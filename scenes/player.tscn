@@ -4,16 +4,20 @@
 [ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="2_qhqgy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dqkch"]
-radius = 74.00676
+radius = 28.01785
 
 [node name="Player" type="CharacterBody2D" unique_id=496631088]
 script = ExtResource("1_g2els")
 acceleration = 50.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1024225290]
-position = Vector2(-1, -2)
-scale = Vector2(0.15625, 0.1484375)
+position = Vector2(9.536743e-07, 0)
+scale = Vector2(0.3984375, 0.37109375)
 texture = ExtResource("2_qhqgy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=783048376]
 shape = SubResource("CircleShape2D_dqkch")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1343793477]
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0

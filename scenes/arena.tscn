@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://cvjltj45k060t"]
+
+[ext_resource type="PackedScene" uid="uid://c1qemdrgxriw3" path="res://scenes/player.tscn" id="1_e05a3"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_e05a3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ug7gw"]
+size = Vector2(1142, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e05a3"]
+size = Vector2(20, 118)
+
+[node name="Arena" type="Node2D" unique_id=49824254]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=607539569]
+offset_left = -893.0
+offset_top = -565.0
+offset_right = 2570.0
+offset_bottom = 1639.0
+texture = SubResource("PlaceholderTexture2D_e05a3")
+
+[node name="Paredes" type="StaticBody2D" parent="." unique_id=1560623714]
+
+[node name="Cima" type="CollisionShape2D" parent="Paredes" unique_id=829995922]
+position = Vector2(848, -510)
+scale = Vector2(3, 1)
+shape = SubResource("RectangleShape2D_ug7gw")
+debug_color = Color(1, 0, 0, 1)
+
+[node name="Baixo" type="CollisionShape2D" parent="Paredes" unique_id=445633347]
+position = Vector2(855.00006, 1588)
+scale = Vector2(3, 1)
+shape = SubResource("RectangleShape2D_ug7gw")
+debug_color = Color(1, 0, 0, 1)
+
+[node name="Esquerda" type="CollisionShape2D" parent="Paredes" unique_id=842240337]
+position = Vector2(-853, 542)
+scale = Vector2(1, 18)
+shape = SubResource("RectangleShape2D_e05a3")
+debug_color = Color(1, 0, 0, 1)
+
+[node name="Direita" type="CollisionShape2D" parent="Paredes" unique_id=2056556152]
+position = Vector2(2545, 533)
+scale = Vector2(1, 18)
+shape = SubResource("RectangleShape2D_e05a3")
+debug_color = Color(1, 0, 0, 1)
+
+[node name="Player" parent="." unique_id=496631088 instance=ExtResource("1_e05a3")]
+position = Vector2(963, 538)
