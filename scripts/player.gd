@@ -13,21 +13,20 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 
 	if input_dir.length() > 0:
-		# 1. ACELERAÇÃO REAL: Adiciona velocidade progressivamente na direção do input
+		# Adiciona velocidade progressivamente na direção do input
 		velocity += input_dir * acceleration * delta
 		
 		# Garante que a velocidade não ultrapasse a max_speed
 		if velocity.length() > max_speed:
 			velocity = velocity.normalized() * max_speed
 
-		# 2. DRIFT (Steering): Calculamos para onde ele quer ir, mantendo a VELOCIDADE ATUAL
+		# Calculamos para onde ele quer ir, mantendo a velocidade atual
 		var current_speed = velocity.length()
 		var desired_velocity = input_dir * current_speed
 		
-		# O lerp agora afeta apenas a curva, não acelera o personagem!
 		velocity = velocity.lerp(desired_velocity, steering_speed * delta)
 		
-		# 3. SISTEMA DE "QUEBRA DE MOMENTO"
+		# Sistema de quebra de momento
 		var movement_dir = velocity.normalized()
 		var dot_product = movement_dir.dot(input_dir)
 		
@@ -36,7 +35,7 @@ func _physics_process(delta):
 			velocity *= sharp_turn_penalty
 			
 	else:
-		# 4. DESACELERAÇÃO: Reduz a velocidade a zero
+		# Reduz a velocidade a zero
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 
 	# Aplica a física
