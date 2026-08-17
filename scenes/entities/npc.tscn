@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bosxy7omdd3or"]
+
+[ext_resource type="Script" uid="uid://beuyipodwayib" path="res://scripts/entities/npc.gd" id="1_4kvco"]
+[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="1_iify0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4kvco"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n61dp"]
+radius = 91.00549
+
+[node name="NPC" type="Node2D" unique_id=1523823426]
+script = ExtResource("1_4kvco")
+
+[node name="Visual" type="Sprite2D" parent="." unique_id=1901786522]
+scale = Vector2(0.515625, 0.5)
+texture = ExtResource("1_iify0")
+
+[node name="NpcCollision" type="StaticBody2D" parent="." unique_id=208999964]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NpcCollision" unique_id=44621603]
+scale = Vector2(3, 3)
+shape = SubResource("RectangleShape2D_4kvco")
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=1133557033]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1105984249]
+position = Vector2(60, 0)
+shape = SubResource("CircleShape2D_n61dp")
+
+[node name="PromptLabel" type="Label" parent="." unique_id=378238653]
+offset_left = -19.0
+offset_top = 33.0
+offset_right = 21.0
+offset_bottom = 56.0

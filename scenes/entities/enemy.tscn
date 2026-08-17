@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://c6h2mjkopn4lp"]
 
 [ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="1_7p1mj"]
-[ext_resource type="Script" uid="uid://bhkb3rqglk3fp" path="res://scripts/enemy_hitbox.gd" id="2_4ra3w"]
-[ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/hit_receiver.gd" id="2_md0e3"]
+[ext_resource type="Script" uid="uid://bhkb3rqglk3fp" path="res://scripts/entities/enemy_hitbox.gd" id="2_4ra3w"]
+[ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/entities/player_hit.gd" id="2_md0e3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xwavj"]
 radius = 19.0

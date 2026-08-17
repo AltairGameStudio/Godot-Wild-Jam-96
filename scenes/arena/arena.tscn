@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cvjltj45k060t"]
 
-[ext_resource type="PackedScene" uid="uid://c1qemdrgxriw3" path="res://scenes/player.tscn" id="1_e05a3"]
-[ext_resource type="PackedScene" uid="uid://c6h2mjkopn4lp" path="res://scenes/enemy.tscn" id="2_wl4x5"]
-[ext_resource type="Script" uid="uid://bsfov1g6uy6el" path="res://scripts/enemy.gd" id="3_olpmc"]
-[ext_resource type="Script" uid="uid://6jr8e2psttx5" path="res://scripts/player_hud.gd" id="4_xdvfk"]
+[ext_resource type="PackedScene" uid="uid://c1qemdrgxriw3" path="res://scenes/entities/player.tscn" id="1_aj7ud"]
+[ext_resource type="PackedScene" uid="uid://c6h2mjkopn4lp" path="res://scenes/entities/enemy.tscn" id="2_asdgj"]
+[ext_resource type="Script" uid="uid://bsfov1g6uy6el" path="res://scripts/entities/enemy.gd" id="3_jx0ua"]
+[ext_resource type="Script" uid="uid://6jr8e2psttx5" path="res://scripts/ui/player_hud.gd" id="4_u52cf"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_e05a3"]
 
@@ -54,15 +54,15 @@ scale = Vector2(1, 18)
 shape = SubResource("RectangleShape2D_e05a3")
 debug_color = Color(1, 0, 0, 1)
 
-[node name="Player" parent="." unique_id=496631088 instance=ExtResource("1_e05a3")]
+[node name="Player" parent="." unique_id=496631088 instance=ExtResource("1_aj7ud")]
 position = Vector2(963, 538)
 
-[node name="Enemy" parent="." unique_id=302185580 instance=ExtResource("2_wl4x5")]
+[node name="Enemy" parent="." unique_id=302185580 instance=ExtResource("2_asdgj")]
 position = Vector2(340, 94)
-script = ExtResource("3_olpmc")
+script = ExtResource("3_jx0ua")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=434009101]
-script = ExtResource("4_xdvfk")
+script = ExtResource("4_u52cf")
 
 [node name="UI" type="Control" parent="CanvasLayer" unique_id=47074319]
 layout_mode = 3
