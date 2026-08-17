@@ -1,48 +1,170 @@
 [gd_scene format=3 uid="uid://btow5yatkocyy"]
 
+[ext_resource type="Script" uid="uid://bfu2hcip83gi8" path="res://scripts/world/town_ui.gd" id="1_6g2qn"]
 [ext_resource type="PackedScene" uid="uid://c1qemdrgxriw3" path="res://scenes/entities/player.tscn" id="1_n11nm"]
+[ext_resource type="Texture2D" uid="uid://dkoh6ojqm6t77" path="res://assets/sprites/houses/house_blacksmith.aseprite" id="1_v00pm"]
+[ext_resource type="Texture2D" uid="uid://idtai0kxfaw7" path="res://assets/sprites/houses/house_shop.aseprite" id="2_6g2qn"]
+[ext_resource type="Texture2D" uid="uid://bhxt4y8ijiusc" path="res://assets/sprites/houses/font.aseprite" id="3_5vpkg"]
+[ext_resource type="Texture2D" uid="uid://ctcpexmfcur7i" path="res://assets/sprites/houses/house_1.aseprite" id="4_jil70"]
+[ext_resource type="Texture2D" uid="uid://bcy68thok4hjx" path="res://assets/sprites/houses/house_2.aseprite" id="5_vb1k2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g3yvl"]
+size = Vector2(255, 224.75)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5ya6w"]
+radius = 78.025635
 
 [node name="Town" type="Node2D" unique_id=1370605599]
 
-[node name="Ground" type="ColorRect" parent="." unique_id=1069252435]
-color = Color(0.63432676, 0.9161008, 0.72445786, 1)
+[node name="Control" type="Control" parent="." unique_id=49435251]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 2000.0
+offset_bottom = 1500.0
+
+[node name="Ground" type="ColorRect" parent="Control" unique_id=1069252435]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.45869648, 0.68713796, 0.4876523, 1)
 
 [node name="YSortEntities" type="Node2D" parent="." unique_id=221459298]
 
 [node name="Buildings" type="Node2D" parent="YSortEntities" unique_id=968238861]
 
-[node name="House_Blacksmith" type="StaticBody2D" parent="YSortEntities/Buildings" unique_id=923701043]
-position = Vector2(0, 1)
+[node name="HouseBlacksmith" type="StaticBody2D" parent="YSortEntities/Buildings" unique_id=923701043]
+position = Vector2(24, -258)
 
-[node name="House_Shop" type="StaticBody2D" parent="YSortEntities/Buildings" unique_id=1016922903]
+[node name="HouseBlacksmith" type="Sprite2D" parent="YSortEntities/Buildings/HouseBlacksmith" unique_id=700801228]
+position = Vector2(1584, 763)
+scale = Vector2(2, 2)
+texture = ExtResource("1_v00pm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortEntities/Buildings/HouseBlacksmith" unique_id=784630293]
+position = Vector2(1584, 768.375)
+shape = SubResource("RectangleShape2D_g3yvl")
+
+[node name="HouseShop" type="StaticBody2D" parent="YSortEntities/Buildings" unique_id=1016922903]
+position = Vector2(24, -259)
+
+[node name="HouseShop" type="Sprite2D" parent="YSortEntities/Buildings/HouseShop" unique_id=1289613906]
+position = Vector2(623, 778)
+scale = Vector2(2, 2)
+texture = ExtResource("2_6g2qn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortEntities/Buildings/HouseShop" unique_id=1813665134]
+position = Vector2(623, 775)
+shape = SubResource("RectangleShape2D_g3yvl")
 
 [node name="TownSquare" type="StaticBody2D" parent="YSortEntities/Buildings" unique_id=1731960539]
+position = Vector2(24, -259)
+
+[node name="Font" type="Sprite2D" parent="YSortEntities/Buildings/TownSquare" unique_id=1548960227]
+position = Vector2(946, 1077)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_5vpkg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortEntities/Buildings/TownSquare" unique_id=1462951830]
+position = Vector2(945, 1067)
+shape = SubResource("CircleShape2D_5ya6w")
+
+[node name="House1" type="StaticBody2D" parent="YSortEntities/Buildings" unique_id=1883968098]
+position = Vector2(24, -259)
+
+[node name="House1" type="Sprite2D" parent="YSortEntities/Buildings/House1" unique_id=674900391]
+position = Vector2(1585, 1219)
+scale = Vector2(2, 2)
+texture = ExtResource("4_jil70")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortEntities/Buildings/House1" unique_id=1141405907]
+position = Vector2(1584, 1215)
+shape = SubResource("RectangleShape2D_g3yvl")
+
+[node name="House2" type="StaticBody2D" parent="YSortEntities/Buildings" unique_id=1156445407]
+position = Vector2(24, -259)
+
+[node name="House2" type="Sprite2D" parent="YSortEntities/Buildings/House2" unique_id=608776284]
+position = Vector2(1315, 764)
+scale = Vector2(2, 2)
+texture = ExtResource("5_vb1k2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortEntities/Buildings/House2" unique_id=1047123969]
+position = Vector2(1316, 764)
+shape = SubResource("RectangleShape2D_g3yvl")
+
+[node name="House3" type="StaticBody2D" parent="YSortEntities/Buildings" unique_id=745467151]
+position = Vector2(48, -518)
+
+[node name="House1" type="Sprite2D" parent="YSortEntities/Buildings/House3" unique_id=548114244]
+position = Vector2(1299, 1481)
+scale = Vector2(2, 2)
+texture = ExtResource("4_jil70")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortEntities/Buildings/House3" unique_id=1101334496]
+position = Vector2(1299, 1481)
+shape = SubResource("RectangleShape2D_g3yvl")
+
+[node name="House4" type="StaticBody2D" parent="YSortEntities/Buildings" unique_id=818099224]
+position = Vector2(24, -259)
+
+[node name="House1" type="Sprite2D" parent="YSortEntities/Buildings/House4" unique_id=1664847628]
+position = Vector2(1323, 1425)
+scale = Vector2(2, 2)
+texture = ExtResource("4_jil70")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortEntities/Buildings/House4" unique_id=905811194]
+position = Vector2(1322, 1429)
+shape = SubResource("RectangleShape2D_g3yvl")
 
 [node name="NPCs" type="Node2D" parent="." unique_id=544107022]
 
 [node name="Player" parent="." unique_id=496631088 instance=ExtResource("1_n11nm")]
+position = Vector2(621, 143)
 
 [node name="TownHUD" type="CanvasLayer" parent="." unique_id=616025795]
+visible = false
+script = ExtResource("1_6g2qn")
 
 [node name="UI" type="Control" parent="TownHUD" unique_id=918530139]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="DialogueWindow" type="Panel" parent="TownHUD/UI" unique_id=747468567]
 layout_mode = 0
+offset_left = 63.0
+offset_top = 377.0
+offset_right = 900.0
+offset_bottom = 519.0
+
+[node name="NameLabel" type="Label" parent="TownHUD/UI/DialogueWindow" unique_id=709083913]
+layout_mode = 0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 23.0
+
+[node name="TextLabel" type="Label" parent="TownHUD/UI/DialogueWindow" unique_id=2134205032]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
 
 [node name="ShopWindow" type="Panel" parent="TownHUD/UI" unique_id=1683188368]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 432.0
+offset_top = 15.0
+offset_right = 911.0
+offset_bottom = 529.0
 
 [node name="UpgradeWindow" type="Panel" parent="TownHUD/UI" unique_id=1486071153]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 433.0
+offset_top = 17.0
+offset_right = 913.0
+offset_bottom = 531.0
 
 [node name="Limits" type="StaticBody2D" parent="." unique_id=1527474310]

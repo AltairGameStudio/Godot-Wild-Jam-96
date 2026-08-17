@@ -1,9 +1,9 @@
 class_name TownUI
 extends CanvasLayer
 
-@onready var dialogue_box: Panel = $UI/DialogueBox
-@onready var dialogue_name: Label = $UI/DialogueBox/NameLabel
-@onready var dialogue_text: Label = $UI/DialogueBox/TextLabel
+@onready var dialogue_box: Panel = $UI/DialogueWindow
+@onready var dialogue_name: Label = $UI/DialogueWindow/NameLabel
+@onready var dialogue_text: Label = $UI/DialogueWindow/TextLabel
 
 @onready var shop_window: Panel = $UI/ShopWindow
 @onready var upgrade_window: Panel = $UI/UpgradeWindow
