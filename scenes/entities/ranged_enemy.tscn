@@ -1,9 +1,9 @@
-[gd_scene format=3 uid="uid://cgjxoex1bxyv0"]
+[gd_scene format=3 uid="uid://c6h2mjkopn4lp"]
 
-[ext_resource type="Script" uid="uid://bsfov1g6uy6el" path="res://scripts/entities/enemy.gd" id="1_puwww"]
-[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="2_l7eqa"]
-[ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/entities/player_hit.gd" id="3_rw5oa"]
-[ext_resource type="Script" uid="uid://bhkb3rqglk3fp" path="res://scripts/entities/enemy_hitbox.gd" id="4_ubhci"]
+[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="1_7p1mj"]
+[ext_resource type="Script" uid="uid://d1lksa1km20va" path="res://scenes/entities/ranged_enemy.gd" id="1_puwww"]
+[ext_resource type="Script" uid="uid://bhkb3rqglk3fp" path="res://scripts/entities/enemy_hitbox.gd" id="2_4ra3w"]
+[ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/entities/player_hit.gd" id="2_md0e3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xwavj"]
 radius = 19.0
@@ -31,7 +31,7 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ra3w"]
 bg_color = Color(0.6012307, 0, 0.12017762, 1)
 
-[node name="Enemy" type="CharacterBody2D" unique_id=302185580]
+[node name="RangedEnemy" type="CharacterBody2D" unique_id=302185580]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_puwww")
@@ -39,7 +39,7 @@ script = ExtResource("1_puwww")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2044408994]
 position = Vector2(8.34465e-07, -1)
 scale = Vector2(0.32812503, 0.2734375)
-texture = ExtResource("2_l7eqa")
+texture = ExtResource("1_7p1mj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1347283466]
 shape = SubResource("CircleShape2D_xwavj")
@@ -49,7 +49,7 @@ shape = SubResource("CircleShape2D_xwavj")
 [node name="BodyHurt" type="Area2D" parent="HitReceivers" unique_id=1864913758]
 collision_layer = 16
 collision_mask = 0
-script = ExtResource("3_rw5oa")
+script = ExtResource("2_md0e3")
 momentum_penalty = 0.2
 
 [node name="HurtBoxArea" type="CollisionShape2D" parent="HitReceivers/BodyHurt" unique_id=722574545]
@@ -59,7 +59,7 @@ shape = SubResource("RectangleShape2D_4ra3w")
 [node name="WeakHurt" type="Area2D" parent="HitReceivers" unique_id=1017981133]
 collision_layer = 16
 collision_mask = 0
-script = ExtResource("3_rw5oa")
+script = ExtResource("2_md0e3")
 hit_type = 1
 damage_multiplier = 2.0
 momentum_penalty = 0.1
@@ -72,7 +72,7 @@ shape = SubResource("RectangleShape2D_5uy6h")
 visible = false
 collision_layer = 16
 collision_mask = 0
-script = ExtResource("3_rw5oa")
+script = ExtResource("2_md0e3")
 hit_type = 2
 damage_multiplier = 0.0
 momentum_penalty = 0.8
@@ -81,7 +81,7 @@ momentum_penalty = 0.8
 position = Vector2(-14, 17.000002)
 rotation = 0.43633232
 scale = Vector2(0.21501164, 0.066406265)
-texture = ExtResource("2_l7eqa")
+texture = ExtResource("1_7p1mj")
 
 [node name="ShieldArea" type="CollisionShape2D" parent="HitReceivers/Shield" unique_id=79591579]
 position = Vector2(-15, 16)
@@ -91,14 +91,14 @@ shape = SubResource("CapsuleShape2D_c4w8v")
 [node name="HitboxWeapon" type="Area2D" parent="HitReceivers" unique_id=1831932505]
 collision_layer = 64
 collision_mask = 32
-script = ExtResource("4_ubhci")
+script = ExtResource("2_4ra3w")
 damage = 40.0
 knockback_force = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="HitReceivers/HitboxWeapon" unique_id=2012559256]
 position = Vector2(14, 25)
 scale = Vector2(0.054687504, 0.15624999)
-texture = ExtResource("2_l7eqa")
+texture = ExtResource("1_7p1mj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitReceivers/HitboxWeapon" unique_id=1078216928]
 position = Vector2(14, 25)
@@ -107,7 +107,7 @@ shape = SubResource("CapsuleShape2D_5uy6h")
 [node name="HitboxDamageContact" type="Area2D" parent="HitReceivers" unique_id=1712262640]
 collision_layer = 64
 collision_mask = 32
-script = ExtResource("4_ubhci")
+script = ExtResource("2_4ra3w")
 knockback_force = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitReceivers/HitboxDamageContact" unique_id=85258552]
@@ -121,3 +121,10 @@ offset_bottom = -23.0
 theme_override_styles/background = SubResource("StyleBoxFlat_md0e3")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4ra3w")
 show_percentage = false
+
+[node name="ShootTimer" type="Timer" parent="." unique_id=345535461]
+wait_time = 1.5
+autostart = true
+
+[node name="ShootPoint" type="Marker2D" parent="." unique_id=1926591893]
+position = Vector2(14, 35)

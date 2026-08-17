@@ -2,9 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://c1qemdrgxriw3" path="res://scenes/entities/player.tscn" id="1_aj7ud"]
 [ext_resource type="Script" uid="uid://bivo15gjxshha" path="res://scripts/arena/arena.gd" id="1_asdgj"]
-[ext_resource type="PackedScene" uid="uid://c6h2mjkopn4lp" path="res://scenes/entities/enemy.tscn" id="2_asdgj"]
-[ext_resource type="Script" uid="uid://bsfov1g6uy6el" path="res://scripts/entities/enemy.gd" id="3_jx0ua"]
+[ext_resource type="PackedScene" uid="uid://cgjxoex1bxyv0" path="res://scenes/entities/enemy.tscn" id="2_asdgj"]
+[ext_resource type="PackedScene" uid="uid://bcpxwt5ovyq1c" path="res://scenes/entities/enemy_bullet.tscn" id="3_jx0ua"]
 [ext_resource type="Script" uid="uid://6jr8e2psttx5" path="res://scripts/ui/player_hud.gd" id="4_u52cf"]
+[ext_resource type="PackedScene" uid="uid://c6h2mjkopn4lp" path="res://scenes/entities/ranged_enemy.tscn" id="5_u52cf"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_e05a3"]
 
@@ -22,7 +23,8 @@ bg_color = Color(1, 0.34122363, 0.29450622, 1)
 
 [node name="Arena" type="Node2D" unique_id=49824254]
 script = ExtResource("1_asdgj")
-enemy_scene = ExtResource("2_asdgj")
+melee_enemy_scene = ExtResource("2_asdgj")
+ranged_enemy_scene = ExtResource("3_jx0ua")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=607539569]
 offset_left = -893.0
@@ -60,9 +62,8 @@ debug_color = Color(1, 0, 0, 1)
 [node name="Player" parent="." unique_id=496631088 instance=ExtResource("1_aj7ud")]
 position = Vector2(963, 538)
 
-[node name="Enemy" parent="." unique_id=302185580 instance=ExtResource("2_asdgj")]
+[node name="Enemy" parent="." unique_id=302185580 instance=ExtResource("5_u52cf")]
 position = Vector2(340, 94)
-script = ExtResource("3_jx0ua")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=434009101]
 script = ExtResource("4_u52cf")
