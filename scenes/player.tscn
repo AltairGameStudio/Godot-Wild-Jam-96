@@ -4,11 +4,17 @@
 [ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="2_qhqgy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dqkch"]
-radius = 28.01785
+radius = 25.019993
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qhqgy"]
+radius = 28.0
 
 [node name="Player" type="CharacterBody2D" unique_id=496631088]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_g2els")
-acceleration = 50.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1024225290]
 position = Vector2(9.536743e-07, 0)
@@ -18,6 +24,31 @@ texture = ExtResource("2_qhqgy")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=783048376]
 shape = SubResource("CircleShape2D_dqkch")
 
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=103844479]
+position = Vector2(-0.5, 12.5)
+
+[node name="LancePivot" type="Node2D" parent="." unique_id=1176067835]
+
+[node name="LanceArea" type="Area2D" parent="LancePivot" unique_id=1234388435]
+collision_layer = 8
+collision_mask = 16
+
+[node name="LanceColision" type="CollisionShape2D" parent="LancePivot/LanceArea" unique_id=1859248750]
+position = Vector2(10, -58)
+shape = SubResource("RectangleShape2D_g2els")
+
+[node name="LanceSprite" type="Sprite2D" parent="LancePivot/LanceArea" unique_id=1897399912]
+position = Vector2(9.999999, -40)
+scale = Vector2(0.101562515, 0.3984375)
+texture = ExtResource("2_qhqgy")
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1343793477]
 position_smoothing_enabled = true
 position_smoothing_speed = 4.0
+
+[node name="HurtboxArea" type="Area2D" parent="." unique_id=109100208]
+collision_layer = 32
+collision_mask = 64
+
+[node name="HurtboxCollision" type="CollisionShape2D" parent="HurtboxArea" unique_id=64798763]
+shape = SubResource("CircleShape2D_qhqgy")

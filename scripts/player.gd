@@ -1,49 +1,157 @@
+class_name Player
 extends CharacterBody2D
 
-@export var acceleration := 300.0       # Quão rápido ele ganha velocidade
-@export var max_speed := 1000.0         # Limite máximo de velocidade
-@export var friction := 150.0           # Desaceleração quando solta o teclado
-@export var steering_speed := 2.5       # Quão rápido ele consegue fazer curvas
-@export var sharp_turn_penalty := 0.98  # Multiplicador que rouba inércia em curvas muito fechadass
+signal health_changed(current: float, max_h: float)
 
-# Variável para calcular o dano nos inimigos
-var kinetic_energy: float = 0.0
+@export_group("Vida")
+@export var max_health: float = 100.0
+var current_health: float
 
-func _physics_process(delta):
-	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+@export_group("Movimento")
+@export var engine_power: float = 200.0
+@export var max_speed: float = 600.0
+@export var steer_speed: float = 2.0
+@export var forward_friction: float = 0.98
+@export var drift_traction: float = 0.85
 
-	if input_dir.length() > 0:
-		# Adiciona velocidade progressivamente na direção do input
-		velocity += input_dir * acceleration * delta
+@export_group("Combate")
+@export var min_charge_speed: float = 100.0
+@export var base_damage: float = 10.0
+@export var damage_velocity_scale: float = 0.01
+
+@export_group("Defesa e Invulnerabilidade")
+@export var invulnerability_duration: float = 0.6
+var is_invulnerable: bool = false
+
+@onready var lance_pivot: Node2D = $LancePivot
+@onready var lance_area: Area2D = $LancePivot/LanceArea
+@onready var hurtbox_area: Area2D = $HurtboxArea
+
+var heading_angle: float = 0.0
+
+func _ready() -> void:
+	add_to_group("player")
+	current_health = max_health
+	heading_angle = rotation
+	
+	if lance_area:
+		lance_area.area_entered.connect(_on_lance_hit)
+	
+	if hurtbox_area:
+		hurtbox_area.area_entered.connect(_on_hurtbox_area_entered)
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	if is_invulnerable:
+		return
 		
-		# Garante que a velocidade não ultrapasse a max_speed
-		if velocity.length() > max_speed:
-			velocity = velocity.normalized() * max_speed
+	# Aceita tanto EnemyHitbox quanto classes genéricas de Hitbox
+	if area is EnemyHitbox or area.has_method("get_damage_payload"):
+		var payload: Dictionary = area.get_damage_payload(global_position)
+		take_damage(payload["damage"], payload["knockback"])
 
-		# Calculamos para onde ele quer ir, mantendo a velocidade atual
-		var current_speed = velocity.length()
-		var desired_velocity = input_dir * current_speed
+func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO) -> void:
+	if is_invulnerable:
+		return
 		
-		velocity = velocity.lerp(desired_velocity, steering_speed * delta)
+	# Se estiver em investida rápida frontal, a lança anula o dano de frente
+	var forward_vec = Vector2.UP.rotated(heading_angle)
+	var is_charging = velocity.length() >= min_charge_speed and velocity.normalized().dot(forward_vec) > 0.5
+	
+	if is_charging:
+		return
 		
-		# Sistema de quebra de momento
-		var movement_dir = velocity.normalized()
-		var dot_product = movement_dir.dot(input_dir)
-		
-		# Se fizer curva brusca com alta velocidade, perde momento
-		if dot_product < 0.5 and current_speed > 200:
-			velocity *= sharp_turn_penalty
-			
-	else:
-		# Reduz a velocidade a zero
-		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
+	current_health = maxf(0.0, current_health - amount)
+	velocity += knockback
+	health_changed.emit(current_health, max_health)
+	
+	_trigger_invulnerability()
+	
+	if current_health <= 0.0:
+		die()
 
-	# Aplica a física
+func _trigger_invulnerability() -> void:
+	is_invulnerable = true
+	var tween = create_tween().set_loops(int(invulnerability_duration / 0.1))
+	tween.tween_property(self, "modulate:a", 0.2, 0.05)
+	tween.tween_property(self, "modulate:a", 1.0, 0.05)
+	
+	await get_tree().create_timer(invulnerability_duration).timeout
+	is_invulnerable = false
+	modulate.a = 1.0
+
+func _physics_process(delta: float) -> void:
+	_handle_movement(delta)
+	_update_lance_state()
 	move_and_slide()
 
-	# Guarda a energia para o combate
-	kinetic_energy = velocity.length()
+func _handle_movement(delta: float) -> void:
+	var turn_input = Input.get_axis("ui_left", "ui_right")
+	var throttle_input = Input.get_axis("ui_down", "ui_up")
 	
-	# Rotaciona o personagem
-	if velocity.length() > 50:
-		rotation = velocity.angle()
+	heading_angle += turn_input * steer_speed * delta
+	rotation = heading_angle
+	
+	var forward_vec = Vector2.UP.rotated(heading_angle)
+	var right_vec = Vector2.RIGHT.rotated(heading_angle)
+	
+	if throttle_input > 0.0:
+		velocity += forward_vec * engine_power * throttle_input * delta
+	elif throttle_input < 0.0:
+		velocity += forward_vec * (engine_power * 0.4) * throttle_input * delta
+	
+	var forward_velocity = forward_vec * velocity.dot(forward_vec)
+	var lateral_velocity = right_vec * velocity.dot(right_vec)
+	
+	lateral_velocity *= pow(1.0 - drift_traction, delta)
+	forward_velocity *= pow(forward_friction, delta)
+	
+	velocity = forward_velocity + lateral_velocity
+	
+	if velocity.length() > max_speed:
+		velocity = velocity.normalized() * max_speed
+
+func _update_lance_state() -> void:
+	if not lance_area:
+		return
+		
+	var is_charging = velocity.length() >= min_charge_speed
+	lance_area.monitoring = is_charging
+	
+	# Garante impacto mesmo se já estiver colidindo ao atingir a velocidade
+	if is_charging:
+		for area in lance_area.get_overlapping_areas():
+			_on_lance_hit(area)
+
+func _on_lance_hit(area: Area2D) -> void:
+	if not area is HitReceiver:
+		return
+		
+	var current_speed = velocity.length()
+	if current_speed < min_charge_speed:
+		return
+		
+	# Validação direcional (usa Vector2.UP)
+	var forward_vec = Vector2.UP.rotated(heading_angle)
+	if velocity.normalized().dot(forward_vec) < 0.5:
+		return
+		
+	var excess_speed = current_speed - min_charge_speed
+	var raw_damage = base_damage + (excess_speed * damage_velocity_scale)
+	
+	var receiver = area as HitReceiver
+	var hit_data = receiver.process_hit(raw_damage, velocity.normalized())
+	
+	var penalty: float = hit_data["momentum_penalty"]
+	velocity *= (1.0 - clampf(penalty, 0.05, 0.95))
+
+func _on_hurtbox_entered(area: Area2D) -> void:
+	if is_invulnerable:
+		return
+		
+	# Verifica se é EnemyHitbox ou se tem a função de dano implementada
+	if area is EnemyHitbox or area.has_method("get_damage_payload"):
+		var payload: Dictionary = area.get_damage_payload(global_position)
+		take_damage(payload["damage"], payload["knockback"])
+	
+func die() -> void:
+	queue_free()
