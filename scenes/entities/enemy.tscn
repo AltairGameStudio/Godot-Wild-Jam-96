@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c6h2mjkopn4lp"]
 
 [ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="1_7p1mj"]
+[ext_resource type="Script" uid="uid://bsfov1g6uy6el" path="res://scripts/entities/enemy.gd" id="1_defa4"]
 [ext_resource type="Script" uid="uid://bhkb3rqglk3fp" path="res://scripts/entities/enemy_hitbox.gd" id="2_4ra3w"]
 [ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/entities/player_hit.gd" id="2_md0e3"]
 
@@ -33,6 +34,7 @@ bg_color = Color(0.6012307, 0, 0.12017762, 1)
 [node name="Enemy" type="CharacterBody2D" unique_id=302185580]
 collision_layer = 4
 collision_mask = 7
+script = ExtResource("1_defa4")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2044408994]
 position = Vector2(8.34465e-07, -1)

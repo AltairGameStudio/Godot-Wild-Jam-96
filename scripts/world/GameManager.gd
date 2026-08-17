@@ -24,6 +24,8 @@ var is_in_run: bool = false
 const ARENA_SCENE_PATH = "res://scenes/arena/arena.tscn"
 const TOWN_SCENE_PATH = "res://scenes/town/town.tscn"
 
+var current_phase: int = 0
+
 func _process(delta: float) -> void:
 	if is_in_run:
 		run_timer += delta
@@ -40,19 +42,24 @@ func end_run_success() -> void:
 	is_in_run = false
 	var total_earned = 0
 	
-	# Calcula a perda de valor dos itens com o tempo (Freshness Decay)
 	for item in current_run_loot:
 		var freshness_mult = clampf(1.0 - (run_timer / 300.0), 0.2, 1.0)
 		total_earned += int(item.get("base_value", 10) * freshness_mult)
 	
 	add_gold(total_earned)
 	current_run_loot.clear()
+	
+	# Avança para a próxima fase
+	current_phase += 1
 	get_tree().change_scene_to_file(TOWN_SCENE_PATH)
 
 # Retorno por morte (perde os itens da run atual)
 func end_run_failure() -> void:
 	is_in_run = false
 	current_run_loot.clear()
+	
+	# Reseta a fase ao morrer
+	current_phase = 1
 	get_tree().change_scene_to_file(TOWN_SCENE_PATH)
 
 func add_gold(amount: int) -> void:

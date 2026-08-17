@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cvjltj45k060t"]
 
 [ext_resource type="PackedScene" uid="uid://c1qemdrgxriw3" path="res://scenes/entities/player.tscn" id="1_aj7ud"]
+[ext_resource type="Script" uid="uid://bivo15gjxshha" path="res://scripts/arena/arena.gd" id="1_asdgj"]
 [ext_resource type="PackedScene" uid="uid://c6h2mjkopn4lp" path="res://scenes/entities/enemy.tscn" id="2_asdgj"]
 [ext_resource type="Script" uid="uid://bsfov1g6uy6el" path="res://scripts/entities/enemy.gd" id="3_jx0ua"]
 [ext_resource type="Script" uid="uid://6jr8e2psttx5" path="res://scripts/ui/player_hud.gd" id="4_u52cf"]
@@ -20,6 +21,8 @@ bg_color = Color(0, 0, 0, 1)
 bg_color = Color(1, 0.34122363, 0.29450622, 1)
 
 [node name="Arena" type="Node2D" unique_id=49824254]
+script = ExtResource("1_asdgj")
+enemy_scene = ExtResource("2_asdgj")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=607539569]
 offset_left = -893.0
@@ -79,3 +82,65 @@ offset_bottom = 28.0
 theme_override_styles/background = SubResource("StyleBoxFlat_7ft05")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4ag8t")
 show_percentage = false
+
+[node name="SpawnPoints" type="Node2D" parent="." unique_id=674017212]
+
+[node name="Marker2D" type="Marker2D" parent="SpawnPoints" unique_id=1611474316]
+position = Vector2(414, 1344)
+
+[node name="Marker2D2" type="Marker2D" parent="SpawnPoints" unique_id=1343259568]
+position = Vector2(825, 1338)
+
+[node name="Marker2D3" type="Marker2D" parent="SpawnPoints" unique_id=1562268089]
+position = Vector2(1290, 1337)
+
+[node name="Marker2D4" type="Marker2D" parent="SpawnPoints" unique_id=1712952225]
+position = Vector2(1655, 1330)
+
+[node name="Marker2D5" type="Marker2D" parent="SpawnPoints" unique_id=391383164]
+position = Vector2(2121, 1347)
+
+[node name="Marker2D6" type="Marker2D" parent="SpawnPoints" unique_id=1641821320]
+position = Vector2(2162, 947)
+
+[node name="Marker2D13" type="Marker2D" parent="SpawnPoints" unique_id=1378530367]
+position = Vector2(1260, -205)
+
+[node name="Marker2D18" type="Marker2D" parent="SpawnPoints" unique_id=193654851]
+position = Vector2(366, -197)
+
+[node name="Marker2D20" type="Marker2D" parent="SpawnPoints" unique_id=1129664033]
+position = Vector2(-54, -209)
+
+[node name="Marker2D19" type="Marker2D" parent="SpawnPoints" unique_id=1417921530]
+position = Vector2(848, -221)
+
+[node name="Marker2D14" type="Marker2D" parent="SpawnPoints" unique_id=478745693]
+position = Vector2(1661, -189)
+
+[node name="Marker2D15" type="Marker2D" parent="SpawnPoints" unique_id=963454224]
+position = Vector2(2166, -145)
+
+[node name="Marker2D16" type="Marker2D" parent="SpawnPoints" unique_id=584229048]
+position = Vector2(2166, 264)
+
+[node name="Marker2D17" type="Marker2D" parent="SpawnPoints" unique_id=479922679]
+position = Vector2(2166, 624)
+
+[node name="Marker2D7" type="Marker2D" parent="SpawnPoints" unique_id=895404787]
+position = Vector2(-512, 194)
+
+[node name="Marker2D8" type="Marker2D" parent="SpawnPoints" unique_id=793998674]
+position = Vector2(-533, -208)
+
+[node name="Marker2D9" type="Marker2D" parent="SpawnPoints" unique_id=1446958316]
+position = Vector2(-491, 606)
+
+[node name="Marker2D10" type="Marker2D" parent="SpawnPoints" unique_id=1556682015]
+position = Vector2(-481, 942)
+
+[node name="Marker2D11" type="Marker2D" parent="SpawnPoints" unique_id=1127021436]
+position = Vector2(-463, 1295)
+
+[node name="Marker2D12" type="Marker2D" parent="SpawnPoints" unique_id=974573255]
+position = Vector2(-55, 1319)

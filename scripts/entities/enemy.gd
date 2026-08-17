@@ -1,6 +1,8 @@
 class_name Enemy
 extends CharacterBody2D
 
+signal enemy_died
+
 @export_group("Atributos")
 @export var max_health: float = 60.0
 @export var move_speed: float = 120.0
@@ -79,4 +81,5 @@ func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.H
 				die()
 
 func die() -> void:
+	enemy_died.emit() 
 	queue_free()
