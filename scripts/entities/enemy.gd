@@ -8,6 +8,7 @@ signal enemy_died
 @export var move_speed: float = 120.0
 @export var turn_speed: float = 3.5
 @export var contact_damage: float = 15.0
+@export var knockback_multiplier: float = 1.2
 
 var current_health: float
 var player_ref: Node2D = null
@@ -68,15 +69,23 @@ func _update_healthbar_position() -> void:
 	if health_bar:
 		health_bar.global_position = global_position + Vector2(-health_bar.size.x / 2.0, 30.0)
 	
-func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.HitType) -> void:
+func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.HitType, impact_speed: float = 0.0) -> void:
 	match hit_type:
 		HitReceiver.HitType.SHIELD:
-			velocity += direction * 150.0
+			# Se acertar o escudo, empurra menos
+			velocity += direction * (impact_speed * 0.4 + 100.0)
 		HitReceiver.HitType.WEAKSPOT, HitReceiver.HitType.NORMAL:
 			current_health = maxf(0.0, current_health - damage)
 			if health_bar:
 				health_bar.value = current_health
-			velocity += direction * (damage * 8.0)
+			
+			# Força proporcional à velocidade do impacto
+			var knockback_force = impact_speed * knockback_multiplier
+			if hit_type == HitReceiver.HitType.WEAKSPOT:
+				# Ponto fraco recebe 30% a mais de empurrão
+				knockback_force *= 1.3
+			
+			velocity += direction * knockback_force
 			
 			if current_health <= 0.0:
 				die()

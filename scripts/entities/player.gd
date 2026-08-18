@@ -18,6 +18,7 @@ var current_health: float
 @export var min_charge_speed: float = 100.0
 @export var base_damage: float = 10.0
 @export var damage_velocity_scale: float = 0.01
+@export var bounce_ratio: float = 0.35
 
 @export_group("Defesa e Invulnerabilidade")
 @export var invulnerability_duration: float = 0.6
@@ -130,7 +131,7 @@ func _on_lance_hit(area: Area2D) -> void:
 	if current_speed < min_charge_speed:
 		return
 		
-	# Validação direcional (usa Vector2.UP)
+	# Validação direcional
 	var forward_vec = Vector2.UP.rotated(heading_angle)
 	if velocity.normalized().dot(forward_vec) < 0.5:
 		return
@@ -139,10 +140,12 @@ func _on_lance_hit(area: Area2D) -> void:
 	var raw_damage = base_damage + (excess_speed * damage_velocity_scale)
 	
 	var receiver = area as HitReceiver
-	var hit_data = receiver.process_hit(raw_damage, velocity.normalized())
+	# Enviamos o dano, a direção e a velocidade atual do impacto
+	var hit_data = receiver.process_hit(raw_damage, velocity.normalized(), current_speed)
 	
-	var penalty: float = hit_data["momentum_penalty"]
-	velocity *= (1.0 - clampf(penalty, 0.05, 0.95))
+	# Empurra o jogador na direção oposta ao golpe
+	var bounce_dir = -forward_vec
+	velocity = bounce_dir * (current_speed * bounce_ratio)
 
 func _on_hurtbox_entered(area: Area2D) -> void:
 	if is_invulnerable:

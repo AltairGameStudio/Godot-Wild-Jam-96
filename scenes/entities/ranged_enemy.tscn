@@ -28,6 +28,7 @@ bg_color = Color(0.6012307, 0, 0.12017762, 1)
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_puwww")
+knockback_multiplier = 0.8
 bullet_scene = ExtResource("2_l7eqa")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2044408994]
