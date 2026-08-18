@@ -9,6 +9,8 @@ func set_empty_slot() -> void:
 	$amount.text = ""
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
+	if $sprite.texture == null:
+		return null
 	var data = {
 		"sprite": $sprite.texture,
 		"amount": $amount.text,
