@@ -19,6 +19,8 @@ var player_ref: Node2D = null
 var is_dead: bool = false
 
 func _ready() -> void:
+	add_to_group("enemies")
+	
 	current_health = max_health
 	player_ref = get_tree().get_first_node_in_group("player") as Node2D
 	

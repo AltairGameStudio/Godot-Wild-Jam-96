@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cgjxoex1bxyv0" path="res://scenes/entities/enemy.tscn" id="2_asdgj"]
 [ext_resource type="Script" uid="uid://6jr8e2psttx5" path="res://scripts/ui/player_hud.gd" id="4_u52cf"]
 [ext_resource type="PackedScene" uid="uid://c6h2mjkopn4lp" path="res://scenes/entities/ranged_enemy.tscn" id="5_u52cf"]
+[ext_resource type="Script" uid="uid://chcdoqrsmlrq4" path="res://scripts/ui/enemy_indicators.gd" id="6_jx0ua"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_e05a3"]
 
@@ -79,6 +80,15 @@ offset_bottom = 28.0
 theme_override_styles/background = SubResource("StyleBoxFlat_7ft05")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4ag8t")
 show_percentage = false
+
+[node name="EnemyIndicators" type="Control" parent="CanvasLayer" unique_id=234991851]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_jx0ua")
 
 [node name="SpawnPoints" type="Node2D" parent="." unique_id=674017212]
 
