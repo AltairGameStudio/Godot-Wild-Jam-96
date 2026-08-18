@@ -18,6 +18,7 @@ var player_ref: Node2D = null
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var shoot_point: Marker2D = $ShootPoint
 @onready var shoot_timer: Timer = $ShootTimer
+@onready var hit_receivers_node: Node2D = $HitReceivers
 
 var is_dead: bool = false
 
@@ -31,6 +32,11 @@ func _ready() -> void:
 		health_bar.top_level = true
 		
 	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
+	
+	if hit_receivers_node:
+		for child in hit_receivers_node.get_children():
+			if child is HitReceiver:
+				child.hit_received.connect(_on_hit_received)
 
 func _physics_process(delta: float) -> void:
 	_handle_ai_combat(delta)
