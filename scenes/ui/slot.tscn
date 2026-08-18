@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://dqlxaplui668g"]
+
+[ext_resource type="Texture2D" uid="uid://bkp30ogd8bpi" path="res://assets/sprites/slot_inventario.png" id="1_jkamp"]
+[ext_resource type="Script" uid="uid://cei2y0m38vfqt" path="res://scripts/ui/slot.gd" id="1_sad2q"]
+
+[node name="slot" type="Control" unique_id=1277440558]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1860.0
+offset_bottom = -1020.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sad2q")
+
+[node name="background" type="TextureRect" parent="." unique_id=839060867]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_jkamp")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="." unique_id=1646542697]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="amount" type="Label" parent="." unique_id=798709211]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -26.0
+offset_right = 20.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 0
