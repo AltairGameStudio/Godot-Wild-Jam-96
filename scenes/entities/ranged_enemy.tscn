@@ -9,10 +9,10 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_xwavj"]
 radius = 19.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ra3w"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l7eqa"]
 size = Vector2(43, 18)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5uy6h"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rw5oa"]
 size = Vector2(43, 19)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
@@ -40,17 +40,17 @@ shape = SubResource("CircleShape2D_xwavj")
 
 [node name="HitReceivers" type="Node2D" parent="." unique_id=1858289]
 
-[node name="BodyHurt" type="Area2D" parent="HitReceivers" unique_id=1864913758]
+[node name="BodyHurt" type="Area2D" parent="HitReceivers" unique_id=657711422]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("2_md0e3")
 momentum_penalty = 0.2
 
-[node name="HurtBoxArea" type="CollisionShape2D" parent="HitReceivers/BodyHurt" unique_id=722574545]
+[node name="HurtBoxArea" type="CollisionShape2D" parent="HitReceivers/BodyHurt" unique_id=586892629]
 position = Vector2(0, 8)
-shape = SubResource("RectangleShape2D_4ra3w")
+shape = SubResource("RectangleShape2D_l7eqa")
 
-[node name="WeakHurt" type="Area2D" parent="HitReceivers" unique_id=1017981133]
+[node name="WeakHurt" type="Area2D" parent="HitReceivers" unique_id=2111492344]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("2_md0e3")
@@ -58,11 +58,12 @@ hit_type = 1
 damage_multiplier = 2.0
 momentum_penalty = 0.1
 
-[node name="WeakBoxArea" type="CollisionShape2D" parent="HitReceivers/WeakHurt" unique_id=235717837]
+[node name="WeakBoxArea" type="CollisionShape2D" parent="HitReceivers/WeakHurt" unique_id=908858376]
 position = Vector2(0.5, -10.5)
-shape = SubResource("RectangleShape2D_5uy6h")
+shape = SubResource("RectangleShape2D_rw5oa")
 
 [node name="HitboxWeapon" type="Area2D" parent="HitReceivers" unique_id=1831932505]
+visible = false
 collision_layer = 64
 collision_mask = 32
 script = ExtResource("2_4ra3w")

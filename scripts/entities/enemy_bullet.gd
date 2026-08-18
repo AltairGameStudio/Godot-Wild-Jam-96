@@ -5,25 +5,24 @@ extends Area2D
 
 var direction: Vector2 = Vector2.ZERO
 
+func _ready() -> void:
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
+
 func _physics_process(delta: float) -> void:
-	# Move o tiro na direção definida pelo inimigo
 	global_position += direction * speed * delta
 
-# --- SINAIS ---
-
 func _on_body_entered(body: Node2D) -> void:
-	# Se bateu no player, dá dano e deleta o tiro
+	# Checa se bateu no player
 	if body.is_in_group("player"):
 		if body.has_method("take_damage"):
-			# Empurra o player na direção do tiro
-			var push_dir = direction
-			body.take_damage(damage, push_dir * 150.0)
+			# Passa o dano e a direção para empurrar o player
+			body.take_damage(damage, direction * 150.0)
 		queue_free()
 		
-	# Se bateu na parede, deleta o tiro também
+	# Se bateu em paredes ou barreiras, a bala some
 	elif body is StaticBody2D:
 		queue_free()
 
 func _on_screen_exited() -> void:
-	# Deleta o tiro se ele sair da tela do jogador
 	queue_free()
