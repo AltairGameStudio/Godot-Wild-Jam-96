@@ -15,10 +15,8 @@ func start_phase() -> void:
 	var phase: int = GameManager.current_phase 
 	
 	var total_enemies: int = 1 + (phase * 2) 
-	# var ranged_amount: int = int(phase / 2.0) 
-	# var melee_amount: int = total_enemies - ranged_amount
-	var ranged_amount: int = 1
-	var melee_amount: int = 0
+	var ranged_amount: int = int(phase / 2.0) 
+	var melee_amount: int = total_enemies - ranged_amount
 	
 	spawn_enemies(melee_amount, ranged_amount)
 
