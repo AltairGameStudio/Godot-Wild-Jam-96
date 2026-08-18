@@ -39,6 +39,7 @@ func start_run() -> void:
 
 # Retorno com sucesso (ex: passou pelo portal de extração)
 func end_run_success() -> void:
+	print("Passou de fase")
 	is_in_run = false
 	var total_earned = 0
 	
@@ -55,6 +56,7 @@ func end_run_success() -> void:
 
 # Retorno por morte (perde os itens da run atual)
 func end_run_failure() -> void:
+	print("Morreu")
 	is_in_run = false
 	current_run_loot.clear()
 	

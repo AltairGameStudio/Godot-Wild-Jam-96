@@ -19,11 +19,17 @@ var player_ref: Node2D = null
 @onready var shoot_point: Marker2D = $ShootPoint
 @onready var shoot_timer: Timer = $ShootTimer
 
+var is_dead: bool = false
+
 func _ready() -> void:
 	current_health = max_health
 	player_ref = get_tree().get_first_node_in_group("player") as Node2D
 	
-	# Conecta o Timer de atirar
+	if health_bar:
+		health_bar.max_value = max_health
+		health_bar.value = current_health
+		health_bar.top_level = true
+		
 	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
 
 func _physics_process(delta: float) -> void:
@@ -77,10 +83,13 @@ func shoot() -> void:
 
 func _update_healthbar_position() -> void:
 	if health_bar:
-		health_bar.rotation = 0.0
-		health_bar.global_position = global_position + Vector2(-health_bar.size.x / 2.0, 30.0)
+		health_bar.global_position = global_position + Vector2(-health_bar.size.x / 2.0, -30.0)
 
 func die() -> void:
+	# Se já morreu neste frame, não faz nada
+	if is_dead: return 
+	
+	is_dead = true
 	enemy_died.emit()
 	queue_free()
 	

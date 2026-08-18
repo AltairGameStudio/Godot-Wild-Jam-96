@@ -15,6 +15,8 @@ var player_ref: Node2D = null
 @onready var hit_receivers_node: Node2D = $HitReceivers
 @onready var health_bar: ProgressBar = $HealthBar
 
+var is_dead: bool = false
+
 func _ready() -> void:
 	current_health = max_health
 	player_ref = get_tree().get_first_node_in_group("player") as Node2D
@@ -64,7 +66,6 @@ func _check_body_collisions() -> void:
 
 func _update_healthbar_position() -> void:
 	if health_bar:
-		health_bar.rotation = 0.0
 		health_bar.global_position = global_position + Vector2(-health_bar.size.x / 2.0, 30.0)
 	
 func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.HitType) -> void:
@@ -81,5 +82,9 @@ func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.H
 				die()
 
 func die() -> void:
-	enemy_died.emit() 
+	# Se já morreu neste frame, não faz nada
+	if is_dead: return 
+	
+	is_dead = true
+	enemy_died.emit()
 	queue_free()
