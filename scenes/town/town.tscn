@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://btow5yatkocyy"]
 
 [ext_resource type="Script" uid="uid://bfu2hcip83gi8" path="res://scripts/world/town_ui.gd" id="1_6g2qn"]
+[ext_resource type="PackedScene" uid="uid://bosxy7omdd3or" path="res://scenes/entities/npc.tscn" id="1_e21v4"]
 [ext_resource type="PackedScene" uid="uid://c1qemdrgxriw3" path="res://scenes/entities/player.tscn" id="1_n11nm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g3yvl"]
@@ -109,6 +110,13 @@ shape = SubResource("RectangleShape2D_g3yvl")
 
 [node name="NPCs" type="Node2D" parent="." unique_id=544107022]
 
+[node name="ArenaGate" parent="NPCs" unique_id=1523823426 instance=ExtResource("1_e21v4")]
+position = Vector2(204, 993)
+npc_name = "Arena Gate"
+npc_type = 4
+prompt_message = "[E] Enter arena"
+accent_color = Color(0.39215687, 0.58431375, 0.19215687, 1)
+
 [node name="Player" parent="." unique_id=496631088 instance=ExtResource("1_n11nm")]
 position = Vector2(621, 143)
 
@@ -156,3 +164,4 @@ offset_right = 913.0
 offset_bottom = 531.0
 
 [node name="Limits" type="StaticBody2D" parent="." unique_id=1527474310]
+position = Vector2(124, 257)
