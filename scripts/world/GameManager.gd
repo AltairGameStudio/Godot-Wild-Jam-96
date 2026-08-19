@@ -39,6 +39,7 @@ func start_run() -> void:
 
 # Retorno com sucesso (ex: passou pelo portal de extração)
 func end_run_success() -> void:
+	await get_tree().create_timer(5).timeout
 	print("Passou de fase")
 	is_in_run = false
 	var total_earned = 0
@@ -48,11 +49,11 @@ func end_run_success() -> void:
 		total_earned += int(item.get("base_value", 10) * freshness_mult)
 	
 	add_gold(total_earned)
-	current_run_loot.clear()
+	current_run_loot.clear.call_deferred()
 	
 	# Avança para a próxima fase
 	current_phase += 1
-	get_tree().change_scene_to_file(TOWN_SCENE_PATH)
+	get_tree().change_scene_to_file.call_deferred(TOWN_SCENE_PATH)
 
 # Retorno por morte (perde os itens da run atual)
 func end_run_failure() -> void:

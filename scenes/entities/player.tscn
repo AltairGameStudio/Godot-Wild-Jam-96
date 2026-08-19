@@ -12,7 +12,7 @@ radius = 25.019993
 radius = 28.0
 
 [node name="Player" type="CharacterBody2D" unique_id=496631088]
-collision_layer = 2
+collision_layer = 3
 collision_mask = 5
 script = ExtResource("1_g2els")
 bounce_ratio = 0.3

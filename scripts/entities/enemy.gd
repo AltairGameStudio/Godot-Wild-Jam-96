@@ -26,6 +26,7 @@ var player_ref: Node2D = null
 @onready var health_bar: ProgressBar = $HealthBar
 
 var is_dead: bool = false
+var drop = preload("res://scenes/ui/item.tscn")
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -142,10 +143,16 @@ func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.H
 			if current_health <= 0.0:
 				die()
 
+func create_item() -> void:
+	for i in range(1,6):
+		var new_drop = drop.instantiate()
+		new_drop.setup(i*100, self.global_position)
+		get_tree().current_scene.add_child(new_drop)
+
 func die() -> void:
 	# Se já morreu neste frame, não faz nada
 	if is_dead: return 
-	
+	call_deferred("create_item")
 	is_dead = true
 	enemy_died.emit()
-	queue_free()
+	queue_free.call_deferred()

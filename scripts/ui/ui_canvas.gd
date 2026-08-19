@@ -8,16 +8,16 @@ func _process(_delta: float) -> void:
 		$inventario.visible = not $inventario.visible
 	pass
 
-func add_item_inventory(sprite: Texture) -> bool:
+func add_item_inventory(item: Area2D) -> bool:
 	var empty = null
 	for inv_slot in $inventario/Container.get_children():
-		if inv_slot.get_node("sprite").texture == sprite:
+		if inv_slot.id == item.item_id:
 			var new_amount = int(inv_slot.get_node("amount").text)
 			new_amount += 1
 			inv_slot.get_node("amount").text = str(new_amount)
-		elif inv_slot.get_node("sprite").texture == null and empty == null:
+		elif inv_slot.id == 0 and empty == null:
 			empty = inv_slot
 	if not(empty == null):
-		empty.get_node("sprite").texture = sprite
+		empty.get_node("sprite").texture = item.get_node("sprite").texture
 		empty.get_node("amount").text = "1"
 	return false

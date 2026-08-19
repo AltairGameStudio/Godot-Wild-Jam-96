@@ -16,7 +16,8 @@ var current_health: float
 
 @export_group("Combate")
 @export var min_charge_speed: float = 100.0
-@export var base_damage: float = 10.0
+#@export var base_damage: float = 10.0
+@export var base_damage: float = 1000.0
 @export var damage_velocity_scale: float = 0.01
 @export var bounce_ratio: float = 0.35
 
@@ -141,7 +142,7 @@ func _on_lance_hit(area: Area2D) -> void:
 	
 	var receiver = area as HitReceiver
 	# Enviamos o dano, a direção e a velocidade atual do impacto
-	var hit_data = receiver.process_hit(raw_damage, velocity.normalized(), current_speed)
+	var _hit_data = receiver.process_hit(raw_damage, velocity.normalized(), current_speed)
 	
 	# Empurra o jogador na direção oposta ao golpe
 	var bounce_dir = -forward_vec
@@ -155,6 +156,12 @@ func _on_hurtbox_entered(area: Area2D) -> void:
 	if area is EnemyHitbox or area.has_method("get_damage_payload"):
 		var payload: Dictionary = area.get_damage_payload(global_position)
 		take_damage(payload["damage"], payload["knockback"])
-	
+
+func pickup_item(item: Area2D) -> void:
+	var canvas = get_tree().get_first_node_in_group("canvas")
+	if canvas:
+		if canvas.add_item_inventory(item):
+			item.queue_free()
+
 func die() -> void:
 	queue_free()

@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://bajs8h6lhtgv5"]
 
+[ext_resource type="Texture2D" uid="uid://dk8sk4duf2gbf" path="res://assets/sprites/inventory2.png" id="1_cstqn"]
 [ext_resource type="Texture2D" uid="uid://bgwioypxnvb3q" path="res://assets/sprites/inventory.png" id="1_mc7eu"]
 [ext_resource type="PackedScene" uid="uid://dqlxaplui668g" path="res://scenes/ui/slot.tscn" id="2_mc7eu"]
+[ext_resource type="Texture2D" uid="uid://diuh1l1mva3ug" path="res://assets/sprites/inventory3.png" id="4_okgyk"]
 
-[node name="Inventario" type="TextureRect" unique_id=1032948322]
+[node name="inventory" type="GridContainer" unique_id=1194000883]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -12,130 +14,179 @@ anchor_bottom = 0.5
 offset_left = -289.0
 offset_top = -196.5
 offset_right = 289.0
-offset_bottom = 196.5
+offset_bottom = 593.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_mc7eu")
-stretch_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 3
 
-[node name="Container" type="GridContainer" parent="." unique_id=230137354]
+[node name="info" type="TextureRect" parent="." unique_id=294575380]
+layout_mode = 2
+texture = ExtResource("1_cstqn")
+
+[node name="life" type="Label" parent="info" unique_id=1318083703]
+layout_mode = 0
+offset_right = 1.0
+offset_bottom = 23.0
+
+[node name="defense" type="Label" parent="info" unique_id=1418539347]
+layout_mode = 0
+offset_top = 27.0
+offset_right = 1.0
+offset_bottom = 50.0
+
+[node name="attack" type="Label" parent="info" unique_id=1171320578]
+layout_mode = 0
+offset_top = 54.0
+offset_right = 1.0
+offset_bottom = 77.0
+
+[node name="max_velocity" type="Label" parent="info" unique_id=1957310165]
+layout_mode = 0
+offset_top = 81.0
+offset_right = 1.0
+offset_bottom = 104.0
+
+[node name="sprint" type="Label" parent="info" unique_id=285274494]
+layout_mode = 0
+offset_top = 108.0
+offset_right = 1.0
+offset_bottom = 131.0
+
+[node name="invent" type="TextureRect" parent="." unique_id=1998166446]
+layout_mode = 2
+texture = ExtResource("1_mc7eu")
+
+[node name="Container" type="GridContainer" parent="invent" unique_id=230137354]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -244.0
-offset_top = -152.5
-offset_right = 246.0
-offset_bottom = 173.5
+offset_left = -245.0
+offset_top = -163.0
+offset_right = 245.0
+offset_bottom = 163.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 11
 theme_override_constants/v_separation = 6
 columns = 7
 
-[node name="slot" parent="Container" unique_id=1277440558 instance=ExtResource("2_mc7eu")]
+[node name="slot" parent="invent/Container" unique_id=1277440558 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot2" parent="Container" unique_id=1848005386 instance=ExtResource("2_mc7eu")]
+[node name="slot2" parent="invent/Container" unique_id=1848005386 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot3" parent="Container" unique_id=1289173942 instance=ExtResource("2_mc7eu")]
+[node name="slot3" parent="invent/Container" unique_id=1289173942 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot4" parent="Container" unique_id=1058858206 instance=ExtResource("2_mc7eu")]
+[node name="slot4" parent="invent/Container" unique_id=1058858206 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot5" parent="Container" unique_id=149822349 instance=ExtResource("2_mc7eu")]
+[node name="slot5" parent="invent/Container" unique_id=149822349 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot6" parent="Container" unique_id=1361243775 instance=ExtResource("2_mc7eu")]
+[node name="slot6" parent="invent/Container" unique_id=1361243775 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot7" parent="Container" unique_id=297955102 instance=ExtResource("2_mc7eu")]
+[node name="slot7" parent="invent/Container" unique_id=297955102 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot8" parent="Container" unique_id=1400725600 instance=ExtResource("2_mc7eu")]
+[node name="slot8" parent="invent/Container" unique_id=1400725600 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot9" parent="Container" unique_id=19817992 instance=ExtResource("2_mc7eu")]
+[node name="slot9" parent="invent/Container" unique_id=19817992 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot10" parent="Container" unique_id=2004478911 instance=ExtResource("2_mc7eu")]
+[node name="slot10" parent="invent/Container" unique_id=2004478911 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot11" parent="Container" unique_id=924007869 instance=ExtResource("2_mc7eu")]
+[node name="slot11" parent="invent/Container" unique_id=924007869 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot12" parent="Container" unique_id=1096947399 instance=ExtResource("2_mc7eu")]
+[node name="slot12" parent="invent/Container" unique_id=1096947399 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot13" parent="Container" unique_id=1875078525 instance=ExtResource("2_mc7eu")]
+[node name="slot13" parent="invent/Container" unique_id=1875078525 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot14" parent="Container" unique_id=2092619606 instance=ExtResource("2_mc7eu")]
+[node name="slot14" parent="invent/Container" unique_id=2092619606 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot15" parent="Container" unique_id=327158307 instance=ExtResource("2_mc7eu")]
+[node name="slot15" parent="invent/Container" unique_id=327158307 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot16" parent="Container" unique_id=1878326756 instance=ExtResource("2_mc7eu")]
+[node name="slot16" parent="invent/Container" unique_id=1878326756 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot17" parent="Container" unique_id=1445139040 instance=ExtResource("2_mc7eu")]
+[node name="slot17" parent="invent/Container" unique_id=1445139040 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot18" parent="Container" unique_id=1517503007 instance=ExtResource("2_mc7eu")]
+[node name="slot18" parent="invent/Container" unique_id=1517503007 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot19" parent="Container" unique_id=1747847870 instance=ExtResource("2_mc7eu")]
+[node name="slot19" parent="invent/Container" unique_id=1747847870 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot20" parent="Container" unique_id=513837610 instance=ExtResource("2_mc7eu")]
+[node name="slot20" parent="invent/Container" unique_id=513837610 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot21" parent="Container" unique_id=2058761649 instance=ExtResource("2_mc7eu")]
+[node name="slot21" parent="invent/Container" unique_id=2058761649 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot22" parent="Container" unique_id=2024226243 instance=ExtResource("2_mc7eu")]
+[node name="slot22" parent="invent/Container" unique_id=2024226243 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot23" parent="Container" unique_id=177597995 instance=ExtResource("2_mc7eu")]
+[node name="slot23" parent="invent/Container" unique_id=177597995 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot24" parent="Container" unique_id=1223107636 instance=ExtResource("2_mc7eu")]
+[node name="slot24" parent="invent/Container" unique_id=1223107636 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot25" parent="Container" unique_id=662009610 instance=ExtResource("2_mc7eu")]
+[node name="slot25" parent="invent/Container" unique_id=662009610 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot26" parent="Container" unique_id=2100401209 instance=ExtResource("2_mc7eu")]
+[node name="slot26" parent="invent/Container" unique_id=2100401209 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot27" parent="Container" unique_id=1931935859 instance=ExtResource("2_mc7eu")]
+[node name="slot27" parent="invent/Container" unique_id=1931935859 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot28" parent="Container" unique_id=175456138 instance=ExtResource("2_mc7eu")]
+[node name="slot28" parent="invent/Container" unique_id=175456138 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot29" parent="Container" unique_id=812691032 instance=ExtResource("2_mc7eu")]
+[node name="slot29" parent="invent/Container" unique_id=812691032 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot30" parent="Container" unique_id=1860372336 instance=ExtResource("2_mc7eu")]
+[node name="slot30" parent="invent/Container" unique_id=1860372336 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot31" parent="Container" unique_id=448983083 instance=ExtResource("2_mc7eu")]
+[node name="slot31" parent="invent/Container" unique_id=448983083 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot32" parent="Container" unique_id=1222608584 instance=ExtResource("2_mc7eu")]
+[node name="slot32" parent="invent/Container" unique_id=1222608584 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot33" parent="Container" unique_id=79864934 instance=ExtResource("2_mc7eu")]
+[node name="slot33" parent="invent/Container" unique_id=79864934 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot34" parent="Container" unique_id=1343694219 instance=ExtResource("2_mc7eu")]
+[node name="slot34" parent="invent/Container" unique_id=1343694219 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot35" parent="Container" unique_id=1742724028 instance=ExtResource("2_mc7eu")]
+[node name="slot35" parent="invent/Container" unique_id=1742724028 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
+
+[node name="equip" type="TextureRect" parent="." unique_id=1498246025]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+texture = ExtResource("4_okgyk")
+
+[node name="GridContainer" type="GridContainer" parent="equip" unique_id=2107930544]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
