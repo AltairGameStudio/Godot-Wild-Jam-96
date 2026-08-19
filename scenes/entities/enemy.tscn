@@ -19,11 +19,8 @@ radius = 6.0
 height = 28.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5uy6h"]
-radius = 3.0
-height = 20.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
-radius = 23.0
+radius = 4.0
+height = 22.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_md0e3"]
 bg_color = Color(0, 0, 0, 1)
@@ -33,6 +30,10 @@ bg_color = Color(0.6012307, 0, 0.12017762, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_defa4"]
 radius = 42.047592
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_defa4"]
+radius = 3.0
+height = 20.0
 
 [node name="Enemy" type="CharacterBody2D" unique_id=302185580]
 collision_layer = 4
@@ -47,11 +48,13 @@ scale = Vector2(0.32812503, 0.2734375)
 texture = ExtResource("2_l7eqa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1347283466]
+visible = false
 shape = SubResource("CircleShape2D_xwavj")
 
 [node name="HitReceivers" type="Node2D" parent="." unique_id=1858289]
 
 [node name="BodyHurt" type="Area2D" parent="HitReceivers" unique_id=1864913758]
+visible = false
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("3_rw5oa")
@@ -62,6 +65,7 @@ position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_4ra3w")
 
 [node name="WeakHurt" type="Area2D" parent="HitReceivers" unique_id=1017981133]
+visible = false
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("3_rw5oa")
@@ -74,6 +78,7 @@ position = Vector2(0.5, -10.5)
 shape = SubResource("RectangleShape2D_5uy6h")
 
 [node name="Shield" type="Area2D" parent="HitReceivers" unique_id=67214597]
+visible = false
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("3_rw5oa")
@@ -96,8 +101,7 @@ shape = SubResource("CapsuleShape2D_c4w8v")
 collision_layer = 64
 collision_mask = 32
 script = ExtResource("4_ubhci")
-damage = 40.0
-knockback_force = 100.0
+damage = 10.0
 
 [node name="Sprite2D" type="Sprite2D" parent="HitReceivers/HitboxWeapon" unique_id=2012559256]
 position = Vector2(14, 25)
@@ -107,15 +111,6 @@ texture = ExtResource("2_l7eqa")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitReceivers/HitboxWeapon" unique_id=1078216928]
 position = Vector2(14, 25)
 shape = SubResource("CapsuleShape2D_5uy6h")
-
-[node name="HitboxDamageContact" type="Area2D" parent="HitReceivers" unique_id=1712262640]
-collision_layer = 64
-collision_mask = 32
-script = ExtResource("4_ubhci")
-knockback_force = 100.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitReceivers/HitboxDamageContact" unique_id=85258552]
-shape = SubResource("CircleShape2D_md0e3")
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1539955842]
 offset_left = -25.0
@@ -127,8 +122,13 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_4ra3w")
 show_percentage = false
 
 [node name="SeparationArea" type="Area2D" parent="." unique_id=22887674]
+visible = false
 collision_layer = 128
 collision_mask = 128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SeparationArea" unique_id=1974394452]
 shape = SubResource("CircleShape2D_defa4")
+
+[node name="SwordPhysicalCollision" type="CollisionShape2D" parent="." unique_id=1166956418]
+position = Vector2(14, 25)
+shape = SubResource("CapsuleShape2D_defa4")

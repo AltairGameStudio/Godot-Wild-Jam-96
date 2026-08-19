@@ -80,6 +80,8 @@ func _trigger_invulnerability() -> void:
 	await get_tree().create_timer(invulnerability_duration).timeout
 	is_invulnerable = false
 	modulate.a = 1.0
+	
+	_check_overlapping_hitboxes()
 
 func _physics_process(delta: float) -> void:
 	_handle_movement(delta)
@@ -156,6 +158,16 @@ func _on_hurtbox_entered(area: Area2D) -> void:
 	if area is EnemyHitbox or area.has_method("get_damage_payload"):
 		var payload: Dictionary = area.get_damage_payload(global_position)
 		take_damage(payload["damage"], payload["knockback"])
+
+func _check_overlapping_hitboxes() -> void:
+	if is_invulnerable or not hurtbox_area:
+		return
+		
+	for area in hurtbox_area.get_overlapping_areas():
+		if area is EnemyHitbox or area.has_method("get_damage_payload"):
+			var payload: Dictionary = area.get_damage_payload(global_position)
+			take_damage(payload["damage"], payload["knockback"])
+			break
 
 func pickup_item(item: Area2D) -> void:
 	var canvas = get_tree().get_first_node_in_group("canvas")

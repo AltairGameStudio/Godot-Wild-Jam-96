@@ -50,7 +50,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_handle_ai_chase(delta)
 	move_and_slide()
-	_check_body_collisions()
+	# _check_body_collisions()
 	_update_healthbar_position()
 	
 func _get_separation_vector() -> Vector2:
