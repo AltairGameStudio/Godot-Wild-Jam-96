@@ -3,11 +3,12 @@
 importer="aseprite_wizard.plugin.static-texture"
 type="PortableCompressedTexture2D"
 uid="uid://dkoh6ojqm6t77"
-valid=false
+path="res://.godot/imported/house_blacksmith.aseprite-bae3dd447d494652729db12da7e389cb.res"
 
 [deps]
 
 source_file="res://assets/sprites/houses/house_blacksmith.aseprite"
+dest_files=["res://.godot/imported/house_blacksmith.aseprite-bae3dd447d494652729db12da7e389cb.res"]
 
 [params]
 
