@@ -1,4 +1,4 @@
-class_name Enemy
+class_name SwordEnemy
 extends CharacterBody2D
 
 signal enemy_died

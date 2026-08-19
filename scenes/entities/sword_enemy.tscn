@@ -1,9 +1,9 @@
-[gd_scene format=3 uid="uid://cgjxoex1bxyv0"]
+[gd_scene format=3 uid="uid://c875x0cyyg4kk"]
 
-[ext_resource type="Script" uid="uid://bsfov1g6uy6el" path="res://scripts/entities/enemy.gd" id="1_puwww"]
-[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="2_l7eqa"]
-[ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/entities/player_hit.gd" id="3_rw5oa"]
-[ext_resource type="Script" uid="uid://bhkb3rqglk3fp" path="res://scripts/entities/enemy_hitbox.gd" id="4_ubhci"]
+[ext_resource type="Script" uid="uid://bsfov1g6uy6el" path="res://scripts/entities/enemy.gd" id="1_5vdvj"]
+[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="2_ath7f"]
+[ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/entities/player_hit.gd" id="3_mbux2"]
+[ext_resource type="Script" uid="uid://bhkb3rqglk3fp" path="res://scripts/entities/enemy_hitbox.gd" id="4_yxpm6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xwavj"]
 radius = 19.0
@@ -13,10 +13,6 @@ size = Vector2(43, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5uy6h"]
 size = Vector2(43, 19)
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c4w8v"]
-radius = 6.0
-height = 28.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5uy6h"]
 radius = 4.0
@@ -35,29 +31,27 @@ radius = 42.047592
 radius = 3.0
 height = 20.0
 
-[node name="Enemy" type="CharacterBody2D" unique_id=302185580]
+[node name="SwordEnemy" type="CharacterBody2D" unique_id=302185580]
 collision_layer = 4
 collision_mask = 7
-script = ExtResource("1_puwww")
+script = ExtResource("1_5vdvj")
 knockback_multiplier = 0.7
 separation_strength = 30.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2044408994]
 position = Vector2(8.34465e-07, -1)
 scale = Vector2(0.32812503, 0.2734375)
-texture = ExtResource("2_l7eqa")
+texture = ExtResource("2_ath7f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1347283466]
-visible = false
 shape = SubResource("CircleShape2D_xwavj")
 
 [node name="HitReceivers" type="Node2D" parent="." unique_id=1858289]
 
 [node name="BodyHurt" type="Area2D" parent="HitReceivers" unique_id=1864913758]
-visible = false
 collision_layer = 16
 collision_mask = 0
-script = ExtResource("3_rw5oa")
+script = ExtResource("3_mbux2")
 momentum_penalty = 0.2
 
 [node name="HurtBoxArea" type="CollisionShape2D" parent="HitReceivers/BodyHurt" unique_id=722574545]
@@ -65,10 +59,9 @@ position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_4ra3w")
 
 [node name="WeakHurt" type="Area2D" parent="HitReceivers" unique_id=1017981133]
-visible = false
 collision_layer = 16
 collision_mask = 0
-script = ExtResource("3_rw5oa")
+script = ExtResource("3_mbux2")
 hit_type = 1
 damage_multiplier = 2.0
 momentum_penalty = 0.1
@@ -77,36 +70,16 @@ momentum_penalty = 0.1
 position = Vector2(0.5, -10.5)
 shape = SubResource("RectangleShape2D_5uy6h")
 
-[node name="Shield" type="Area2D" parent="HitReceivers" unique_id=67214597]
-visible = false
-collision_layer = 16
-collision_mask = 0
-script = ExtResource("3_rw5oa")
-hit_type = 2
-damage_multiplier = 0.0
-momentum_penalty = 0.8
-
-[node name="Sprite2D" type="Sprite2D" parent="HitReceivers/Shield" unique_id=1902336287]
-position = Vector2(-14, 17.000002)
-rotation = 0.43633232
-scale = Vector2(0.21501164, 0.066406265)
-texture = ExtResource("2_l7eqa")
-
-[node name="ShieldArea" type="CollisionShape2D" parent="HitReceivers/Shield" unique_id=79591579]
-position = Vector2(-15, 16)
-rotation = 1.9634954
-shape = SubResource("CapsuleShape2D_c4w8v")
-
 [node name="HitboxWeapon" type="Area2D" parent="HitReceivers" unique_id=1831932505]
 collision_layer = 64
 collision_mask = 32
-script = ExtResource("4_ubhci")
+script = ExtResource("4_yxpm6")
 damage = 10.0
 
 [node name="Sprite2D" type="Sprite2D" parent="HitReceivers/HitboxWeapon" unique_id=2012559256]
 position = Vector2(14, 25)
 scale = Vector2(0.054687504, 0.15624999)
-texture = ExtResource("2_l7eqa")
+texture = ExtResource("2_ath7f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitReceivers/HitboxWeapon" unique_id=1078216928]
 position = Vector2(14, 25)
@@ -122,7 +95,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_4ra3w")
 show_percentage = false
 
 [node name="SeparationArea" type="Area2D" parent="." unique_id=22887674]
-visible = false
 collision_layer = 128
 collision_mask = 128
 
