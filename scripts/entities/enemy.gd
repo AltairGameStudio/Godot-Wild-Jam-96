@@ -10,6 +10,15 @@ signal enemy_died
 @export var contact_damage: float = 15.0
 @export var knockback_multiplier: float = 1.2
 
+@export_group("Comportamento Orgânico")
+@export var wobble_frequency: float = 3.0    # Velocidade da oscilação
+@export var wobble_amplitude: float = 0.5    # Intensidade do desvio lateral (0.0 a 1.0)
+
+@export var separation_strength: float = 60.0 # Força com que os inimigos se repelem
+@onready var separation_area: Area2D = $SeparationArea
+
+var time_offset: float = 0.0
+
 var current_health: float
 var player_ref: Node2D = null
 
@@ -33,12 +42,33 @@ func _ready() -> void:
 		for child in hit_receivers_node.get_children():
 			if child is HitReceiver:
 				child.hit_received.connect(_on_hit_received)
+				
+	time_offset = randf_range(0.0, 100.0)
+	move_speed *= randf_range(0.9, 1.1)
 
 func _physics_process(delta: float) -> void:
 	_handle_ai_chase(delta)
 	move_and_slide()
 	_check_body_collisions()
 	_update_healthbar_position()
+	
+func _get_separation_vector() -> Vector2:
+	if not separation_area:
+		return Vector2.ZERO
+		
+	var push_vector = Vector2.ZERO
+	var overlapping_areas = separation_area.get_overlapping_areas()
+	
+	for area in overlapping_areas:
+		# Ignora a própria área
+		if area != separation_area:
+			var diff = global_position - area.global_position
+			var distance = diff.length()
+			if distance > 0.0:
+				# Quanto mais perto estiverem, mais forte é o empurrão
+				push_vector += diff.normalized() / maxf(distance, 1.0)
+				
+	return push_vector.normalized()
 
 func _handle_ai_chase(delta: float) -> void:
 	if not is_instance_valid(player_ref):
@@ -47,14 +77,34 @@ func _handle_ai_chase(delta: float) -> void:
 
 	var to_player = player_ref.global_position - global_position
 	var distance = to_player.length()
-	
-	# Rotaciona para o jogador alinhando a frente desenhada (DOWN)
+
+	# Direção frontal e direção lateral
+	var forward_dir = to_player.normalized()
+	var lateral_dir = Vector2(-forward_dir.y, forward_dir.x)
+
+	# Calcula desvio senoidal
+	var current_time = (Time.get_ticks_msec() / 1000.0) + time_offset
+	var lateral_wobble = sin(current_time * wobble_frequency) * wobble_amplitude
+
+	# Quando estiver muito perto do player, reduz o zigue-zague para focar no ataque
+	if distance < 60.0:
+		lateral_wobble *= (distance / 60.0)
+
+	var final_move_dir = (forward_dir + lateral_dir * lateral_wobble).normalized()
+
+	# Rotação alinhada à direção do movimento
 	var target_angle = to_player.angle() - (PI / 2.0)
 	rotation = rotate_toward(rotation, target_angle, turn_speed * delta)
-	
+
+	# Aplica a velocidade
 	if distance > 20.0:
-		var forward_dir = Vector2.DOWN.rotated(rotation)
-		var desired_velocity = forward_dir * move_speed
+		# Direção desejada para ir até o player
+		var desired_velocity = final_move_dir * move_speed
+		
+		# Adiciona a repulsão para desviar de outros inimigos
+		var separation = _get_separation_vector() * separation_strength
+		desired_velocity += separation
+		
 		velocity = velocity.move_toward(desired_velocity, 500.0 * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, 600.0 * delta)

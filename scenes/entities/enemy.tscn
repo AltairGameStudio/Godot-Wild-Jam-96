@@ -31,11 +31,15 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ra3w"]
 bg_color = Color(0.6012307, 0, 0.12017762, 1)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_defa4"]
+radius = 42.047592
+
 [node name="Enemy" type="CharacterBody2D" unique_id=302185580]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_puwww")
 knockback_multiplier = 0.7
+separation_strength = 30.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2044408994]
 position = Vector2(8.34465e-07, -1)
@@ -121,3 +125,10 @@ offset_bottom = -23.0
 theme_override_styles/background = SubResource("StyleBoxFlat_md0e3")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4ra3w")
 show_percentage = false
+
+[node name="SeparationArea" type="Area2D" parent="." unique_id=22887674]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SeparationArea" unique_id=1974394452]
+shape = SubResource("CircleShape2D_defa4")

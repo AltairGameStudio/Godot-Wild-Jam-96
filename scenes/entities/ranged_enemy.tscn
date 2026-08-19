@@ -24,6 +24,9 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ra3w"]
 bg_color = Color(0.6012307, 0, 0.12017762, 1)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_l7eqa"]
+radius = 42.047592
+
 [node name="RangedEnemy" type="CharacterBody2D" unique_id=302185580]
 collision_layer = 4
 collision_mask = 7
@@ -98,7 +101,15 @@ show_percentage = false
 
 [node name="ShootTimer" type="Timer" parent="." unique_id=345535461]
 wait_time = 1.5
+one_shot = true
 autostart = true
 
 [node name="ShootPoint" type="Marker2D" parent="." unique_id=1926591893]
 position = Vector2(14, 35)
+
+[node name="SeparationArea" type="Area2D" parent="." unique_id=128340454]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SeparationArea" unique_id=229108934]
+shape = SubResource("CircleShape2D_l7eqa")

@@ -68,6 +68,10 @@ interact={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_8="SoftCollisions"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

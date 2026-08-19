@@ -12,6 +12,18 @@ signal enemy_died
 
 @export_group("Combate")
 @export var bullet_scene: PackedScene # Arraste a cena do seu EnemyBullet aqui!
+@export var min_shoot_interval: float = 1.2 # Tempo mínimo de espera entre tiros
+@export var max_shoot_interval: float = 2.6 # Tempo máximo de espera entre tiros
+
+@export_group("Distâncias de Combate")
+@export var retreat_distance: float = 170.0 # Se o player chegar mais perto que isso, ele recua
+@export var strafe_speed_ratio: float = 0.75 # Velocidade enquanto circula
+
+@export var separation_strength: float = 60.0 # Força com que os inimigos se repelem
+@onready var separation_area: Area2D = $SeparationArea
+
+var strafe_direction: float = 1.0
+var strafe_change_timer: float = 0.0
 
 var current_health: float
 var player_ref: Node2D = null
@@ -35,16 +47,39 @@ func _ready() -> void:
 		health_bar.top_level = true
 		
 	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
+	# Inicia o primeiro tiro com tempo aleatório
+	shoot_timer.start(randf_range(min_shoot_interval, max_shoot_interval))
 	
 	if hit_receivers_node:
 		for child in hit_receivers_node.get_children():
 			if child is HitReceiver:
 				child.hit_received.connect(_on_hit_received)
+				
+	strafe_direction = 1.0 if randf() > 0.5 else -1.0
+	strafe_change_timer = randf_range(1.5, 3.5)
 
 func _physics_process(delta: float) -> void:
 	_handle_ai_combat(delta)
 	move_and_slide()
 	_update_healthbar_position()
+	
+func _get_separation_vector() -> Vector2:
+	if not separation_area:
+		return Vector2.ZERO
+		
+	var push_vector = Vector2.ZERO
+	var overlapping_areas = separation_area.get_overlapping_areas()
+	
+	for area in overlapping_areas:
+		# Ignora a própria área
+		if area != separation_area:
+			var diff = global_position - area.global_position
+			var distance = diff.length()
+			if distance > 0.0:
+				# Quanto mais perto estiverem, mais forte é o empurrão
+				push_vector += diff.normalized() / maxf(distance, 1.0)
+				
+	return push_vector.normalized()
 
 func _handle_ai_combat(delta: float) -> void:
 	if not is_instance_valid(player_ref):
@@ -53,25 +88,51 @@ func _handle_ai_combat(delta: float) -> void:
 
 	var to_player = player_ref.global_position - global_position
 	var distance = to_player.length()
-	
-	# Rotaciona para mirar no jogador
+
+	# Mira sempre no jogador
 	var target_angle = to_player.angle() - (PI / 2.0)
 	rotation = rotate_toward(rotation, target_angle, turn_speed * delta)
-	
-	# Só anda se estiver mais longe que a stop_distance
+
+	# Atualiza timer de troca de direção do strafe
+	strafe_change_timer -= delta
+	if strafe_change_timer <= 0.0:
+		strafe_direction *= -1.0 # Inverte o sentido (horário / anti-horário)
+		strafe_change_timer = randf_range(2.0, 4.0)
+
+	var forward_dir = to_player.normalized()
+	var lateral_dir = Vector2(-forward_dir.y, forward_dir.x) * strafe_direction
+
+	var desired_velocity = Vector2.ZERO
+
 	if distance > stop_distance:
-		var forward_dir = Vector2.DOWN.rotated(rotation)
-		velocity = velocity.move_toward(forward_dir * move_speed, 500.0 * delta)
+		# Longe demais: avança em direção ao player, com leve desvio lateral
+		var move_dir = (forward_dir + lateral_dir * 0.3).normalized()
+		desired_velocity = move_dir * move_speed
+
+	elif distance < retreat_distance:
+		# Perto demais: recua e esquiva para o lado
+		var retreat_dir = (-forward_dir + lateral_dir * 0.5).normalized()
+		desired_velocity = retreat_dir * (move_speed * 1.1)
+
 	else:
-		# Se já está na distância de tiro, ele freia
-		velocity = velocity.move_toward(Vector2.ZERO, 600.0 * delta)
+		# Na distância ideal: circunda o jogador lateralmente
+		desired_velocity = lateral_dir * (move_speed * strafe_speed_ratio)
+
+	# Adiciona a repulsão para desviar e não colidir com outros inimigos
+	var separation = _get_separation_vector() * separation_strength
+	desired_velocity += separation
+
+	velocity = velocity.move_toward(desired_velocity, 450.0 * delta)
 
 # --- SISTEMA DE TIRO ---
 
 func _on_shoot_timer_timeout() -> void:
 	# Só atira se o player existir e estiver dentro de uma distância razoável
-	if is_instance_valid(player_ref) and (player_ref.global_position - global_position).length() < stop_distance + 100:
+	if is_instance_valid(player_ref) and (player_ref.global_position - global_position).length() < stop_distance + 500:
 		shoot()
+		
+	# Sorteia um novo intervalo aleatório para o próximo disparo
+	shoot_timer.start(randf_range(min_shoot_interval, max_shoot_interval))
 
 func shoot() -> void:
 	if bullet_scene == null:
