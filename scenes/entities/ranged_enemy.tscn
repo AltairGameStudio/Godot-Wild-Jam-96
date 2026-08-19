@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://c6h2mjkopn4lp"]
+[gd_scene format=3 uid="uid://cahw4m3240cu1"]
 
 [ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://d1lksa1km20va" path="res://scripts/entities/ranged_enemy.gd" id="1_puwww"]
@@ -28,6 +28,7 @@ bg_color = Color(0.6012307, 0, 0.12017762, 1)
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_puwww")
+knockback_multiplier = 0.8
 bullet_scene = ExtResource("2_l7eqa")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2044408994]

@@ -16,12 +16,14 @@ scale = Vector2(0.515625, 0.5)
 texture = ExtResource("1_iify0")
 
 [node name="NpcCollision" type="StaticBody2D" parent="." unique_id=208999964]
+collision_mask = 33
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NpcCollision" unique_id=44621603]
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_4kvco")
 
 [node name="InteractionArea" type="Area2D" parent="." unique_id=1133557033]
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1105984249]
 position = Vector2(60, 0)

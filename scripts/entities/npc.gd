@@ -21,18 +21,27 @@ signal interacted(npc_data: NPC)
 var player_in_range: bool = false
 
 func _ready() -> void:
+	# Garante que o NPC esteja no grupo para o TownUI conectar
+	add_to_group("npcs")
+
+	# Se for o portão de expedição, atualiza a mensagem com a fase atual
+	if npc_type == NPCType.EXPEDITION_GATE:
+		prompt_message = "[E] Ir para a Arena (Fase %d)" % (GameManager.current_phase + 1)
+
 	prompt_label.text = prompt_message
 	prompt_label.visible = false
-	
+
 	if visual and "modulate" in visual:
 		visual.modulate = accent_color
-	
+
 	interaction_area.body_entered.connect(_on_body_entered)
 	interaction_area.body_exited.connect(_on_body_exited)
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		player_in_range = true
+		if npc_type == NPCType.EXPEDITION_GATE:
+			prompt_label.text = "[E] Ir para a Arena (Fase %d)" % (GameManager.current_phase + 1)
 		prompt_label.visible = true
 
 func _on_body_exited(body: Node2D) -> void:
@@ -41,6 +50,10 @@ func _on_body_exited(body: Node2D) -> void:
 		prompt_label.visible = false
 
 func _unhandled_input(event: InputEvent) -> void:
-	if player_in_range and event.is_action_pressed("ui_accept"): # Tecla Espaço / Enter / E
-		interacted.emit(self)
-		get_viewport().set_input_as_handled()
+	# Aceita tanto a ação customizada 'interact' quanto 'ui_accept' ou a tecla E diretamente
+	if player_in_range:
+		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"):
+			if get_viewport():
+				get_viewport().set_input_as_handled()
+				
+			interacted.emit(self)

@@ -8,6 +8,7 @@ signal enemy_died
 @export var move_speed: float = 90.0
 @export var turn_speed: float = 4.0
 @export var stop_distance: float = 250.0
+@export var knockback_multiplier: float = 1.3
 
 @export_group("Combate")
 @export var bullet_scene: PackedScene # Arraste a cena do seu EnemyBullet aqui!
@@ -23,6 +24,8 @@ var player_ref: Node2D = null
 var is_dead: bool = false
 
 func _ready() -> void:
+	add_to_group("enemies")
+	
 	current_health = max_health
 	player_ref = get_tree().get_first_node_in_group("player") as Node2D
 	
@@ -99,15 +102,20 @@ func die() -> void:
 	enemy_died.emit()
 	queue_free()
 	
-func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.HitType) -> void:
+func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.HitType, impact_speed: float = 0.0) -> void:
 	match hit_type:
 		HitReceiver.HitType.SHIELD:
-			velocity += direction * 150.0
+			velocity += direction * (impact_speed * 0.4 + 100.0)
 		HitReceiver.HitType.WEAKSPOT, HitReceiver.HitType.NORMAL:
 			current_health = maxf(0.0, current_health - damage)
 			if health_bar:
 				health_bar.value = current_health
-			velocity += direction * (damage * 8.0)
-			
-			if current_health <= 0.0:
-				die()
+				
+				var knockback_force = impact_speed * knockback_multiplier
+				if hit_type == HitReceiver.HitType.WEAKSPOT:
+					knockback_force *= 1.3
+				
+				velocity += direction * knockback_force
+				
+				if current_health <= 0.0:
+					die()

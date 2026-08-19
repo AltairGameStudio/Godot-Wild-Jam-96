@@ -35,6 +35,7 @@ bg_color = Color(0.6012307, 0, 0.12017762, 1)
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_puwww")
+knockback_multiplier = 0.7
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2044408994]
 position = Vector2(8.34465e-07, -1)
@@ -69,7 +70,6 @@ position = Vector2(0.5, -10.5)
 shape = SubResource("RectangleShape2D_5uy6h")
 
 [node name="Shield" type="Area2D" parent="HitReceivers" unique_id=67214597]
-visible = false
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("3_rw5oa")
