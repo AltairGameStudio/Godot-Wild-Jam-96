@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://7d5t1q2dmnct"]
+
+[ext_resource type="Script" uid="uid://dbvl2oria12x0" path="res://scripts/entities/heavy_enemy.gd" id="1_l2kg0"]
+[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="2_vs2hb"]
+[ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/entities/player_hit.gd" id="3_xjqmp"]
+[ext_resource type="Script" uid="uid://bhkb3rqglk3fp" path="res://scripts/entities/enemy_hitbox.gd" id="4_eaxfg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xwavj"]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vs2hb"]
+radius = 32.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_md0e3"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ra3w"]
+bg_color = Color(0.6012307, 0, 0.12017762, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_defa4"]
+radius = 48.010414
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xjqmp"]
+radius = 33.0
+
+[node name="HeavyEnemy" type="CharacterBody2D" unique_id=302185580]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_l2kg0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2044408994]
+position = Vector2(4.7683716e-07, 0)
+scale = Vector2(0.44531253, 0.44140625)
+texture = ExtResource("2_vs2hb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1347283466]
+shape = SubResource("CircleShape2D_xwavj")
+
+[node name="HitReceivers" type="Node2D" parent="." unique_id=1858289]
+
+[node name="BodyHurt" type="Area2D" parent="HitReceivers" unique_id=1864913758]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("3_xjqmp")
+momentum_penalty = 0.2
+
+[node name="HurtBoxArea" type="CollisionShape2D" parent="HitReceivers/BodyHurt" unique_id=722574545]
+shape = SubResource("CircleShape2D_vs2hb")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1539955842]
+offset_left = -25.0
+offset_top = -37.0
+offset_right = 26.0
+offset_bottom = -30.0
+theme_override_styles/background = SubResource("StyleBoxFlat_md0e3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4ra3w")
+show_percentage = false
+
+[node name="SeparationArea" type="Area2D" parent="." unique_id=22887674]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SeparationArea" unique_id=1974394452]
+shape = SubResource("CircleShape2D_defa4")
+
+[node name="BodyHitbox" type="Area2D" parent="." unique_id=538165341]
+collision_layer = 64
+collision_mask = 32
+script = ExtResource("4_eaxfg")
+damage = 15.0
+knockback_force = 220.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BodyHitbox" unique_id=702208374]
+shape = SubResource("CircleShape2D_xjqmp")

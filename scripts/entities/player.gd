@@ -51,16 +51,16 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		var payload: Dictionary = area.get_damage_payload(global_position)
 		take_damage(payload["damage"], payload["knockback"])
 
-func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO) -> void:
+func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, ignore_charge: bool = false) -> void:
 	if is_invulnerable:
 		return
 		
 	# Se estiver em investida rápida frontal, a lança anula o dano de frente
-	var forward_vec = Vector2.UP.rotated(heading_angle)
-	var is_charging = velocity.length() >= min_charge_speed and velocity.normalized().dot(forward_vec) > 0.5
-	
-	if is_charging:
-		return
+	if not ignore_charge:
+		var forward_vec = Vector2.UP.rotated(heading_angle)
+		var is_charging = velocity.length() >= min_charge_speed and velocity.normalized().dot(forward_vec) > 0.5
+		if is_charging:
+			return
 		
 	current_health = maxf(0.0, current_health - amount)
 	velocity += knockback
