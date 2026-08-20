@@ -147,7 +147,7 @@ func create_item() -> void:
 	for i in range(1,6):
 		var new_drop = drop.instantiate()
 		new_drop.setup(i*100, self.global_position)
-		get_tree().current_scene.add_child(new_drop)
+		get_tree().current_scene.get_node("World/Arena").add_child(new_drop)
 
 func die() -> void:
 	# Se já morreu neste frame, não faz nada

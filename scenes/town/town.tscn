@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://cfjmtbs2yssrs" path="res://assets/sprites/houses/house_blacksmith-frame0.png" id="1_5vpkg"]
 [ext_resource type="Script" uid="uid://bfu2hcip83gi8" path="res://scripts/world/town_ui.gd" id="1_6g2qn"]
 [ext_resource type="PackedScene" uid="uid://bosxy7omdd3or" path="res://scenes/entities/npc.tscn" id="1_e21v4"]
-[ext_resource type="PackedScene" uid="uid://c1qemdrgxriw3" path="res://scenes/entities/player.tscn" id="1_n11nm"]
 [ext_resource type="Texture2D" uid="uid://df8qt5j2c3tet" path="res://assets/sprites/tilesets/grass-tile-tileset-frame0.png" id="1_svnup"]
 [ext_resource type="Texture2D" uid="uid://dauheebydw0eo" path="res://assets/sprites/houses/house_shop-frame0.png" id="2_jil70"]
 [ext_resource type="Texture2D" uid="uid://d1bxenhu7ropx" path="res://assets/sprites/tilesets/swamp-tileset-frame0.png" id="2_yr8sw"]
@@ -10059,8 +10058,8 @@ npc_type = 4
 prompt_message = "[E] Enter arena"
 accent_color = Color(0.39215687, 0.58431375, 0.19215687, 1)
 
-[node name="Player" parent="." unique_id=496631088 instance=ExtResource("1_n11nm")]
-position = Vector2(621, 143)
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1143949303]
+position = Vector2(559, 135)
 
 [node name="TownHUD" type="CanvasLayer" parent="." unique_id=616025795]
 visible = false

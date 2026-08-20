@@ -1,6 +1,5 @@
 [gd_scene format=4 uid="uid://cvjltj45k060t"]
 
-[ext_resource type="PackedScene" uid="uid://c1qemdrgxriw3" path="res://scenes/entities/player.tscn" id="1_aj7ud"]
 [ext_resource type="Script" uid="uid://bivo15gjxshha" path="res://scripts/arena/arena.gd" id="1_asdgj"]
 [ext_resource type="PackedScene" uid="uid://c875x0cyyg4kk" path="res://scenes/entities/sword_enemy.tscn" id="2_vmsrg"]
 [ext_resource type="Texture2D" uid="uid://df8qt5j2c3tet" path="res://assets/sprites/tilesets/grass-tile-tileset-frame0.png" id="3_2ml6w"]
@@ -11,7 +10,6 @@
 [ext_resource type="Script" uid="uid://chcdoqrsmlrq4" path="res://scripts/ui/enemy_indicators.gd" id="6_jx0ua"]
 [ext_resource type="Texture2D" uid="uid://c7xj42h2wd6jg" path="res://assets/sprites/tilesets/grass-walk-tileset-frame0.png" id="6_s83md"]
 [ext_resource type="Texture2D" uid="uid://by85axt801wa7" path="res://assets/sprites/tilesets/grasslol.png" id="7_fv88w"]
-[ext_resource type="PackedScene" uid="uid://bajs8h6lhtgv5" path="res://scenes/ui/inventario.tscn" id="12_vmsrg"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_w4nra"]
 tile_data = PackedInt32Array(0, 1, 0, 65536, 1, 1, 131072, 1, 2, 1, 65537, 0, 65537, 65537, 1, 131073, 65537, 2, 2, 131073, 0, 65538, 131073, 1, 131074, 131073, 2)
@@ -166,10 +164,10 @@ scale = Vector2(1, 18)
 shape = SubResource("RectangleShape2D_e05a3")
 debug_color = Color(1, 0, 0, 1)
 
-[node name="Player" parent="." unique_id=496631088 instance=ExtResource("1_aj7ud")]
-position = Vector2(963, 538)
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1696066322]
+position = Vector2(896, 512)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=434009101 groups=["canvas"]]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=434009101]
 script = ExtResource("4_u52cf")
 
 [node name="UI" type="Control" parent="CanvasLayer" unique_id=47074319]
@@ -196,9 +194,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("6_jx0ua")
-
-[node name="inventory" parent="CanvasLayer" unique_id=1194000883 instance=ExtResource("12_vmsrg")]
-visible = false
 
 [node name="SpawnPoints" type="Node2D" parent="." unique_id=674017212]
 

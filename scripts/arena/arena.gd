@@ -12,7 +12,8 @@ func _ready() -> void:
 	start_phase()
 
 func start_phase() -> void:
-	var phase: int = GameManager.current_phase 
+	#var phase: int = GameManager.current_phase 
+	var phase: int = get_tree().current_scene.current_phase 
 	
 	var total_enemies: int = 1 + (phase * 2) 
 	var ranged_amount: int = int(phase / 2.0) 
@@ -59,4 +60,5 @@ func _on_enemy_died() -> void:
 	enemies_alive -= 1
 	
 	if enemies_alive <= 0:
-		GameManager.end_run_success()
+		#GameManager.end_run_success()
+		get_tree().current_scene.end_run_success()

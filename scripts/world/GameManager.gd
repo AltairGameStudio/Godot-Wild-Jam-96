@@ -26,16 +26,33 @@ const TOWN_SCENE_PATH = "res://scenes/town/town.tscn"
 
 var current_phase: int = 0
 
+var current_scene: Node
+
+func _ready() -> void:
+	change_world(TOWN_SCENE_PATH)
+	
 func _process(delta: float) -> void:
 	if is_in_run:
 		run_timer += delta
+
+func change_world(scene_path: String) -> void:
+	if current_scene:
+		current_scene.queue_free()
+	
+	current_scene = load(scene_path).instantiate()
+	$World.add_child(current_scene)
+	
+	var spawn = current_scene.get_node("PlayerSpawn")
+	$Player.global_position = spawn.global_position
+	$Player.velocity = Vector2(0,0)
 
 # Inicia a expedição limpando os dados da run anterior
 func start_run() -> void:
 	current_run_loot.clear()
 	run_timer = 0.0
 	is_in_run = true
-	get_tree().change_scene_to_file(ARENA_SCENE_PATH)
+	#get_tree().change_scene_to_file(ARENA_SCENE_PATH)
+	change_world(ARENA_SCENE_PATH)
 
 # Retorno com sucesso (ex: passou pelo portal de extração)
 func end_run_success() -> void:
@@ -53,7 +70,8 @@ func end_run_success() -> void:
 	
 	# Avança para a próxima fase
 	current_phase += 1
-	get_tree().change_scene_to_file.call_deferred(TOWN_SCENE_PATH)
+	#get_tree().change_scene_to_file.call_deferred(TOWN_SCENE_PATH)
+	change_world(TOWN_SCENE_PATH)
 
 # Retorno por morte (perde os itens da run atual)
 func end_run_failure() -> void:

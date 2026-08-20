@@ -45,6 +45,10 @@ func _ready() -> void:
 	
 	if hurtbox_area:
 		hurtbox_area.area_entered.connect(_on_hurtbox_area_entered)
+	update_info()
+
+func update_info() -> void:
+	$inventoryHUD/inventory/info.update_labels([max_health, current_health, base_damage, max_speed, speed_multiplier])
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if is_invulnerable:
@@ -179,7 +183,7 @@ func _check_overlapping_hitboxes() -> void:
 			break
 
 func pickup_item(item: Area2D) -> void:
-	var canvas = get_tree().get_first_node_in_group("canvas")
+	var canvas = get_tree().get_first_node_in_group("inventCanvas")
 	if canvas:
 		if canvas.add_item_inventory(item):
 			item.queue_free()

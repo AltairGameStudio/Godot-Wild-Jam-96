@@ -32,7 +32,8 @@ func _handle_npc_interaction(npc: NPC) -> void:
 		NPC.NPCType.UPGRADE:
 			upgrade_window.visible = true
 		NPC.NPCType.EXPEDITION_GATE:
-			GameManager.start_run()
+			#GameManager.start_run()
+			get_tree().current_scene.start_run()
 
 func _start_dialogue(speaker: String, text_pages: Array[String]) -> void:
 	dialogue_name.text = speaker

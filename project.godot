@@ -11,13 +11,9 @@ config_version=5
 [application]
 
 config/name="WGJ#96"
-run/main_scene="uid://btow5yatkocyy"
+run/main_scene="uid://bs4rjnmx5salv"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
-
-[autoload]
-
-GameManager="*uid://da3sah3gxl23w"
 
 [display]
 
@@ -27,6 +23,10 @@ window/size/viewport_height=1080
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")
+
+[global_group]
+
+inventCanvas=""
 
 [input]
 

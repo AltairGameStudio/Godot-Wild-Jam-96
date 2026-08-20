@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cme17ohbaulgi"
-path="res://.godot/imported/saddle.png-196311c2dcc4699202628f716bb5c644.ctex"
+uid="uid://fgb7rkfcrixb"
+path="res://.godot/imported/player_icon.png-0f63cbede06e46a89dfedd226b0768b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/items/saddle.png"
-dest_files=["res://.godot/imported/saddle.png-196311c2dcc4699202628f716bb5c644.ctex"]
+source_file="res://assets/sprites/player_icon.png"
+dest_files=["res://.godot/imported/player_icon.png-0f63cbede06e46a89dfedd226b0768b1.ctex"]
 
 [params]
 

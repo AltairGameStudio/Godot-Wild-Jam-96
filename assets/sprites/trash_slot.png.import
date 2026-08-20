@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cme17ohbaulgi"
-path="res://.godot/imported/saddle.png-196311c2dcc4699202628f716bb5c644.ctex"
+uid="uid://1h6lcm5hietc"
+path="res://.godot/imported/trash_slot.png-39674d7499afae78942cf742b68f12ac.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/items/saddle.png"
-dest_files=["res://.godot/imported/saddle.png-196311c2dcc4699202628f716bb5c644.ctex"]
+source_file="res://assets/sprites/trash_slot.png"
+dest_files=["res://.godot/imported/trash_slot.png-39674d7499afae78942cf742b68f12ac.ctex"]
 
 [params]
 

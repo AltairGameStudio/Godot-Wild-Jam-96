@@ -3,7 +3,24 @@
 [ext_resource type="Texture2D" uid="uid://dk8sk4duf2gbf" path="res://assets/sprites/inventory2.png" id="1_cstqn"]
 [ext_resource type="Texture2D" uid="uid://bgwioypxnvb3q" path="res://assets/sprites/inventory.png" id="1_mc7eu"]
 [ext_resource type="PackedScene" uid="uid://dqlxaplui668g" path="res://scenes/ui/slot.tscn" id="2_mc7eu"]
+[ext_resource type="Script" uid="uid://cnn82g8ndvk0q" path="res://scripts/ui/info.gd" id="2_okgyk"]
 [ext_resource type="Texture2D" uid="uid://diuh1l1mva3ug" path="res://assets/sprites/inventory3.png" id="4_okgyk"]
+[ext_resource type="Script" uid="uid://dsbm50f64cvdj" path="res://scenes/ui/trash.gd" id="5_v0ugu"]
+[ext_resource type="Texture2D" uid="uid://1h6lcm5hietc" path="res://assets/sprites/trash_slot.png" id="6_uinjd"]
+[ext_resource type="Texture2D" uid="uid://fgb7rkfcrixb" path="res://assets/sprites/player_icon.png" id="7_uinjd"]
+[ext_resource type="Texture2D" uid="uid://crfskga3n610k" path="res://assets/sprites/horse_icon.png" id="8_j8a6o"]
+[ext_resource type="Script" uid="uid://dxt0r0638y556" path="res://scripts/ui/lance.gd" id="10_pylkd"]
+[ext_resource type="Texture2D" uid="uid://blx0rtq0kmmae" path="res://assets/sprites/items/lance_slot.png" id="10_sttpb"]
+[ext_resource type="Script" uid="uid://nek0jom2l6ed" path="res://scripts/ui/rein.gd" id="12_at5t2"]
+[ext_resource type="Texture2D" uid="uid://ld2rmw816401" path="res://assets/sprites/items/rein_slot.png" id="13_h47kl"]
+[ext_resource type="Script" uid="uid://cwatrfcu18442" path="res://scripts/ui/armor.gd" id="14_7stia"]
+[ext_resource type="Texture2D" uid="uid://dp0rxm0g7lgmk" path="res://assets/sprites/items/armor_slot.png" id="15_sgy5u"]
+[ext_resource type="Script" uid="uid://cr1gq44n5d3pb" path="res://scripts/ui/horseshoe.gd" id="16_o32sh"]
+[ext_resource type="Texture2D" uid="uid://b60qviams6jpb" path="res://assets/sprites/items/horseshoe_slot.png" id="17_bci2j"]
+[ext_resource type="Script" uid="uid://bv25hl23k54q0" path="res://scripts/ui/cape.gd" id="18_3chmt"]
+[ext_resource type="Texture2D" uid="uid://c4rdwys3ev8ie" path="res://assets/sprites/items/cape_slot.png" id="19_xw6bx"]
+[ext_resource type="Script" uid="uid://bkgcrhs7chdjw" path="res://scripts/ui/saddle.gd" id="20_f63ls"]
+[ext_resource type="Texture2D" uid="uid://gri21oyhd1ly" path="res://assets/sprites/items/saddle_slot.png" id="21_3iwlh"]
 
 [node name="inventory" type="GridContainer" unique_id=1194000883]
 anchors_preset = 8
@@ -24,35 +41,47 @@ columns = 3
 [node name="info" type="TextureRect" parent="." unique_id=294575380]
 layout_mode = 2
 texture = ExtResource("1_cstqn")
+script = ExtResource("2_okgyk")
 
-[node name="life" type="Label" parent="info" unique_id=1318083703]
-layout_mode = 0
-offset_right = 1.0
-offset_bottom = 23.0
+[node name="max_life" type="Label" parent="info" unique_id=1318083703]
+layout_mode = 1
+offset_left = 61.0
+offset_top = 93.5
+offset_right = 146.0
+offset_bottom = 116.5
+text = "Vida máx. :"
 
-[node name="defense" type="Label" parent="info" unique_id=1418539347]
-layout_mode = 0
-offset_top = 27.0
-offset_right = 1.0
-offset_bottom = 50.0
+[node name="act_life" type="Label" parent="info" unique_id=1418539347]
+layout_mode = 1
+offset_left = 61.0
+offset_top = 144.5
+offset_right = 152.0
+offset_bottom = 167.5
+text = "Vida atual : "
 
 [node name="attack" type="Label" parent="info" unique_id=1171320578]
-layout_mode = 0
-offset_top = 54.0
-offset_right = 1.0
-offset_bottom = 77.0
+layout_mode = 1
+offset_left = 61.0
+offset_top = 192.5
+offset_right = 156.0
+offset_bottom = 215.5
+text = "Dano base : "
 
 [node name="max_velocity" type="Label" parent="info" unique_id=1957310165]
-layout_mode = 0
-offset_top = 81.0
-offset_right = 1.0
-offset_bottom = 104.0
+layout_mode = 1
+offset_left = 61.0
+offset_top = 239.5
+offset_right = 225.0
+offset_bottom = 262.5
+text = "Vel. máx. : "
 
-[node name="sprint" type="Label" parent="info" unique_id=285274494]
-layout_mode = 0
-offset_top = 108.0
-offset_right = 1.0
-offset_bottom = 131.0
+[node name="mult_velocity" type="Label" parent="info" unique_id=285274494]
+layout_mode = 1
+offset_left = 61.0
+offset_top = 291.5
+offset_right = 236.0
+offset_bottom = 314.5
+text = "Mult. de vel.: "
 
 [node name="invent" type="TextureRect" parent="." unique_id=1998166446]
 layout_mode = 2
@@ -66,9 +95,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -245.0
-offset_top = -163.0
+offset_top = -151.0
 offset_right = 245.0
-offset_bottom = 163.0
+offset_bottom = 175.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 11
@@ -177,8 +206,16 @@ layout_mode = 2
 [node name="slot34" parent="invent/Container" unique_id=1343694219 instance=ExtResource("2_mc7eu")]
 layout_mode = 2
 
-[node name="slot35" parent="invent/Container" unique_id=1742724028 instance=ExtResource("2_mc7eu")]
+[node name="trash_slot" type="Control" parent="invent/Container" unique_id=644764486]
 layout_mode = 2
+script = ExtResource("5_v0ugu")
+
+[node name="TextureRect" type="TextureRect" parent="invent/Container/trash_slot" unique_id=1463030030]
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 60.0
+texture = ExtResource("6_uinjd")
+expand_mode = 2
 
 [node name="equip" type="TextureRect" parent="." unique_id=1498246025]
 layout_mode = 2
@@ -186,7 +223,204 @@ size_flags_horizontal = 8
 size_flags_vertical = 4
 texture = ExtResource("4_okgyk")
 
-[node name="GridContainer" type="GridContainer" parent="equip" unique_id=2107930544]
+[node name="icons" type="GridContainer" parent="equip" unique_id=2107930544]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 52.5
+offset_right = 234.0
+offset_bottom = 112.5
+theme_override_constants/h_separation = 39
+theme_override_constants/v_separation = 14
+columns = 2
+
+[node name="player_icon" type="TextureRect" parent="equip/icons" unique_id=756465995]
+layout_mode = 2
+texture = ExtResource("7_uinjd")
+
+[node name="horse_icon" type="TextureRect" parent="equip/icons" unique_id=356068893]
+layout_mode = 2
+texture = ExtResource("8_j8a6o")
+
+[node name="equipments" type="GridContainer" parent="equip" unique_id=480291593]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 130.5
+offset_right = 234.0
+offset_bottom = 354.5
+theme_override_constants/h_separation = 47
+theme_override_constants/v_separation = 22
+columns = 2
+
+[node name="lance" type="Control" parent="equip/equipments" unique_id=1700799658]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("10_pylkd")
+
+[node name="background" type="TextureRect" parent="equip/equipments/lance" unique_id=452050560]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+texture = ExtResource("10_sttpb")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="equip/equipments/lance" unique_id=1177840688]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 2
+
+[node name="rein" type="Control" parent="equip/equipments" unique_id=1217355771]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("12_at5t2")
+
+[node name="background" type="TextureRect" parent="equip/equipments/rein" unique_id=651525085]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("13_h47kl")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="equip/equipments/rein" unique_id=233998896]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 2
+
+[node name="armor" type="Control" parent="equip/equipments" unique_id=2132605866]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("14_7stia")
+
+[node name="background" type="TextureRect" parent="equip/equipments/armor" unique_id=869577033]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("15_sgy5u")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="equip/equipments/armor" unique_id=715061927]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 2
+
+[node name="horseshoe" type="Control" parent="equip/equipments" unique_id=1838463288]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("16_o32sh")
+
+[node name="background" type="TextureRect" parent="equip/equipments/horseshoe" unique_id=1591416159]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("17_bci2j")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="equip/equipments/horseshoe" unique_id=354076221]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 2
+
+[node name="cape" type="Control" parent="equip/equipments" unique_id=1152287377]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("18_3chmt")
+
+[node name="background" type="TextureRect" parent="equip/equipments/cape" unique_id=1700502371]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("19_xw6bx")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="equip/equipments/cape" unique_id=1702464684]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 2
+
+[node name="saddle" type="Control" parent="equip/equipments" unique_id=1326128113]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("20_f63ls")
+
+[node name="background" type="TextureRect" parent="equip/equipments/saddle" unique_id=1051871976]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("21_3iwlh")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="equip/equipments/saddle" unique_id=390852755]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 2
