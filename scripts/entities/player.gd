@@ -31,6 +31,10 @@ var is_invulnerable: bool = false
 
 var heading_angle: float = 0.0
 
+# Controle de efeitos de lentidão
+var speed_multiplier: float = 1.0
+var active_slow_sources: int = 0
+
 func _ready() -> void:
 	add_to_group("player")
 	current_health = max_health
@@ -98,6 +102,10 @@ func _handle_movement(delta: float) -> void:
 	var forward_vec = Vector2.UP.rotated(heading_angle)
 	var right_vec = Vector2.RIGHT.rotated(heading_angle)
 	
+	# Aplica o multiplicador de velocidade atual
+	var effective_power = engine_power * speed_multiplier
+	var effective_max_speed = max_speed * speed_multiplier
+	
 	if throttle_input > 0.0:
 		velocity += forward_vec * engine_power * throttle_input * delta
 	elif throttle_input < 0.0:
@@ -111,8 +119,9 @@ func _handle_movement(delta: float) -> void:
 	
 	velocity = forward_velocity + lateral_velocity
 	
-	if velocity.length() > max_speed:
-		velocity = velocity.normalized() * max_speed
+	 # Limita à velocidade máxima com lentidão
+	if velocity.length() > effective_max_speed:
+		velocity = velocity.normalized() * effective_max_speed
 
 func _update_lance_state() -> void:
 	if not lance_area:
@@ -174,6 +183,15 @@ func pickup_item(item: Area2D) -> void:
 	if canvas:
 		if canvas.add_item_inventory(item):
 			item.queue_free()
+			
+func apply_slow(factor: float = 0.5) -> void:
+	active_slow_sources += 1
+	speed_multiplier = factor
+
+func remove_slow() -> void:
+	active_slow_sources = maxi(0, active_slow_sources - 1)
+	if active_slow_sources == 0:
+		speed_multiplier = 1.0
 
 func die() -> void:
 	queue_free()

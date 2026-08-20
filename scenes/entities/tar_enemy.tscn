@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://dvqhvpv3ui8q0"]
+
+[ext_resource type="Script" uid="uid://5lw4spwjcaal" path="res://scripts/entities/tar_enemy.gd" id="1_dyacx"]
+[ext_resource type="PackedScene" uid="uid://cjp4tu6i1xvsl" path="res://scenes/entities/tar_puddle.tscn" id="2_e3c7r"]
+[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="3_nm145"]
+[ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/entities/player_hit.gd" id="4_baxkh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g2jkx"]
+radius = 25.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lhqmu"]
+radius = 27.018513
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8vmmm"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vnfh1"]
+bg_color = Color(0.6012307, 0, 0.12017762, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jgtyb"]
+radius = 38.209946
+
+[node name="TarEnemy" type="CharacterBody2D" unique_id=1922258064]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_dyacx")
+flee_distance = 400.0
+tar_puddle_scene = ExtResource("2_e3c7r")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2105691930]
+position = Vector2(0, -0.9999962)
+scale = Vector2(0.3828125, 0.3671875)
+texture = ExtResource("3_nm145")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633371717]
+shape = SubResource("CircleShape2D_g2jkx")
+
+[node name="HitReceivers" type="Node2D" parent="." unique_id=532227617]
+
+[node name="BodyHurt" type="Area2D" parent="HitReceivers" unique_id=1747339858]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("4_baxkh")
+momentum_penalty = 0.2
+
+[node name="HurtBoxArea" type="CollisionShape2D" parent="HitReceivers/BodyHurt" unique_id=1881318403]
+shape = SubResource("CircleShape2D_lhqmu")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1230983542]
+offset_left = -25.0
+offset_top = -37.0
+offset_right = 26.0
+offset_bottom = -30.0
+theme_override_styles/background = SubResource("StyleBoxFlat_8vmmm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vnfh1")
+show_percentage = false
+
+[node name="SeparationArea" type="Area2D" parent="." unique_id=1334543851]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SeparationArea" unique_id=319168841]
+shape = SubResource("CircleShape2D_jgtyb")

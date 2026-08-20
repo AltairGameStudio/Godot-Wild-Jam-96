@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cjp4tu6i1xvsl"]
+
+[ext_resource type="Script" uid="uid://dan78ey0wj3q2" path="res://scripts/entities/tar_puddle.gd" id="1_ca27a"]
+[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="2_gukak"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2jsh8"]
+radius = 18.0
+
+[node name="TarPuddle" type="Area2D" unique_id=1085202365]
+z_index = -1
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_ca27a")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1773581007]
+modulate = Color(0.12595835, 0.048142303, 0.074836135, 1)
+position = Vector2(-1.9073486e-06, 3.8146973e-06)
+scale = Vector2(0.24609376, 0.24609375)
+texture = ExtResource("2_gukak")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2075892349]
+shape = SubResource("CircleShape2D_2jsh8")
