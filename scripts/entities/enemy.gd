@@ -145,9 +145,10 @@ func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.H
 				die()
 
 func create_item() -> void:
-	for i in range(1,6):
+	for i in range(1,8):
 		var new_drop = drop.instantiate()
-		new_drop.setup(i*100, self.global_position)
+		var lvl = randi_range(1,2)
+		new_drop.setup(i*100 + lvl, self.global_position)
 		get_tree().current_scene.get_node("World/Arena").add_child(new_drop)
 
 func die() -> void:

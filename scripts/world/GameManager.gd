@@ -51,7 +51,6 @@ func start_run() -> void:
 	current_run_loot.clear()
 	run_timer = 0.0
 	is_in_run = true
-	#get_tree().change_scene_to_file(ARENA_SCENE_PATH)
 	change_world(ARENA_SCENE_PATH)
 
 # Retorno com sucesso (ex: passou pelo portal de extração)
@@ -70,7 +69,6 @@ func end_run_success() -> void:
 	
 	# Avança para a próxima fase
 	current_phase += 1
-	#get_tree().change_scene_to_file.call_deferred(TOWN_SCENE_PATH)
 	change_world(TOWN_SCENE_PATH)
 
 # Retorno por morte (perde os itens da run atual)

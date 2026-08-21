@@ -25,6 +25,14 @@ var current_health: float
 @export var invulnerability_duration: float = 0.6
 var is_invulnerable: bool = false
 
+@export_group("Equipáveis")
+@export var extra_damage = 0
+@export var extra_health = 0
+@export var defense = 0
+@export var extra_speed = 0
+@export var extra_steer_speed = 0
+@export var extra_speed_multiplier = 0
+
 @onready var lance_pivot: Node2D = $LancePivot
 @onready var lance_area: Area2D = $LancePivot/LanceArea
 @onready var hurtbox_area: Area2D = $HurtboxArea
@@ -37,7 +45,7 @@ var active_slow_sources: int = 0
 
 func _ready() -> void:
 	add_to_group("player")
-	current_health = max_health
+	current_health = max_health + extra_health
 	heading_angle = rotation
 	
 	if lance_area:
@@ -48,12 +56,47 @@ func _ready() -> void:
 	update_info()
 
 func update_info() -> void:
-	$inventoryHUD/inventory/info.update_labels([max_health, current_health, base_damage, max_speed, speed_multiplier])
+	$inventoryHUD/inventory/info.update_labels(
+		[max_health + extra_health,
+		 current_health,
+		 base_damage + extra_damage,
+		 defense,
+		 max_speed + extra_speed,
+		 speed_multiplier + extra_speed_multiplier,
+		 steer_speed + extra_steer_speed])
+
+func equipment_changed(item_id, item_equipped: bool):
+	var lvl : float = item_id%100
+	var controler = -1
+	if item_equipped: 
+		controler = 1
+	if (item_id/100) == 2:
+		extra_damage += controler * lvl*2
+	elif (item_id/100) == 3:
+		defense += controler * lvl*3
+	elif (item_id/100) == 4:
+		if item_equipped and (current_health == max_health + extra_health):
+			current_health = max_health + lvl*10
+		elif not item_equipped:
+			if (current_health == max_health + extra_health):
+				current_health = max_health
+			elif (current_health != max_health + extra_health) and current_health >= max_health:
+				var percent = current_health/max_health+extra_health
+				current_health = max_health*percent
+		extra_health += controler * lvl*10
+	elif (item_id/100) == 5:
+		extra_steer_speed += controler * lvl/5.0
+	elif (item_id/100) == 6:
+		extra_speed_multiplier += controler * lvl/10.0
+	elif (item_id/100) == 7:
+		extra_speed += controler * lvl*20
+	
+	update_info()
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if is_invulnerable:
 		return
-		
+	
 	# Aceita tanto EnemyHitbox quanto classes genéricas de Hitbox
 	if area is EnemyHitbox or area.has_method("get_damage_payload"):
 		var payload: Dictionary = area.get_damage_payload(global_position)
@@ -70,12 +113,12 @@ func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, ignore_charge
 		if is_charging:
 			return
 		
-	current_health = maxf(0.0, current_health - amount)
+	current_health = maxf(0.0, current_health - (amount * (1 - defense/100)))
 	velocity += knockback
-	health_changed.emit(current_health, max_health)
+	health_changed.emit(current_health, max_health+extra_health)
 	
 	_trigger_invulnerability()
-	
+	update_info()
 	if current_health <= 0.0:
 		die()
 
@@ -93,22 +136,27 @@ func _trigger_invulnerability() -> void:
 
 func _physics_process(delta: float) -> void:
 	_handle_movement(delta)
+	var is_charging = lance_area.monitoring
 	_update_lance_state()
+	if !is_charging and lance_area.monitoring:
+		lance_area.get_node("LanceSprite").modulate = Color(1,0,0,1)
+	elif is_charging and !lance_area.monitoring:
+		lance_area.get_node("LanceSprite").modulate = Color(1,1,1,1)
 	move_and_slide()
 
 func _handle_movement(delta: float) -> void:
 	var turn_input = Input.get_axis("ui_left", "ui_right")
 	var throttle_input = Input.get_axis("ui_down", "ui_up")
 	
-	heading_angle += turn_input * steer_speed * delta
+	heading_angle += turn_input * (steer_speed + extra_steer_speed) * delta
 	rotation = heading_angle
 	
 	var forward_vec = Vector2.UP.rotated(heading_angle)
 	var right_vec = Vector2.RIGHT.rotated(heading_angle)
 	
 	# Aplica o multiplicador de velocidade atual
-	var effective_power = engine_power * speed_multiplier
-	var effective_max_speed = max_speed * speed_multiplier
+	var effective_power = engine_power * (speed_multiplier + extra_speed_multiplier)
+	var effective_max_speed = (max_speed + extra_speed) * (speed_multiplier + extra_speed_multiplier)
 	
 	if throttle_input > 0.0:
 		velocity += forward_vec * engine_power * throttle_input * delta
@@ -134,6 +182,7 @@ func _update_lance_state() -> void:
 	var is_charging = velocity.length() >= min_charge_speed
 	lance_area.monitoring = is_charging
 	
+	
 	# Garante impacto mesmo se já estiver colidindo ao atingir a velocidade
 	if is_charging:
 		for area in lance_area.get_overlapping_areas():
@@ -157,7 +206,7 @@ func _on_lance_hit(area: Area2D) -> void:
 	
 	var receiver = area as HitReceiver
 	# Enviamos o dano, a direção e a velocidade atual do impacto
-	var _hit_data = receiver.process_hit(raw_damage, velocity.normalized(), current_speed)
+	var _hit_data = receiver.process_hit(raw_damage + extra_damage, velocity.normalized(), current_speed)
 	
 	# Empurra o jogador na direção oposta ao golpe
 	var bounce_dir = -forward_vec
@@ -170,7 +219,7 @@ func _on_hurtbox_entered(area: Area2D) -> void:
 	# Verifica se é EnemyHitbox ou se tem a função de dano implementada
 	if area is EnemyHitbox or area.has_method("get_damage_payload"):
 		var payload: Dictionary = area.get_damage_payload(global_position)
-		take_damage(payload["damage"], payload["knockback"])
+		take_damage(payload["damage"]*((100-defense)/100), payload["knockback"])
 
 func _check_overlapping_hitboxes() -> void:
 	if is_invulnerable or not hurtbox_area:
@@ -183,6 +232,11 @@ func _check_overlapping_hitboxes() -> void:
 			break
 
 func pickup_item(item: Area2D) -> void:
+	var item_id = item.item_id
+	if item_id/100 == 1:
+		get_tree().current_scene.add_gold(5 * item_id%100)
+		item.queue_free()
+		return
 	var canvas = get_tree().get_first_node_in_group("inventCanvas")
 	if canvas:
 		if canvas.add_item_inventory(item):
@@ -199,3 +253,6 @@ func remove_slow() -> void:
 
 func die() -> void:
 	queue_free()
+
+func _gold_changed(_new_amount: int) -> void:
+	update_info()

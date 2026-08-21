@@ -18,12 +18,7 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	set_drag_preview(preview)
 	$sprite.visible = false
-	self.is_equipment = true
 	return self
-
-func _notification(what):
-	if what == NOTIFICATION_DRAG_END:
-		$sprite.visible = true
 
 func _return_data(data: Variant) -> void:
 	$sprite.texture = data.sprite
@@ -47,6 +42,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		else:
 			data.get_node("amount").text = str(quantity-1)
 	else:
+		get_tree().call_group("player", "equipment_changed", self.id, false)
 		if quantity == 1:
 			var n_id = data.id
 			data.id = self.id
@@ -57,6 +53,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 			id = data.id
 	data.get_node("sprite").visible = true
 	data.get_node("amount").visible = true
+	get_tree().call_group("player", "equipment_changed", self.id, true)
 
 func return_to_inventory(new_item_id) -> bool:
 	var empty = null

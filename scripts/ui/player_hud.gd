@@ -5,8 +5,8 @@ extends CanvasLayer
 func _ready() -> void:
 	var player = get_tree().get_first_node_in_group("player") as Player
 	if player:
-		health_bar.max_value = player.max_health
-		health_bar.value = player.max_health
+		health_bar.max_value = player.max_health + player.extra_health
+		health_bar.value = player.max_health + player.extra_health
 		player.health_changed.connect(_on_player_health_changed)
 
 func _on_player_health_changed(current: float, max_h: float) -> void:

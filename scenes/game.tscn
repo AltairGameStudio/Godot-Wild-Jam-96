@@ -9,3 +9,5 @@ script = ExtResource("2_lnu2h")
 [node name="World" type="Node2D" parent="." unique_id=1365819276]
 
 [node name="Player" parent="." unique_id=496631088 instance=ExtResource("1_yqjtg")]
+
+[connection signal="gold_changed" from="." to="Player" method="_gold_changed"]

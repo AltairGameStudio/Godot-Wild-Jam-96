@@ -46,3 +46,13 @@ offset_right = 20.0
 offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="description" type="Label" parent="." unique_id=1884000582]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

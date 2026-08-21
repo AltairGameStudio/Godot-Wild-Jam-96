@@ -28,10 +28,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -289.0
-offset_top = -196.5
-offset_right = 289.0
-offset_bottom = 593.5
+offset_left = -589.0
+offset_top = -289.0
+offset_right = 589.0
+offset_bottom = 501.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -43,45 +43,69 @@ layout_mode = 2
 texture = ExtResource("1_cstqn")
 script = ExtResource("2_okgyk")
 
+[node name="gold" type="Label" parent="info" unique_id=884197101]
+layout_mode = 1
+offset_left = 50.0
+offset_top = 56.5
+offset_right = 135.0
+offset_bottom = 79.5
+text = "Qtd. ouro:"
+
 [node name="max_life" type="Label" parent="info" unique_id=1318083703]
 layout_mode = 1
-offset_left = 61.0
-offset_top = 93.5
-offset_right = 146.0
-offset_bottom = 116.5
+offset_left = 50.0
+offset_top = 91.5
+offset_right = 135.0
+offset_bottom = 114.5
 text = "Vida máx. :"
 
 [node name="act_life" type="Label" parent="info" unique_id=1418539347]
 layout_mode = 1
-offset_left = 61.0
-offset_top = 144.5
-offset_right = 152.0
-offset_bottom = 167.5
+offset_left = 50.0
+offset_top = 131.5
+offset_right = 141.0
+offset_bottom = 154.5
 text = "Vida atual : "
 
 [node name="attack" type="Label" parent="info" unique_id=1171320578]
 layout_mode = 1
-offset_left = 61.0
-offset_top = 192.5
-offset_right = 156.0
-offset_bottom = 215.5
+offset_left = 50.0
+offset_top = 172.5
+offset_right = 145.0
+offset_bottom = 195.5
 text = "Dano base : "
+
+[node name="defense" type="Label" parent="info" unique_id=520014219]
+layout_mode = 1
+offset_left = 50.0
+offset_top = 213.5
+offset_right = 145.0
+offset_bottom = 236.5
+text = "Defesa : "
 
 [node name="max_velocity" type="Label" parent="info" unique_id=1957310165]
 layout_mode = 1
-offset_left = 61.0
-offset_top = 239.5
-offset_right = 225.0
-offset_bottom = 262.5
+offset_left = 50.0
+offset_top = 254.5
+offset_right = 214.0
+offset_bottom = 277.5
 text = "Vel. máx. : "
 
 [node name="mult_velocity" type="Label" parent="info" unique_id=285274494]
 layout_mode = 1
-offset_left = 61.0
-offset_top = 291.5
-offset_right = 236.0
-offset_bottom = 314.5
+offset_left = 50.0
+offset_top = 297.5
+offset_right = 225.0
+offset_bottom = 320.5
 text = "Mult. de vel.: "
+
+[node name="steer_speed" type="Label" parent="info" unique_id=1209698360]
+layout_mode = 1
+offset_left = 50.0
+offset_top = 339.5
+offset_right = 225.0
+offset_bottom = 362.5
+text = "Vel. de manobra : "
 
 [node name="invent" type="TextureRect" parent="." unique_id=1998166446]
 layout_mode = 2
@@ -280,6 +304,13 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
 
+[node name="description" type="Label" parent="equip/equipments/lance" unique_id=532948664]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="rein" type="Control" parent="equip/equipments" unique_id=1217355771]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -308,6 +339,13 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
+
+[node name="description" type="Label" parent="equip/equipments/rein" unique_id=1581566273]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
 
 [node name="armor" type="Control" parent="equip/equipments" unique_id=2132605866]
 custom_minimum_size = Vector2(60, 60)
@@ -338,6 +376,13 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
 
+[node name="description" type="Label" parent="equip/equipments/armor" unique_id=1618731903]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="horseshoe" type="Control" parent="equip/equipments" unique_id=1838463288]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -366,6 +411,13 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
+
+[node name="description" type="Label" parent="equip/equipments/horseshoe" unique_id=508511999]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
 
 [node name="cape" type="Control" parent="equip/equipments" unique_id=1152287377]
 custom_minimum_size = Vector2(60, 60)
@@ -396,6 +448,13 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
 
+[node name="description" type="Label" parent="equip/equipments/cape" unique_id=1270994468]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="saddle" type="Control" parent="equip/equipments" unique_id=1326128113]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -424,3 +483,23 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
+
+[node name="description" type="Label" parent="equip/equipments/saddle" unique_id=1904572884]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="mouse_entered" from="equip/equipments/lance" to="equip/equipments/lance" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="equip/equipments/lance" to="equip/equipments/lance" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="equip/equipments/rein" to="equip/equipments/rein" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="equip/equipments/rein" to="equip/equipments/rein" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="equip/equipments/armor" to="equip/equipments/armor" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="equip/equipments/armor" to="equip/equipments/armor" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="equip/equipments/horseshoe" to="equip/equipments/horseshoe" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="equip/equipments/horseshoe" to="equip/equipments/horseshoe" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="equip/equipments/cape" to="equip/equipments/cape" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="equip/equipments/cape" to="equip/equipments/cape" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="equip/equipments/saddle" to="equip/equipments/saddle" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="equip/equipments/saddle" to="equip/equipments/saddle" method="_on_mouse_exited"]
