@@ -14,6 +14,7 @@ signal enemy_died
 @export var bullet_scene: PackedScene # Arraste a cena do seu EnemyBullet aqui!
 @export var min_shoot_interval: float = 1.2 # Tempo mínimo de espera entre tiros
 @export var max_shoot_interval: float = 2.6 # Tempo máximo de espera entre tiros
+@export var shoot_spread_degrees: float = 12.0
 
 @export_group("Distâncias de Combate")
 @export var retreat_distance: float = 170.0 # Se o player chegar mais perto que isso, ele recua
@@ -135,20 +136,22 @@ func _on_shoot_timer_timeout() -> void:
 	shoot_timer.start(randf_range(min_shoot_interval, max_shoot_interval))
 
 func shoot() -> void:
-	if bullet_scene == null:
+	if bullet_scene == null or not is_instance_valid(player_ref):
 		return
 		
-	# Instancia o tiro
 	var bullet = bullet_scene.instantiate() as Area2D
 	
-	# Calcula a direção exata da arma para o player
-	var dir = (player_ref.global_position - shoot_point.global_position).normalized()
-	bullet.direction = dir
+	# Calcula a direção em linha reta para o player
+	var base_dir = (player_ref.global_position - shoot_point.global_position).normalized()
 	
-	# Define a posição inicial do tiro para o nosso Marker2D
+	# Sorteia uma variação de ângulo em radianos entre [-spread, +spread]
+	var spread_rad = deg_to_rad(shoot_spread_degrees)
+	var random_offset = randf_range(-spread_rad, spread_rad)
+	
+	# Aplica a rotação no vetor de direção
+	bullet.direction = base_dir.rotated(random_offset)
 	bullet.global_position = shoot_point.global_position
 	
-	# Adiciona o tiro ao mundo
 	get_tree().current_scene.add_child(bullet)
 
 func _update_healthbar_position() -> void:

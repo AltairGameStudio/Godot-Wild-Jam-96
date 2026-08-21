@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://vo75vtnxe4sn"]
+
+[ext_resource type="Script" uid="uid://dakupwiuh8r2n" path="res://scripts/entities/dodging_ranged_enemy.gd" id="1_qcu1j"]
+[ext_resource type="PackedScene" uid="uid://bcpxwt5ovyq1c" path="res://scenes/entities/enemy_bullet.tscn" id="2_eakh8"]
+[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="3_cdp7v"]
+[ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/entities/player_hit.gd" id="4_4w21l"]
+[ext_resource type="Script" uid="uid://bhkb3rqglk3fp" path="res://scripts/entities/enemy_hitbox.gd" id="5_56weh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xwavj"]
+radius = 19.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l7eqa"]
+size = Vector2(43, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rw5oa"]
+size = Vector2(43, 19)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
+radius = 23.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_md0e3"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ra3w"]
+bg_color = Color(0.6012307, 0, 0.12017762, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l7eqa"]
+radius = 42.047592
+
+[node name="DodgingRangedEnemy" type="CharacterBody2D" unique_id=302185580]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_qcu1j")
+dodge_trigger_distance = 320.0
+dodge_speed = 400.0
+bullet_scene = ExtResource("2_eakh8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2044408994]
+position = Vector2(8.34465e-07, -1)
+scale = Vector2(0.32812503, 0.2734375)
+texture = ExtResource("3_cdp7v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1347283466]
+shape = SubResource("CircleShape2D_xwavj")
+
+[node name="HitReceivers" type="Node2D" parent="." unique_id=1858289]
+
+[node name="BodyHurt" type="Area2D" parent="HitReceivers" unique_id=657711422]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("4_4w21l")
+momentum_penalty = 0.2
+
+[node name="HurtBoxArea" type="CollisionShape2D" parent="HitReceivers/BodyHurt" unique_id=586892629]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_l7eqa")
+
+[node name="WeakHurt" type="Area2D" parent="HitReceivers" unique_id=2111492344]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("4_4w21l")
+hit_type = 1
+damage_multiplier = 2.0
+momentum_penalty = 0.1
+
+[node name="WeakBoxArea" type="CollisionShape2D" parent="HitReceivers/WeakHurt" unique_id=908858376]
+position = Vector2(0.5, -10.5)
+shape = SubResource("RectangleShape2D_rw5oa")
+
+[node name="HitboxWeapon" type="Area2D" parent="HitReceivers" unique_id=1831932505]
+visible = false
+collision_layer = 64
+collision_mask = 32
+script = ExtResource("5_56weh")
+damage = 40.0
+knockback_force = 100.0
+
+[node name="Sprite2D" type="Sprite2D" parent="HitReceivers/HitboxWeapon" unique_id=2012559256]
+position = Vector2(14, 25)
+scale = Vector2(0.054687504, 0.15624999)
+texture = ExtResource("3_cdp7v")
+
+[node name="HitboxDamageContact" type="Area2D" parent="HitReceivers" unique_id=1712262640]
+visible = false
+collision_layer = 64
+collision_mask = 32
+script = ExtResource("5_56weh")
+knockback_force = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitReceivers/HitboxDamageContact" unique_id=85258552]
+visible = false
+shape = SubResource("CircleShape2D_md0e3")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1539955842]
+offset_left = -25.0
+offset_top = -30.0
+offset_right = 26.0
+offset_bottom = -23.0
+theme_override_styles/background = SubResource("StyleBoxFlat_md0e3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4ra3w")
+show_percentage = false
+
+[node name="ShootTimer" type="Timer" parent="." unique_id=345535461]
+wait_time = 1.5
+one_shot = true
+autostart = true
+
+[node name="ShootPoint" type="Marker2D" parent="." unique_id=1926591893]
+position = Vector2(14, 35)
+
+[node name="SeparationArea" type="Area2D" parent="." unique_id=128340454]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SeparationArea" unique_id=229108934]
+shape = SubResource("CircleShape2D_l7eqa")

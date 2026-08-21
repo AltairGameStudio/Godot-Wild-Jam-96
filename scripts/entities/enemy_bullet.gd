@@ -17,7 +17,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		if body.has_method("take_damage"):
 			# Passa o dano e a direção para empurrar o player
-			body.take_damage(damage, direction * 150.0)
+			body.take_damage(damage, direction * 150.0, true)
 		queue_free()
 		
 	# Se bateu em paredes ou barreiras, a bala some
