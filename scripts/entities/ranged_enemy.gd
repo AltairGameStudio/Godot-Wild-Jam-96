@@ -46,6 +46,7 @@ func _ready() -> void:
 		health_bar.max_value = max_health
 		health_bar.value = current_health
 		health_bar.top_level = true
+		_update_healthbar_position()
 		
 	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
 	# Inicia o primeiro tiro com tempo aleatório

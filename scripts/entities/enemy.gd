@@ -38,7 +38,8 @@ func _ready() -> void:
 		health_bar.max_value = max_health
 		health_bar.value = current_health
 		health_bar.top_level = true # Desacopla rotação e movimento do pai
-	
+		_update_healthbar_position()
+
 	if hit_receivers_node:
 		for child in hit_receivers_node.get_children():
 			if child is HitReceiver:

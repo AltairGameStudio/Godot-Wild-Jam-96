@@ -30,6 +30,23 @@ var next_spawn_timer: float = 0.0
 var is_round_active: bool = false
 var player_ref: Node2D = null
 
+@onready var announcement_container: VBoxContainer = get_node_or_null("CanvasLayer/AnnouncementContainer")
+@onready var title_label: Label = get_node_or_null("CanvasLayer/AnnouncementContainer/TitleLabel")
+@onready var subtitle_label: Label = get_node_or_null("CanvasLayer/AnnouncementContainer/SubtitleLabel")
+
+# Nomes temáticos para cada uma das 9 fases
+const PHASE_TITLES = {
+	1: "The Awakening of the Spear",
+	2: "Rain of Arrows",
+	3: "Iron Wall",
+	4: "Sticky Ground",
+	5: "Armored Colossus",
+	6: "Dance of Shadows",
+	7: "Crossfire",
+	8: "Relentless Chaos",
+	9: "The Penultimate Confrontation"
+}
+
 func _ready() -> void:
 	player_ref = get_tree().get_first_node_in_group("player") as Node2D
 	start_phase()
@@ -40,6 +57,9 @@ func start_phase() -> void:
 		current_phase = maxi(1, get_tree().current_scene.current_phase)
 
 	_setup_phase_pool(current_phase)
+	
+	var sub_title = PHASE_TITLES.get(current_phase, "Survive!")
+	_show_announcement("PHASE %d" % current_phase, sub_title, 2.5)
 
 	round_time_left = round_duration
 	next_spawn_timer = randf_range(min_spawn_interval, max_spawn_interval)
@@ -82,8 +102,12 @@ func _spawn_random_enemy() -> void:
 	var enemy_instance = chosen_scene.instantiate() as Node2D
 	var spawn_pos = _get_safe_spawn_position()
 	
-	enemy_instance.global_position = spawn_pos
 	add_child(enemy_instance)
+	enemy_instance.global_position = spawn_pos
+	
+	# Força a barra de vida a ir para a posição do inimigo imediatamente
+	if enemy_instance.has_method("_update_healthbar_position"):
+		enemy_instance._update_healthbar_position()
 
 func _pick_enemy_from_pool() -> PackedScene:
 	if enemy_scenes.is_empty():
@@ -140,6 +164,8 @@ func _end_phase_by_time() -> void:
 	is_round_active = false
 	if timer_label:
 		timer_label.text = "00"
+		
+	_show_announcement("TIME'S UP!", "Travelling to the town...", 3.5, Color(0.3, 1.0, 0.4))
 
 	# Remove todos os inimigos vivos restantes na arena
 	get_tree().call_group("enemies", "queue_free")
@@ -178,3 +204,28 @@ func _setup_phase_pool(phase: int) -> void:
 		_: # Fase 9 em diante
 			enemy_scenes = [SCENE_SWORD, SCENE_RANGED, SCENE_SHIELD, SCENE_TAR, SCENE_HEAVY, SCENE_DODGING]
 			enemy_weights = [5.0, 10.0, 15.0, 20.0, 25.0, 25.0]
+
+func _show_announcement(title: String, subtitle: String, duration: float = 3.0, title_color: Color = Color(1.0, 0.85, 0.2)) -> void:
+	if not announcement_container or not title_label or not subtitle_label:
+		return
+
+	title_label.text = title
+	title_label.modulate = title_color
+	subtitle_label.text = subtitle
+
+	# Garante que o pivô de escala fique no centro para o efeito de zoom
+	announcement_container.pivot_offset = announcement_container.size / 2.0
+
+	var tween = create_tween()
+	# Aparece com zoom e fade-in
+	announcement_container.modulate.a = 0.0
+	announcement_container.scale = Vector2(0.7, 0.7)
+	tween.parallel().tween_property(announcement_container, "modulate:a", 1.0, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(announcement_container, "scale", Vector2(1.0, 1.0), 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.
+EASE_OUT)
+
+	# Permanece visível na tela
+	tween.tween_interval(duration)
+
+	# Fade-out suave
+	tween.tween_property(announcement_container, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
