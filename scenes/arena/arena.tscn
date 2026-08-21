@@ -4,12 +4,16 @@
 [ext_resource type="PackedScene" uid="uid://c875x0cyyg4kk" path="res://scenes/entities/sword_enemy.tscn" id="2_vmsrg"]
 [ext_resource type="Texture2D" uid="uid://df8qt5j2c3tet" path="res://assets/sprites/tilesets/grass-tile-tileset-frame0.png" id="3_2ml6w"]
 [ext_resource type="PackedScene" uid="uid://cahw4m3240cu1" path="res://scenes/entities/ranged_enemy.tscn" id="3_xgbxb"]
+[ext_resource type="PackedScene" uid="uid://dvqhvpv3ui8q0" path="res://scenes/entities/tar_enemy.tscn" id="4_fv88w"]
 [ext_resource type="Script" uid="uid://6jr8e2psttx5" path="res://scripts/ui/player_hud.gd" id="4_u52cf"]
 [ext_resource type="Texture2D" uid="uid://d1bxenhu7ropx" path="res://assets/sprites/tilesets/swamp-tileset-frame0.png" id="4_xgbxb"]
 [ext_resource type="Texture2D" uid="uid://cwfmuvlk33ei6" path="res://assets/sprites/tilesets/grass-water-tileset-frame0.png" id="5_vmsrg"]
+[ext_resource type="PackedScene" uid="uid://7d5t1q2dmnct" path="res://scenes/entities/heavy_enemy.tscn" id="5_w4nra"]
 [ext_resource type="Script" uid="uid://chcdoqrsmlrq4" path="res://scripts/ui/enemy_indicators.gd" id="6_jx0ua"]
 [ext_resource type="Texture2D" uid="uid://c7xj42h2wd6jg" path="res://assets/sprites/tilesets/grass-walk-tileset-frame0.png" id="6_s83md"]
+[ext_resource type="PackedScene" uid="uid://cgjxoex1bxyv0" path="res://scenes/entities/shield_enemy.tscn" id="6_t3vx8"]
 [ext_resource type="Texture2D" uid="uid://by85axt801wa7" path="res://assets/sprites/tilesets/grasslol.png" id="7_fv88w"]
+[ext_resource type="PackedScene" uid="uid://vo75vtnxe4sn" path="res://scenes/entities/dodging_ranged_enemy.tscn" id="11_xgbxb"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_w4nra"]
 tile_data = PackedInt32Array(0, 1, 0, 65536, 1, 1, 131072, 1, 2, 1, 65537, 0, 65537, 65537, 1, 131073, 65537, 2, 2, 131073, 0, 65538, 131073, 1, 131074, 131073, 2)
@@ -130,8 +134,7 @@ bg_color = Color(1, 0.34122363, 0.29450622, 1)
 
 [node name="Arena" type="Node2D" unique_id=49824254]
 script = ExtResource("1_asdgj")
-melee_enemy_scene = ExtResource("2_vmsrg")
-ranged_enemy_scene = ExtResource("3_xgbxb")
+enemy_scenes = Array[PackedScene]([ExtResource("2_vmsrg"), ExtResource("3_xgbxb"), ExtResource("4_fv88w"), ExtResource("5_w4nra"), ExtResource("6_t3vx8"), ExtResource("11_xgbxb")])
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=391488365]
 z_index = -2
@@ -186,6 +189,19 @@ theme_override_styles/background = SubResource("StyleBoxFlat_7ft05")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4ag8t")
 show_percentage = false
 
+[node name="RoundTimerLabel" type="Label" parent="CanvasLayer/UI" unique_id=952804464]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 908.0
+offset_top = 64.0
+offset_right = 960.0
+offset_bottom = 109.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "60s"
+
 [node name="EnemyIndicators" type="Control" parent="CanvasLayer" unique_id=234991851]
 layout_mode = 3
 anchors_preset = 15
@@ -194,65 +210,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("6_jx0ua")
-
-[node name="SpawnPoints" type="Node2D" parent="." unique_id=674017212]
-
-[node name="Marker2D" type="Marker2D" parent="SpawnPoints" unique_id=1611474316]
-position = Vector2(414, 1344)
-
-[node name="Marker2D2" type="Marker2D" parent="SpawnPoints" unique_id=1343259568]
-position = Vector2(825, 1338)
-
-[node name="Marker2D3" type="Marker2D" parent="SpawnPoints" unique_id=1562268089]
-position = Vector2(1290, 1337)
-
-[node name="Marker2D4" type="Marker2D" parent="SpawnPoints" unique_id=1712952225]
-position = Vector2(1655, 1330)
-
-[node name="Marker2D5" type="Marker2D" parent="SpawnPoints" unique_id=391383164]
-position = Vector2(2121, 1347)
-
-[node name="Marker2D6" type="Marker2D" parent="SpawnPoints" unique_id=1641821320]
-position = Vector2(2162, 947)
-
-[node name="Marker2D13" type="Marker2D" parent="SpawnPoints" unique_id=1378530367]
-position = Vector2(1260, -205)
-
-[node name="Marker2D18" type="Marker2D" parent="SpawnPoints" unique_id=193654851]
-position = Vector2(366, -197)
-
-[node name="Marker2D20" type="Marker2D" parent="SpawnPoints" unique_id=1129664033]
-position = Vector2(-54, -209)
-
-[node name="Marker2D19" type="Marker2D" parent="SpawnPoints" unique_id=1417921530]
-position = Vector2(848, -221)
-
-[node name="Marker2D14" type="Marker2D" parent="SpawnPoints" unique_id=478745693]
-position = Vector2(1661, -189)
-
-[node name="Marker2D15" type="Marker2D" parent="SpawnPoints" unique_id=963454224]
-position = Vector2(2166, -145)
-
-[node name="Marker2D16" type="Marker2D" parent="SpawnPoints" unique_id=584229048]
-position = Vector2(2166, 264)
-
-[node name="Marker2D17" type="Marker2D" parent="SpawnPoints" unique_id=479922679]
-position = Vector2(2166, 624)
-
-[node name="Marker2D7" type="Marker2D" parent="SpawnPoints" unique_id=895404787]
-position = Vector2(-512, 194)
-
-[node name="Marker2D8" type="Marker2D" parent="SpawnPoints" unique_id=793998674]
-position = Vector2(-533, -208)
-
-[node name="Marker2D9" type="Marker2D" parent="SpawnPoints" unique_id=1446958316]
-position = Vector2(-491, 606)
-
-[node name="Marker2D10" type="Marker2D" parent="SpawnPoints" unique_id=1556682015]
-position = Vector2(-481, 942)
-
-[node name="Marker2D11" type="Marker2D" parent="SpawnPoints" unique_id=1127021436]
-position = Vector2(-463, 1295)
-
-[node name="Marker2D12" type="Marker2D" parent="SpawnPoints" unique_id=974573255]
-position = Vector2(-55, 1319)

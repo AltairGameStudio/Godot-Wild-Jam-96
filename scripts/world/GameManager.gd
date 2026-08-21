@@ -24,7 +24,7 @@ var is_in_run: bool = false
 const ARENA_SCENE_PATH = "res://scenes/arena/arena.tscn"
 const TOWN_SCENE_PATH = "res://scenes/town/town.tscn"
 
-var current_phase: int = 0
+var current_phase: int = 1
 
 var current_scene: Node
 
