@@ -17,6 +17,10 @@ radius = 28.0
 collision_layer = 3
 collision_mask = 5
 script = ExtResource("1_g2els")
+engine_power = 150.0
+max_speed = 300.0
+min_charge_speed = 200.0
+base_damage = 30.0
 bounce_ratio = 0.3
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1024225290]

@@ -39,6 +39,7 @@ height = 20.0
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_puwww")
+contact_damage = 20.0
 knockback_multiplier = 0.7
 separation_strength = 30.0
 

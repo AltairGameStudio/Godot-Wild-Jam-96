@@ -27,6 +27,7 @@ radius = 33.0
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_l2kg0")
+deflect_damage = 30.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2044408994]
 position = Vector2(4.7683716e-07, 0)

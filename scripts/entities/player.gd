@@ -18,7 +18,7 @@ var current_health: float
 @export var min_charge_speed: float = 100.0
 #@export var base_damage: float = 10.0
 @export var base_damage: float = 1000.0
-@export var damage_velocity_scale: float = 0.01
+@export var damage_velocity_scale: float = 0.1
 @export var bounce_ratio: float = 0.35
 
 @export_group("Defesa e Invulnerabilidade")
