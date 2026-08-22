@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c1qemdrgxriw3"]
 
 [ext_resource type="Script" uid="uid://cwpbcomnywrl2" path="res://scripts/entities/player.gd" id="1_g2els"]
-[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="2_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://b5cbtb7hix63h" path="res://assets/sprites/entities/player_000.png" id="2_42nxq"]
 [ext_resource type="PackedScene" uid="uid://bajs8h6lhtgv5" path="res://scenes/ui/inventario.tscn" id="3_1ie0h"]
 [ext_resource type="Script" uid="uid://b8s0fexespo8o" path="res://scripts/ui/ui_canvas.gd" id="3_42nxq"]
 
@@ -12,6 +12,19 @@ radius = 25.019993
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qhqgy"]
 radius = 28.0
+
+[sub_resource type="Gradient" id="Gradient_42nxq"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.89849627)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5u6hq"]
+gradient = SubResource("Gradient_42nxq")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
 
 [node name="Player" type="CharacterBody2D" unique_id=496631088]
 collision_layer = 3
@@ -24,11 +37,11 @@ base_damage = 30.0
 bounce_ratio = 0.3
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1024225290]
-position = Vector2(9.536743e-07, 0)
-scale = Vector2(0.3984375, 0.37109375)
-texture = ExtResource("2_qhqgy")
+rotation = 1.5707964
+texture = ExtResource("2_42nxq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=783048376]
+position = Vector2(-12, 9)
 shape = SubResource("CircleShape2D_dqkch")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=103844479]
@@ -41,13 +54,8 @@ collision_layer = 8
 collision_mask = 16
 
 [node name="LanceColision" type="CollisionShape2D" parent="LancePivot/LanceArea" unique_id=1859248750]
-position = Vector2(10, -58)
+position = Vector2(10, -51)
 shape = SubResource("RectangleShape2D_g2els")
-
-[node name="LanceSprite" type="Sprite2D" parent="LancePivot/LanceArea" unique_id=1897399912]
-position = Vector2(9.999999, -40)
-scale = Vector2(0.101562515, 0.3984375)
-texture = ExtResource("2_qhqgy")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1343793477]
 position_smoothing_enabled = true
@@ -58,6 +66,7 @@ collision_layer = 32
 collision_mask = 64
 
 [node name="HurtboxCollision" type="CollisionShape2D" parent="HurtboxArea" unique_id=64798763]
+position = Vector2(-12, 9)
 shape = SubResource("CircleShape2D_qhqgy")
 
 [node name="inventoryData" type="Node" parent="." unique_id=1189242973]
@@ -67,3 +76,10 @@ script = ExtResource("3_42nxq")
 
 [node name="inventory" parent="inventoryHUD" unique_id=1194000883 instance=ExtResource("3_1ie0h")]
 visible = false
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1437981006]
+texture_filter = 1
+color = Color(1, 1, 0.61960787, 1)
+energy = 1.3
+texture = SubResource("GradientTexture2D_5u6hq")
+texture_scale = 4.0

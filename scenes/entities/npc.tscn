@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bosxy7omdd3or"]
 
 [ext_resource type="Script" uid="uid://beuyipodwayib" path="res://scripts/entities/npc.gd" id="1_4kvco"]
-[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="1_iify0"]
+[ext_resource type="Texture2D" uid="uid://cu555ookvkbqq" path="res://assets/sprites/entities/npc_arena.png" id="2_4kvco"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4kvco"]
 
@@ -12,8 +12,7 @@ radius = 91.00549
 script = ExtResource("1_4kvco")
 
 [node name="Visual" type="Sprite2D" parent="." unique_id=1901786522]
-scale = Vector2(0.515625, 0.5)
-texture = ExtResource("1_iify0")
+texture = ExtResource("2_4kvco")
 
 [node name="NpcCollision" type="StaticBody2D" parent="." unique_id=208999964]
 collision_mask = 33

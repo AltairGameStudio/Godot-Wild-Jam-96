@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cgjxoex1bxyv0"]
 
 [ext_resource type="Script" uid="uid://bsfov1g6uy6el" path="res://scripts/entities/enemy.gd" id="1_puwww"]
-[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="2_l7eqa"]
+[ext_resource type="Texture2D" uid="uid://dyqjw8lyqx847" path="res://assets/sprites/entities/enemy_sword_shield-frame0.png" id="2_qngg0"]
 [ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/entities/player_hit.gd" id="3_rw5oa"]
 [ext_resource type="Script" uid="uid://bhkb3rqglk3fp" path="res://scripts/entities/enemy_hitbox.gd" id="4_ubhci"]
 
@@ -15,8 +15,8 @@ size = Vector2(43, 18)
 size = Vector2(43, 19)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c4w8v"]
-radius = 6.0
-height = 28.0
+radius = 4.0782013
+height = 18.925934
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5uy6h"]
 radius = 4.0
@@ -44,11 +44,13 @@ knockback_multiplier = 0.7
 separation_strength = 30.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2044408994]
-position = Vector2(8.34465e-07, -1)
-scale = Vector2(0.32812503, 0.2734375)
-texture = ExtResource("2_l7eqa")
+position = Vector2(0, -1)
+rotation = 1.5707964
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_qngg0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1347283466]
+position = Vector2(-1, -2)
 shape = SubResource("CircleShape2D_xwavj")
 
 [node name="HitReceivers" type="Node2D" parent="." unique_id=1858289]
@@ -83,14 +85,8 @@ hit_type = 2
 damage_multiplier = 0.0
 momentum_penalty = 0.8
 
-[node name="Sprite2D" type="Sprite2D" parent="HitReceivers/Shield" unique_id=1902336287]
-position = Vector2(-14, 17.000002)
-rotation = 0.43633232
-scale = Vector2(0.21501164, 0.066406265)
-texture = ExtResource("2_l7eqa")
-
 [node name="ShieldArea" type="CollisionShape2D" parent="HitReceivers/Shield" unique_id=79591579]
-position = Vector2(-15, 16)
+position = Vector2(-15, 15)
 rotation = 1.9634954
 shape = SubResource("CapsuleShape2D_c4w8v")
 
@@ -100,13 +96,8 @@ collision_mask = 32
 script = ExtResource("4_ubhci")
 damage = 10.0
 
-[node name="Sprite2D" type="Sprite2D" parent="HitReceivers/HitboxWeapon" unique_id=2012559256]
-position = Vector2(14, 25)
-scale = Vector2(0.054687504, 0.15624999)
-texture = ExtResource("2_l7eqa")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitReceivers/HitboxWeapon" unique_id=1078216928]
-position = Vector2(14, 25)
+position = Vector2(8, 22)
 shape = SubResource("CapsuleShape2D_5uy6h")
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1539955842]
@@ -123,8 +114,9 @@ collision_layer = 128
 collision_mask = 128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SeparationArea" unique_id=1974394452]
+position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_defa4")
 
 [node name="SwordPhysicalCollision" type="CollisionShape2D" parent="." unique_id=1166956418]
-position = Vector2(14, 25)
+position = Vector2(8, 22)
 shape = SubResource("CapsuleShape2D_defa4")

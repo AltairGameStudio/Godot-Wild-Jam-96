@@ -3,6 +3,18 @@ extends CharacterBody2D
 
 signal health_changed(current: float, max_h: float)
 
+# --- CONFIGURAÇÃO DE ANIMAÇÃO DO CAVALO ---
+@export_group("Sprites / Animação")
+@export var sprite_frame_0: Texture2D = preload("res://assets/sprites/entities/player_000.png")
+@export var sprite_frame_1: Texture2D = preload("res://assets/sprites/entities/player_001.png")
+@export var step_distance_threshold: float = 30.0 # Quantos pixels percorridos para trocar o frame
+
+@onready var player_sprite: Sprite2D = $Sprite2D
+
+var current_anim_frame: int = 0
+var distance_traveled: float = 0.0
+# ------------------------------------------
+
 @export_group("Vida")
 @export var max_health: float = 100.0
 var current_health: float
@@ -16,7 +28,6 @@ var current_health: float
 
 @export_group("Combate")
 @export var min_charge_speed: float = 100.0
-#@export var base_damage: float = 10.0
 @export var base_damage: float = 1000.0
 @export var damage_velocity_scale: float = 0.1
 @export var bounce_ratio: float = 0.35
@@ -38,8 +49,6 @@ var is_invulnerable: bool = false
 @onready var hurtbox_area: Area2D = $HurtboxArea
 
 var heading_angle: float = 0.0
-
-# Controle de efeitos de lentidão
 var speed_multiplier: float = 1.0
 var active_slow_sources: int = 0
 
@@ -48,6 +57,9 @@ func _ready() -> void:
 	current_health = max_health + extra_health
 	heading_angle = rotation
 	
+	if player_sprite and sprite_frame_0:
+		player_sprite.texture = sprite_frame_0
+	
 	if lance_area:
 		lance_area.area_entered.connect(_on_lance_hit)
 	
@@ -55,15 +67,45 @@ func _ready() -> void:
 		hurtbox_area.area_entered.connect(_on_hurtbox_area_entered)
 	update_info()
 
+func _physics_process(delta: float) -> void:
+	_handle_movement(delta)
+	_update_lance_state()
+	_update_horse_animation(delta)
+	move_and_slide()
+
+func _update_horse_animation(delta: float) -> void:
+	if not player_sprite:
+		return
+		
+	var current_speed = velocity.length()
+	
+	# Se estiver praticamente parado, volta para o frame base
+	if current_speed < 15.0:
+		if current_anim_frame != 0:
+			current_anim_frame = 0
+			player_sprite.texture = sprite_frame_0
+			distance_traveled = 0.0
+		return
+	
+	# Acumula a distância percorrida no frame atual
+	distance_traveled += current_speed * delta
+	
+	# Troca de sprite sempre que ultrapassa o limiar de passos
+	if distance_traveled >= step_distance_threshold:
+		distance_traveled = 0.0
+		current_anim_frame = 1 if current_anim_frame == 0 else 0
+		player_sprite.texture = sprite_frame_1 if current_anim_frame == 1 else sprite_frame_0
+
 func update_info() -> void:
-	$inventoryHUD/inventory/info.update_labels(
-		[max_health + extra_health,
-		 current_health,
-		 base_damage + extra_damage,
-		 defense,
-		 max_speed + extra_speed,
-		 speed_multiplier + extra_speed_multiplier,
-		 steer_speed + extra_steer_speed])
+	if has_node("inventoryHUD/inventory/info"):
+		$inventoryHUD/inventory/info.update_labels(
+			[max_health + extra_health,
+			 current_health,
+			 base_damage + extra_damage,
+			 defense,
+			 max_speed + extra_speed,
+			 speed_multiplier + extra_speed_multiplier,
+			 steer_speed + extra_steer_speed])
 
 func equipment_changed(item_id, item_equipped: bool):
 	var lvl : float = item_id%100
@@ -97,7 +139,6 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if is_invulnerable:
 		return
 	
-	# Aceita tanto EnemyHitbox quanto classes genéricas de Hitbox
 	if area is EnemyHitbox or area.has_method("get_damage_payload"):
 		var payload: Dictionary = area.get_damage_payload(global_position)
 		take_damage(payload["damage"], payload["knockback"])
@@ -106,14 +147,13 @@ func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, ignore_charge
 	if is_invulnerable:
 		return
 		
-	# Se estiver em investida rápida frontal, a lança anula o dano de frente
 	if not ignore_charge:
 		var forward_vec = Vector2.UP.rotated(heading_angle)
 		var is_charging = velocity.length() >= min_charge_speed and velocity.normalized().dot(forward_vec) > 0.5
 		if is_charging:
 			return
 		
-	current_health = maxf(0.0, current_health - (amount * (1 - defense/100)))
+	current_health = maxf(0.0, current_health - (amount * (1.0 - float(defense)/100.0)))
 	velocity += knockback
 	health_changed.emit(current_health, max_health+extra_health)
 	
@@ -134,16 +174,6 @@ func _trigger_invulnerability() -> void:
 	
 	_check_overlapping_hitboxes()
 
-func _physics_process(delta: float) -> void:
-	_handle_movement(delta)
-	var is_charging = lance_area.monitoring
-	_update_lance_state()
-	if !is_charging and lance_area.monitoring:
-		lance_area.get_node("LanceSprite").modulate = Color(1,0,0,1)
-	elif is_charging and !lance_area.monitoring:
-		lance_area.get_node("LanceSprite").modulate = Color(1,1,1,1)
-	move_and_slide()
-
 func _handle_movement(delta: float) -> void:
 	var turn_input = Input.get_axis("ui_left", "ui_right")
 	var throttle_input = Input.get_axis("ui_down", "ui_up")
@@ -154,8 +184,6 @@ func _handle_movement(delta: float) -> void:
 	var forward_vec = Vector2.UP.rotated(heading_angle)
 	var right_vec = Vector2.RIGHT.rotated(heading_angle)
 	
-	# Aplica o multiplicador de velocidade atual
-	var effective_power = engine_power * (speed_multiplier + extra_speed_multiplier)
 	var effective_max_speed = (max_speed + extra_speed) * (speed_multiplier + extra_speed_multiplier)
 	
 	if throttle_input > 0.0:
@@ -171,7 +199,6 @@ func _handle_movement(delta: float) -> void:
 	
 	velocity = forward_velocity + lateral_velocity
 	
-	 # Limita à velocidade máxima com lentidão
 	if velocity.length() > effective_max_speed:
 		velocity = velocity.normalized() * effective_max_speed
 
@@ -182,8 +209,6 @@ func _update_lance_state() -> void:
 	var is_charging = velocity.length() >= min_charge_speed
 	lance_area.monitoring = is_charging
 	
-	
-	# Garante impacto mesmo se já estiver colidindo ao atingir a velocidade
 	if is_charging:
 		for area in lance_area.get_overlapping_areas():
 			_on_lance_hit(area)
@@ -196,7 +221,6 @@ func _on_lance_hit(area: Area2D) -> void:
 	if current_speed < min_charge_speed:
 		return
 		
-	# Validação direcional
 	var forward_vec = Vector2.UP.rotated(heading_angle)
 	if velocity.normalized().dot(forward_vec) < 0.5:
 		return
@@ -205,10 +229,8 @@ func _on_lance_hit(area: Area2D) -> void:
 	var raw_damage = base_damage + (excess_speed * damage_velocity_scale)
 	
 	var receiver = area as HitReceiver
-	# Enviamos o dano, a direção e a velocidade atual do impacto
 	var _hit_data = receiver.process_hit(raw_damage + extra_damage, velocity.normalized(), current_speed)
 	
-	# Empurra o jogador na direção oposta ao golpe
 	var bounce_dir = -forward_vec
 	velocity = bounce_dir * (current_speed * bounce_ratio)
 
@@ -216,10 +238,9 @@ func _on_hurtbox_entered(area: Area2D) -> void:
 	if is_invulnerable:
 		return
 		
-	# Verifica se é EnemyHitbox ou se tem a função de dano implementada
 	if area is EnemyHitbox or area.has_method("get_damage_payload"):
 		var payload: Dictionary = area.get_damage_payload(global_position)
-		take_damage(payload["damage"]*((100-defense)/100), payload["knockback"])
+		take_damage(payload["damage"] * ((100.0 - float(defense)) / 100.0), payload["knockback"])
 
 func _check_overlapping_hitboxes() -> void:
 	if is_invulnerable or not hurtbox_area:
@@ -233,8 +254,9 @@ func _check_overlapping_hitboxes() -> void:
 
 func pickup_item(item: Area2D) -> void:
 	var item_id = item.item_id
-	if item_id/100 == 1:
-		get_tree().current_scene.add_gold(5 * item_id%100)
+	if int(item_id / 100) == 1:
+		if get_tree().current_scene.has_method("add_gold"):
+			get_tree().current_scene.add_gold(5 * (item_id % 100))
 		item.queue_free()
 		return
 	var canvas = get_tree().get_first_node_in_group("inventCanvas")

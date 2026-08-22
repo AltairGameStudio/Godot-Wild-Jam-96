@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://7d5t1q2dmnct"]
 
 [ext_resource type="Script" uid="uid://dbvl2oria12x0" path="res://scripts/entities/heavy_enemy.gd" id="1_l2kg0"]
-[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="2_vs2hb"]
+[ext_resource type="Texture2D" uid="uid://b5iim605gyfe6" path="res://assets/sprites/entities/enemy_tank-frame0.png" id="2_l2kg0"]
 [ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/entities/player_hit.gd" id="3_xjqmp"]
 [ext_resource type="Script" uid="uid://bhkb3rqglk3fp" path="res://scripts/entities/enemy_hitbox.gd" id="4_eaxfg"]
 
@@ -30,9 +30,9 @@ script = ExtResource("1_l2kg0")
 deflect_damage = 30.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2044408994]
-position = Vector2(4.7683716e-07, 0)
-scale = Vector2(0.44531253, 0.44140625)
-texture = ExtResource("2_vs2hb")
+position = Vector2(1.9999999, -2)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_l2kg0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1347283466]
 shape = SubResource("CircleShape2D_xwavj")
@@ -50,9 +50,9 @@ shape = SubResource("CircleShape2D_vs2hb")
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1539955842]
 offset_left = -25.0
-offset_top = -37.0
+offset_top = -43.0
 offset_right = 26.0
-offset_bottom = -30.0
+offset_bottom = -36.0
 theme_override_styles/background = SubResource("StyleBoxFlat_md0e3")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4ra3w")
 show_percentage = false

@@ -3,6 +3,14 @@ extends CharacterBody2D
 
 signal enemy_died
 
+# --- SPRITES / ANIMAÇÃO DE PULO ---
+@export_group("Sprites")
+@export var sprite_idle: Texture2D = preload("res://assets/sprites/entities/enemy_jumpy_000.png")
+@export var sprite_jumping: Texture2D = preload("res://assets/sprites/entities/enemy_jumpy_001.png")
+
+@onready var enemy_sprite: Sprite2D = $Sprite2D
+# ----------------------------------
+
 @export_group("Atributos")
 @export var max_health: float = 35.0
 @export var move_speed: float = 95.0
@@ -11,8 +19,8 @@ signal enemy_died
 @export var knockback_multiplier: float = 1.2
 
 @export_group("Esquiva / Dash Reativo")
-@export var dodge_trigger_distance: float = 220.0     # Distância em que ele percebe o ataque
-@export var min_player_speed_trigger: float = 250.0   # Velocidade mínima do player para assustar o inimigo
+@export var dodge_trigger_distance: float = 220.0     # Distância em que percebe o ataque
+@export var min_player_speed_trigger: float = 250.0   # Velocidade mínima do player para assustar
 @export var dodge_speed: float = 580.0                # Força/velocidade do dash lateral
 @export var dodge_duration: float = 0.25              # Duração do impulso em segundos
 @export var dodge_cooldown_time: float = 3.0          # Tempo de recarga entre esquivas
@@ -38,11 +46,9 @@ var current_health: float
 var player_ref: Node2D = null
 var is_dead: bool = false
 
-# Variáveis de Strafe
 var strafe_direction: float = 1.0
 var strafe_change_timer: float = 0.0
 
-# Variáveis de Controle da Esquiva
 var is_dodging: bool = false
 var dodge_timer: float = 0.0
 var dodge_cooldown: float = 0.0
@@ -54,6 +60,9 @@ func _ready() -> void:
 	add_to_group("enemies")
 	current_health = max_health
 	player_ref = get_tree().get_first_node_in_group("player") as Node2D
+	
+	if enemy_sprite and sprite_idle:
+		enemy_sprite.texture = sprite_idle
 	
 	if health_bar:
 		health_bar.max_value = max_health
@@ -73,11 +82,9 @@ func _ready() -> void:
 	strafe_change_timer = randf_range(1.5, 3.0)
 
 func _physics_process(delta: float) -> void:
-	# Atualiza o tempo de recarga da esquiva
 	if dodge_cooldown > 0.0:
 		dodge_cooldown -= delta
 
-	# Processa movimento ou esquiva
 	if is_dodging:
 		_process_dodge(delta)
 	else:
@@ -86,8 +93,6 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	_update_healthbar_position()
-
-# --- VERIFICAÇÃO E EXECUÇÃO DA ESQUIVA ---
 
 func _check_dodge_trigger() -> void:
 	if dodge_cooldown > 0.0 or not is_instance_valid(player_ref):
@@ -100,22 +105,17 @@ func _check_dodge_trigger() -> void:
 	var to_enemy = global_position - player_ref.global_position
 	var distance = to_enemy.length()
 	
-	# Checa se o player está próximo o suficiente para ativar o reflexo
 	if distance > dodge_trigger_distance:
 		return
 		
 	var player_speed = player_char.velocity.length()
-	
-	# Checa se o player está vindo em alta velocidade
 	if player_speed < min_player_speed_trigger:
 		return
 		
-	# Checa se o vetor de velocidade do player está apontado para a direção deste inimigo
 	var player_move_dir = player_char.velocity.normalized()
 	var dir_to_enemy = to_enemy.normalized()
 	var alignment = player_move_dir.dot(dir_to_enemy)
 	
-	# Se alignment > 0.65, o player está vindo em rota de colisão frontal direta
 	if alignment > 0.65:
 		_trigger_dodge(dir_to_enemy)
 
@@ -124,14 +124,14 @@ func _trigger_dodge(dir_from_player: Vector2) -> void:
 	dodge_timer = dodge_duration
 	dodge_cooldown = dodge_cooldown_time
 	
-	# Vetor lateral relativo à investida do player
-	var lateral_dir = Vector2(-dir_from_player.y, dir_from_player.x).normalized()
+	# Troca para o sprite de pulo durante o salto
+	if enemy_sprite and sprite_jumping:
+		enemy_sprite.texture = sprite_jumping
 	
-	# Sorteia para qual dos dois lados vai esquivar (-1 ou 1)
+	var lateral_dir = Vector2(-dir_from_player.y, dir_from_player.x).normalized()
 	var side = 1.0 if randf() > 0.5 else -1.0
 	dodge_direction_vec = lateral_dir * side
 	
-	# Aplica a velocidade instantânea do dash
 	velocity = dodge_direction_vec * dodge_speed
 	
 	var tween = create_tween()
@@ -140,14 +140,13 @@ func _trigger_dodge(dir_from_player: Vector2) -> void:
 
 func _process_dodge(delta: float) -> void:
 	dodge_timer -= delta
-	
-	# Mantém a velocidade do dash desacelerando suavemente até o fim da duração
 	velocity = velocity.move_toward(dodge_direction_vec * (dodge_speed * 0.4), 800.0 * delta)
 	
 	if dodge_timer <= 0.0:
 		is_dodging = false
-
-# --- COMBATE PADRÃO ---
+		# Retorna ao sprite base ao aterrissar
+		if enemy_sprite and sprite_idle:
+			enemy_sprite.texture = sprite_idle
 
 func _handle_ai_combat(delta: float) -> void:
 	if not is_instance_valid(player_ref):
@@ -157,11 +156,9 @@ func _handle_ai_combat(delta: float) -> void:
 	var to_player = player_ref.global_position - global_position
 	var distance = to_player.length()
 
-	# Rotação em direção ao player
 	var target_angle = to_player.angle() - (PI / 2.0)
 	rotation = rotate_toward(rotation, target_angle, turn_speed * delta)
 
-	# Atualiza timer do strafe normal
 	strafe_change_timer -= delta
 	if strafe_change_timer <= 0.0:
 		strafe_direction *= -1.0
@@ -199,10 +196,7 @@ func _get_separation_vector() -> Vector2:
 				
 	return push_vector.normalized()
 
-# --- SISTEMA DE TIRO ---
-
 func _on_shoot_timer_timeout() -> void:
-	# Não dispara no meio da esquiva
 	if not is_dodging and is_instance_valid(player_ref) and (player_ref.global_position - global_position).length() < stop_distance + 500:
 		shoot()
 		
@@ -213,15 +207,11 @@ func shoot() -> void:
 		return
 		
 	var bullet = bullet_scene.instantiate() as Area2D
-	
-	# Calcula a direção em linha reta para o player
 	var base_dir = (player_ref.global_position - shoot_point.global_position).normalized()
 	
-	# Sorteia uma variação de ângulo em radianos entre [-spread, +spread]
 	var spread_rad = deg_to_rad(shoot_spread_degrees)
 	var random_offset = randf_range(-spread_rad, spread_rad)
 	
-	# Aplica a rotação no vetor de direção
 	bullet.direction = base_dir.rotated(random_offset)
 	bullet.global_position = shoot_point.global_position
 	

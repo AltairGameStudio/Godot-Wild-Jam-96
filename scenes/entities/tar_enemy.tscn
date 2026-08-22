@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://5lw4spwjcaal" path="res://scripts/entities/tar_enemy.gd" id="1_dyacx"]
 [ext_resource type="PackedScene" uid="uid://cjp4tu6i1xvsl" path="res://scenes/entities/tar_puddle.tscn" id="2_e3c7r"]
-[ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="3_nm145"]
+[ext_resource type="Texture2D" uid="uid://d0p45wh5lrs24" path="res://assets/sprites/entities/enemy_slug-frame0.png" id="3_dyacx"]
 [ext_resource type="Script" uid="uid://cffthbj0sarwx" path="res://scripts/entities/player_hit.gd" id="4_baxkh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2jkx"]
@@ -30,8 +30,8 @@ tar_puddle_scene = ExtResource("2_e3c7r")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2105691930]
 position = Vector2(0, -0.9999962)
-scale = Vector2(0.3828125, 0.3671875)
-texture = ExtResource("3_nm145")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_dyacx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633371717]
 shape = SubResource("CircleShape2D_g2jkx")
