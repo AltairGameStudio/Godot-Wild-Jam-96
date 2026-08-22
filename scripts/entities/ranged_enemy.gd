@@ -36,6 +36,10 @@ var player_ref: Node2D = null
 
 var is_dead: bool = false
 
+var drop = preload("res://scenes/ui/item.tscn")
+var items_can_drop = [5, 7]
+var chances_of_drop = [0.2, 0.1]
+
 func _ready() -> void:
 	add_to_group("enemies")
 	
@@ -159,10 +163,25 @@ func _update_healthbar_position() -> void:
 	if health_bar:
 		health_bar.global_position = global_position + Vector2(-health_bar.size.x / 2.0, -30.0)
 
+func create_item() -> void:
+	var coin_lvl = randi_range(1,10)
+	var coin_drop = drop.instantiate()
+	coin_drop.setup(100 + coin_lvl, self.global_position)
+	get_tree().current_scene.get_node("World/Arena").add_child(coin_drop)
+	
+	for idx in range(items_can_drop.size()):
+		if randf() <= chances_of_drop[idx]:
+			var idx_drop = drop.instantiate()
+			var idx_lvl = randi_range(1,5)
+			var offset = Vector2(randi_range(-5,5), randi_range(-5,5))
+			idx_drop.setup(items_can_drop[idx]*100 + idx_lvl, self.global_position + offset)
+			get_tree().current_scene.get_node("World/Arena").add_child(idx_drop)
+			return
+
 func die() -> void:
 	# Se já morreu neste frame, não faz nada
 	if is_dead: return 
-	
+	call_deferred("create_item")
 	is_dead = true
 	enemy_died.emit()
 	queue_free()

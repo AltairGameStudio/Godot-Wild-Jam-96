@@ -25,7 +25,10 @@ signal enemy_died
 var current_health: float
 var player_ref: Node2D = null
 var is_dead: bool = false
+
 var drop = preload("res://scenes/ui/item.tscn")
+var items_can_drop = [6]
+var chances_of_drop = [0.2]
 
 # Controle de movimentação aleatória
 var wander_direction: Vector2 = Vector2.ZERO
@@ -158,10 +161,19 @@ func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.H
 		die()
 
 func create_item() -> void:
-	for i in range(1, 4):
-		var new_drop = drop.instantiate()
-		new_drop.setup(i * 100, self.global_position)
-		get_tree().current_scene.add_child(new_drop)
+	var coin_lvl = randi_range(1,10)
+	var coin_drop = drop.instantiate()
+	coin_drop.setup(100 + coin_lvl, self.global_position)
+	get_tree().current_scene.get_node("World/Arena").add_child(coin_drop)
+	
+	for idx in range(items_can_drop.size()):
+		if randf() <= chances_of_drop[idx]:
+			var idx_drop = drop.instantiate()
+			var idx_lvl = randi_range(1,5)
+			var offset = Vector2(randi_range(-5,5), randi_range(-5,5))
+			idx_drop.setup(items_can_drop[idx]*100 + idx_lvl, self.global_position + offset)
+			get_tree().current_scene.get_node("World/Arena").add_child(idx_drop)
+			return
 
 func die() -> void:
 	if is_dead: return
