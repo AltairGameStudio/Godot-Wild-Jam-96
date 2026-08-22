@@ -4,16 +4,16 @@ extends Control
 var id = 0
 var description = null
 var item = {
-		1: "Moeda",
-		2: "Lança",
-		3: "Armadura",
-		4: "Capa",
-		5: "Rédea",
-		6: "Ferradura",
-		7: "Sela"
-	}
+	1: "Moeda",
+	2: "Lança",
+	3: "Armadura",
+	4: "Capa",
+	5: "Rédea",
+	6: "Ferradura",
+	7: "Sela"
+}
 var item_description = {
-	1: "%d dinheiros pae",
+	1: "%d",
 	2: "Aumenta o dano em (%d).",
 	3: "Diminui em (%d) porcento o dano recebido.",
 	4: "Aumenta a vida máxima em (%d)",
@@ -54,6 +54,8 @@ func _return_data(data: Variant) -> void:
 
 func _notification(what):
 	if what == NOTIFICATION_DRAG_END:
+		if self is buy_slot:
+			return
 		$sprite.visible = true
 		if !(self is equipment) and $amount:
 			$amount.visible = true
@@ -64,6 +66,10 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 			return true
 		elif data.id != self.id:
 			return false
+	if data is buy_slot:
+		if (id != 0 and id != data.id):
+			return false
+		return data.can_buy()
 	return true
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
@@ -74,14 +80,22 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		if !(self is equipment):
 			$amount.visible = true
 		return
-	if data is equipment and self.id == 0:
+	if data is buy_slot:
+		if id == 0:
+			$sprite.texture = data.get_node("sprite").texture
+			$amount.text = "1"
+			id = data.id
+		else:
+			$amount.text = str(int($amount.text) + 1)
+		data.set_empty_slot()
+		get_tree().call_group("player", "update_info")
+	elif data is equipment and self.id == 0:
 		get_tree().call_group("player", "equipment_changed", data.id, false)
 		$amount.text = "1"
 		$sprite.texture = data.equip_sprite
 		id = data.id
 		data.set_empty_slot()
-		return
-	if self.id == data.id: # Se o id for o mesmo soma as quantidades
+	elif self.id == data.id: # Se o id for o mesmo soma as quantidades
 		var quantity = int($amount.text)
 		if data is equipment:
 			quantity += 1
@@ -91,16 +105,19 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		$amount.text = str(quantity)
 		data.set_empty_slot()
 	else: # Se o sprite for diferente troca os dados de lugar
+		if data is sell_slot:
+			#data.item_removed_from_store.emit(data.id, int(data.get_node("amount").text))
+			data.item_removed_from_store()
+			#data.new_item_on_store.emit(id, int($amount.text))
 		var sprite = data.get_node("sprite").texture
 		var text = data.get_node("amount").text
 		var n_id = data.id
 		data.get_node("sprite").texture = $sprite.texture
 		data.get_node("amount").text = $amount.text
-		data.id = self.id
+		data.id = id
 		$sprite.texture = sprite
 		$amount.text = text
-		self.id = n_id
-	
+		id = n_id
 
 func _on_mouse_entered() -> void:
 	if id == 0 or get_viewport().gui_is_dragging(): return

@@ -24,8 +24,11 @@ func _return_data(data: Variant) -> void:
 	$sprite.texture = data.sprite
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	if data is buy_slot:
+		if id != 0 or (data.id/100 != id_accepted):
+			return false
+		return data.can_buy()
 	if data is slot:
-		@warning_ignore("integer_division")
 		if data.id/100 == id_accepted:
 			return true
 	return false
@@ -33,26 +36,31 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if data.id == 0 or data.id == self.id:
 		return
-	var quantity = int(data.get_node("amount").text)
-	if self.id == 0:
+	var quantity = 0
+	if data is buy_slot or data is equipment:
+		quantity = 1
+	else:
+		quantity = int(data.get_node("amount").text)
+	if id == 0:
 		$sprite.texture = equip_sprite
-		self.id = data.id
+		id = data.id
 		if quantity == 1:
 			data.set_empty_slot()
 		else:
 			data.get_node("amount").text = str(quantity-1)
 	else:
-		get_tree().call_group("player", "equipment_changed", self.id, false)
+		get_tree().call_group("player", "equipment_changed", id, false)
 		if quantity == 1:
 			var n_id = data.id
-			data.id = self.id
-			self.id = n_id
+			data.id = id
+			id = n_id
 		else:
 			data.get_node("amount").text = str(quantity - 1)
 			return_to_inventory(id)
 			id = data.id
-	data.get_node("sprite").visible = true
-	data.get_node("amount").visible = true
+	if !(data is buy_slot):
+		data.get_node("sprite").visible = true
+		data.get_node("amount").visible = true
 	get_tree().call_group("player", "equipment_changed", self.id, true)
 
 func return_to_inventory(new_item_id) -> bool:

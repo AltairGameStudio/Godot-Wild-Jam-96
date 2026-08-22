@@ -21,6 +21,22 @@
 [ext_resource type="Texture2D" uid="uid://c4rdwys3ev8ie" path="res://assets/sprites/items/cape_slot.png" id="19_xw6bx"]
 [ext_resource type="Script" uid="uid://bkgcrhs7chdjw" path="res://scripts/ui/saddle.gd" id="20_f63ls"]
 [ext_resource type="Texture2D" uid="uid://gri21oyhd1ly" path="res://assets/sprites/items/saddle_slot.png" id="21_3iwlh"]
+[ext_resource type="Texture2D" uid="uid://btrfr3o0av7l" path="res://assets/sprites/store.png" id="22_h47kl"]
+[ext_resource type="Script" uid="uid://crmy2c1lbnrv8" path="res://scripts/ui/sell_button.gd" id="23_8lyor"]
+[ext_resource type="Script" uid="uid://cgeqi6o6l0c8v" path="res://scripts/ui/minus.gd" id="23_bci2j"]
+[ext_resource type="Script" uid="uid://kcqiuvwv7e61" path="res://scripts/ui/sell_slot.gd" id="23_e33ju"]
+[ext_resource type="Texture2D" uid="uid://378b858ue4n2" path="res://assets/sprites/minus.png" id="24_3chmt"]
+[ext_resource type="Texture2D" uid="uid://kciadncfjxgc" path="res://assets/sprites/sell_button.png" id="24_e33ju"]
+[ext_resource type="Texture2D" uid="uid://bkp30ogd8bpi" path="res://assets/sprites/slot_inventario.png" id="25_3chmt"]
+[ext_resource type="Script" uid="uid://br4av5r6p3aq7" path="res://scripts/ui/plus.gd" id="25_xw6bx"]
+[ext_resource type="Texture2D" uid="uid://d2w6spgptj60o" path="res://assets/sprites/plus.png" id="26_f63ls"]
+[ext_resource type="Texture2D" uid="uid://vkqhl3x2noyi" path="res://assets/sprites/items/lance.png" id="28_x1rtc"]
+[ext_resource type="Script" uid="uid://b0lchitgoyfvj" path="res://scripts/ui/buy_slot.gd" id="28_x35ds"]
+[ext_resource type="Texture2D" uid="uid://c4k8l7vexfko4" path="res://assets/sprites/items/armor.png" id="29_x35ds"]
+[ext_resource type="Texture2D" uid="uid://bgoxb4gch5miu" path="res://assets/sprites/items/cape.png" id="30_wxh2m"]
+[ext_resource type="Texture2D" uid="uid://bekms35j6usg0" path="res://assets/sprites/items/rein.png" id="31_cbn55"]
+[ext_resource type="Texture2D" uid="uid://rbjxqp4g7pjs" path="res://assets/sprites/items/horseshoe.png" id="32_77d6k"]
+[ext_resource type="Texture2D" uid="uid://cme17ohbaulgi" path="res://assets/sprites/items/saddle.png" id="33_7jf4j"]
 
 [node name="inventory" type="GridContainer" unique_id=1194000883]
 anchors_preset = 8
@@ -29,9 +45,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -589.0
-offset_top = -289.0
+offset_top = -343.0
 offset_right = 589.0
-offset_bottom = 501.0
+offset_bottom = 447.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -491,6 +507,494 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
+[node name="dummy_slot" type="Control" parent="." unique_id=1231830665]
+layout_mode = 2
+
+[node name="store" type="TextureRect" parent="." unique_id=1571300893]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("22_h47kl")
+
+[node name="sale_zone" type="GridContainer" parent="store" unique_id=1433487132]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -245.0
+offset_top = -143.25
+offset_right = 245.0
+offset_bottom = -17.25
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 11
+theme_override_constants/v_separation = 6
+columns = 7
+
+[node name="sell_slot" parent="store/sale_zone" unique_id=1590843936 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot2" parent="store/sale_zone" unique_id=1521085405 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot3" parent="store/sale_zone" unique_id=811237720 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot4" parent="store/sale_zone" unique_id=1673487063 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot5" parent="store/sale_zone" unique_id=903318592 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot6" parent="store/sale_zone" unique_id=1362510816 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot7" parent="store/sale_zone" unique_id=592268611 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot8" parent="store/sale_zone" unique_id=1258712582 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot9" parent="store/sale_zone" unique_id=1178623908 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot10" parent="store/sale_zone" unique_id=1053584426 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot11" parent="store/sale_zone" unique_id=2090637936 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot12" parent="store/sale_zone" unique_id=103082452 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot13" parent="store/sale_zone" unique_id=267188472 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_slot14" parent="store/sale_zone" unique_id=120106379 instance=ExtResource("2_mc7eu")]
+layout_mode = 2
+script = ExtResource("23_e33ju")
+
+[node name="sell_button" type="Control" parent="store" unique_id=1420586304 groups=["sell_store"]]
+layout_mode = 1
+anchor_left = 0.75000006
+anchor_top = 0.574
+anchor_right = 0.75000006
+anchor_bottom = 0.574
+offset_left = -55.50003
+offset_top = -16.582
+offset_right = 55.49997
+offset_bottom = 16.418
+script = ExtResource("23_8lyor")
+
+[node name="sprite" type="TextureRect" parent="store/sell_button" unique_id=84475609]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("24_e33ju")
+expand_mode = 2
+
+[node name="sell" type="Label" parent="store/sell_button" unique_id=1439144694]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -11.5
+offset_right = 28.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Vender"
+
+[node name="info_total" type="Label" parent="store" unique_id=973427389]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.14500001
+anchor_top = 0.532
+anchor_right = 0.14500001
+anchor_bottom = 0.532
+offset_left = 0.18999481
+offset_top = -0.07600403
+offset_right = 148.19
+offset_bottom = 22.923996
+text = "Valor em moedas : "
+
+[node name="total" type="Label" parent="store" unique_id=1601746321]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.40100002
+anchor_top = 0.532
+anchor_right = 0.40100002
+anchor_bottom = 0.532
+offset_left = 0.22198486
+offset_top = -0.07600403
+offset_right = 69.221985
+offset_bottom = 22.923996
+text = "0"
+
+[node name="buy_zone" type="GridContainer" parent="store" unique_id=523433990]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.5
+offset_top = 69.0
+offset_right = 220.5
+offset_bottom = 129.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 3
+theme_override_constants/v_separation = 6
+columns = 9
+
+[node name="minus" type="Control" parent="store/buy_zone" unique_id=1024727911]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("23_bci2j")
+
+[node name="sprite" type="TextureRect" parent="store/buy_zone/minus" unique_id=1017252129]
+layout_mode = 0
+offset_top = 13.75
+offset_right = 29.0
+offset_bottom = 42.75
+texture = ExtResource("24_3chmt")
+expand_mode = 2
+
+[node name="description" type="Label" parent="store/buy_zone/minus" unique_id=1752422703]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Diminuir level dos itens"
+
+[node name="2" type="Control" parent="store/buy_zone" unique_id=1790994582 groups=["buy_store"]]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("28_x35ds")
+
+[node name="background" type="TextureRect" parent="store/buy_zone/2" unique_id=1752548852]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("25_3chmt")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="store/buy_zone/2" unique_id=1816444717]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -2.0
+offset_right = 4.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("28_x1rtc")
+expand_mode = 2
+
+[node name="description" type="Label" parent="store/buy_zone/2" unique_id=1440887525]
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="cost" type="Label" parent="store/buy_zone/2" unique_id=946892078]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.2670001
+anchor_right = 0.5
+anchor_bottom = 1.2670001
+offset_left = -19.5
+offset_top = -11.520004
+offset_right = 20.5
+offset_bottom = 11.479996
+horizontal_alignment = 1
+
+[node name="3" type="Control" parent="store/buy_zone" unique_id=724298611 groups=["buy_store"]]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("28_x35ds")
+
+[node name="background" type="TextureRect" parent="store/buy_zone/3" unique_id=1010900973]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("25_3chmt")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="store/buy_zone/3" unique_id=121746460]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("29_x35ds")
+expand_mode = 2
+
+[node name="description" type="Label" parent="store/buy_zone/3" unique_id=1486709335]
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="cost" type="Label" parent="store/buy_zone/3" unique_id=1143894291]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.2670001
+anchor_right = 0.5
+anchor_bottom = 1.2670001
+offset_left = -19.5
+offset_top = -11.520004
+offset_right = 20.5
+offset_bottom = 11.479996
+horizontal_alignment = 1
+
+[node name="4" type="Control" parent="store/buy_zone" unique_id=196595956 groups=["buy_store"]]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("28_x35ds")
+
+[node name="background" type="TextureRect" parent="store/buy_zone/4" unique_id=433292524]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("25_3chmt")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="store/buy_zone/4" unique_id=1324960839]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("30_wxh2m")
+expand_mode = 2
+
+[node name="description" type="Label" parent="store/buy_zone/4" unique_id=959318691]
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="cost" type="Label" parent="store/buy_zone/4" unique_id=1297481491]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.2670001
+anchor_right = 0.5
+anchor_bottom = 1.2670001
+offset_left = -19.5
+offset_top = -11.520004
+offset_right = 20.5
+offset_bottom = 11.479996
+horizontal_alignment = 1
+
+[node name="5" type="Control" parent="store/buy_zone" unique_id=275552447 groups=["buy_store"]]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("28_x35ds")
+
+[node name="background" type="TextureRect" parent="store/buy_zone/5" unique_id=1930271389]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("25_3chmt")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="store/buy_zone/5" unique_id=964705695]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("31_cbn55")
+expand_mode = 2
+
+[node name="description" type="Label" parent="store/buy_zone/5" unique_id=695240790]
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="cost" type="Label" parent="store/buy_zone/5" unique_id=1234068894]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.2670001
+anchor_right = 0.5
+anchor_bottom = 1.2670001
+offset_left = -19.5
+offset_top = -11.520004
+offset_right = 20.5
+offset_bottom = 11.479996
+horizontal_alignment = 1
+
+[node name="6" type="Control" parent="store/buy_zone" unique_id=1226536007 groups=["buy_store"]]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("28_x35ds")
+
+[node name="background" type="TextureRect" parent="store/buy_zone/6" unique_id=655438803]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("25_3chmt")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="store/buy_zone/6" unique_id=1696528684]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("32_77d6k")
+expand_mode = 2
+
+[node name="description" type="Label" parent="store/buy_zone/6" unique_id=1396584945]
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="cost" type="Label" parent="store/buy_zone/6" unique_id=1328478076]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.2670001
+anchor_right = 0.5
+anchor_bottom = 1.2670001
+offset_left = -19.5
+offset_top = -11.520004
+offset_right = 20.5
+offset_bottom = 11.479996
+horizontal_alignment = 1
+
+[node name="7" type="Control" parent="store/buy_zone" unique_id=1872163292 groups=["buy_store"]]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("28_x35ds")
+
+[node name="background" type="TextureRect" parent="store/buy_zone/7" unique_id=453108688]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("25_3chmt")
+expand_mode = 2
+
+[node name="sprite" type="TextureRect" parent="store/buy_zone/7" unique_id=366845152]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("33_7jf4j")
+expand_mode = 2
+
+[node name="description" type="Label" parent="store/buy_zone/7" unique_id=27347316]
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="cost" type="Label" parent="store/buy_zone/7" unique_id=435899492]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.2670001
+anchor_right = 0.5
+anchor_bottom = 1.2670001
+offset_left = -19.5
+offset_top = -11.520004
+offset_right = 20.5
+offset_bottom = 11.479996
+horizontal_alignment = 1
+
+[node name="plus" type="Control" parent="store/buy_zone" unique_id=1693455922]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("25_xw6bx")
+
+[node name="sprite" type="TextureRect" parent="store/buy_zone/plus" unique_id=1971353742]
+layout_mode = 0
+offset_top = 14.0
+offset_right = 29.75
+offset_bottom = 43.75
+texture = ExtResource("26_f63ls")
+expand_mode = 2
+
+[node name="description" type="Label" parent="store/buy_zone/plus" unique_id=1020233928]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Subir level dos itens"
+
+[node name="cost_label" type="Label" parent="store" unique_id=1791917015]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.503
+anchor_top = 0.92600006
+anchor_right = 0.503
+anchor_bottom = 0.92600006
+offset_left = -58.73401
+offset_top = -10.91803
+offset_right = 60.26599
+offset_bottom = 38.08197
+text = "Custo dos itens
+"
+
 [connection signal="mouse_entered" from="equip/equipments/lance" to="equip/equipments/lance" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="equip/equipments/lance" to="equip/equipments/lance" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="equip/equipments/rein" to="equip/equipments/rein" method="_on_mouse_entered"]
@@ -503,3 +1007,22 @@ offset_bottom = 23.0
 [connection signal="mouse_exited" from="equip/equipments/cape" to="equip/equipments/cape" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="equip/equipments/saddle" to="equip/equipments/saddle" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="equip/equipments/saddle" to="equip/equipments/saddle" method="_on_mouse_exited"]
+[connection signal="gui_input" from="store/sell_button" to="store/sell_button" method="_on_gui_input"]
+[connection signal="gui_input" from="store/buy_zone/minus" to="store/buy_zone/minus" method="_on_gui_input"]
+[connection signal="mouse_entered" from="store/buy_zone/minus" to="store/buy_zone/minus" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="store/buy_zone/minus" to="store/buy_zone/minus" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="store/buy_zone/2" to="store/buy_zone/2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="store/buy_zone/2" to="store/buy_zone/2" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="store/buy_zone/3" to="store/buy_zone/3" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="store/buy_zone/3" to="store/buy_zone/3" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="store/buy_zone/4" to="store/buy_zone/4" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="store/buy_zone/4" to="store/buy_zone/4" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="store/buy_zone/5" to="store/buy_zone/5" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="store/buy_zone/5" to="store/buy_zone/5" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="store/buy_zone/6" to="store/buy_zone/6" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="store/buy_zone/6" to="store/buy_zone/6" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="store/buy_zone/7" to="store/buy_zone/7" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="store/buy_zone/7" to="store/buy_zone/7" method="_on_mouse_exited"]
+[connection signal="gui_input" from="store/buy_zone/plus" to="store/buy_zone/plus" method="_on_gui_input"]
+[connection signal="mouse_entered" from="store/buy_zone/plus" to="store/buy_zone/plus" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="store/buy_zone/plus" to="store/buy_zone/plus" method="_on_mouse_exited"]
