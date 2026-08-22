@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bsqai3jd8t6t4" path="res://assets/sprites/bush.png" id="7_fwvjp"]
 [ext_resource type="Texture2D" uid="uid://bj6t5gaehditt" path="res://assets/sprites/tree.png" id="8_xbtnt"]
 [ext_resource type="Texture2D" uid="uid://dss0rse2oqcay" path="res://assets/sprites/bush_2.png" id="9_3sg37"]
+[ext_resource type="Script" uid="uid://cj6manv3gm1uh" path="res://scripts/entities/store_npc.gd" id="16_my0xt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fwvjp"]
 resource_name = "tiles"
@@ -10057,6 +10058,10 @@ npc_name = "Arena Gate"
 npc_type = 4
 prompt_message = "[E] Enter arena"
 accent_color = Color(0.39215687, 0.58431375, 0.19215687, 1)
+
+[node name="ArmorStore" parent="NPCs" unique_id=416472880 instance=ExtResource("1_e21v4")]
+position = Vector2(867, 531)
+script = ExtResource("16_my0xt")
 
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1143949303]
 position = Vector2(559, 135)

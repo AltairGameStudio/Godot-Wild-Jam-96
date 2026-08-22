@@ -7,6 +7,8 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		$inventory.visible = not $inventory.visible
+		if $inventory/store.visible:
+			$inventory/store.visible = false
 
 func add_item_inventory(new_item: Area2D) -> bool:
 	var empty = null
