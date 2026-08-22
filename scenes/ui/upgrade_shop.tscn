@@ -1,0 +1,395 @@
+[gd_scene format=3 uid="uid://c23ixdpvvncv7"]
+
+[ext_resource type="Script" uid="uid://sti4qsme8j54" path="res://scripts/ui/upgrade_shop.gd" id="1_ms2kk"]
+[ext_resource type="Texture2D" uid="uid://dk0sks7axsnpl" path="res://assets/sprites/upgrade_shop.png" id="2_15oxs"]
+[ext_resource type="Texture2D" uid="uid://kciadncfjxgc" path="res://assets/sprites/sell_button.png" id="3_3by1d"]
+[ext_resource type="Script" uid="uid://btektn5vq2udm" path="res://scripts/ui/upgrade_button.gd" id="3_15oxs"]
+
+[node name="upgrade_shop" type="Container" unique_id=1166444788]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -289.0
+offset_top = -198.5
+offset_right = 289.0
+offset_bottom = 210.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_ms2kk")
+
+[node name="background" type="TextureRect" parent="." unique_id=107153993]
+layout_mode = 2
+texture = ExtResource("2_15oxs")
+
+[node name="max_health_container" type="Control" parent="background" unique_id=392287970]
+anchors_preset = 0
+offset_left = 65.0
+offset_top = 74.5
+offset_right = 643.0
+offset_bottom = 74.5
+
+[node name="mh_label1" type="Label" parent="background/max_health_container" unique_id=419669867]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 0
+offset_left = 8.0
+offset_right = 236.0
+offset_bottom = 30.0
+size_flags_vertical = 0
+text = "Aumentar a vida máxima em "
+
+[node name="step_val" type="Label" parent="background/max_health_container" unique_id=863637361]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+offset_left = 236.0
+offset_right = 286.0
+offset_bottom = 30.0
+size_flags_vertical = 0
+
+[node name="max_health" type="Control" parent="background/max_health_container" unique_id=1201121058]
+custom_minimum_size = Vector2(120, 50)
+layout_direction = 2
+anchors_preset = 0
+offset_left = 344.0
+offset_top = -8.0
+offset_right = 464.0
+offset_bottom = 42.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+script = ExtResource("3_15oxs")
+
+[node name="buy_button" type="TextureRect" parent="background/max_health_container/max_health" unique_id=706471711]
+custom_minimum_size = Vector2(120, 30)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_3by1d")
+expand_mode = 1
+flip_v = true
+
+[node name="buy_text" type="Label" parent="background/max_health_container/max_health" unique_id=913574291]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -15.0
+offset_right = 50.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Comprar"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="mh_label2" type="Label" parent="background/max_health_container" unique_id=2042411849]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 30.0
+offset_right = 57.0
+offset_bottom = 60.0
+size_flags_vertical = 0
+text = "Custo:"
+
+[node name="cost" type="Label" parent="background/max_health_container" unique_id=283323339]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+offset_left = 64.0
+offset_top = 30.0
+offset_right = 114.0
+offset_bottom = 60.0
+size_flags_vertical = 0
+
+[node name="engine_power_container" type="Control" parent="background" unique_id=883374337]
+anchors_preset = 0
+offset_left = 64.0
+offset_top = 146.5
+offset_right = 642.0
+offset_bottom = 146.5
+
+[node name="ep_label1" type="Label" parent="background/engine_power_container" unique_id=400798939]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 0
+offset_left = 8.0
+offset_right = 236.0
+offset_bottom = 30.0
+size_flags_vertical = 0
+text = "Aumentar a força do cavalo em "
+
+[node name="step_val" type="Label" parent="background/engine_power_container" unique_id=195699473]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+offset_left = 257.0
+offset_right = 307.0
+offset_bottom = 30.0
+size_flags_vertical = 0
+
+[node name="engine_power" type="Control" parent="background/engine_power_container" unique_id=1407279954]
+custom_minimum_size = Vector2(120, 50)
+layout_direction = 2
+anchors_preset = 0
+offset_left = 346.0
+offset_top = -3.0
+offset_right = 466.0
+offset_bottom = 47.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+script = ExtResource("3_15oxs")
+
+[node name="buy_button" type="TextureRect" parent="background/engine_power_container/engine_power" unique_id=1032173537]
+custom_minimum_size = Vector2(120, 30)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_3by1d")
+expand_mode = 1
+flip_v = true
+
+[node name="buy_text" type="Label" parent="background/engine_power_container/engine_power" unique_id=2013039715]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -15.0
+offset_right = 50.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Comprar"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ep_label2" type="Label" parent="background/engine_power_container" unique_id=1162122220]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 30.0
+offset_right = 57.0
+offset_bottom = 60.0
+size_flags_vertical = 0
+text = "Custo:"
+
+[node name="cost" type="Label" parent="background/engine_power_container" unique_id=1576092929]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+offset_left = 64.0
+offset_top = 30.0
+offset_right = 114.0
+offset_bottom = 60.0
+size_flags_vertical = 0
+
+[node name="base_damage_container" type="Control" parent="background" unique_id=1322771880]
+anchors_preset = 0
+offset_left = 64.0
+offset_top = 226.5
+offset_right = 642.0
+offset_bottom = 226.5
+
+[node name="bd_label1" type="Label" parent="background/base_damage_container" unique_id=2140194692]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 0
+offset_left = 8.0
+offset_right = 236.0
+offset_bottom = 30.0
+size_flags_vertical = 0
+text = "Aumentar o dano base em"
+
+[node name="step_val" type="Label" parent="background/base_damage_container" unique_id=1388433109]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+offset_left = 217.0
+offset_right = 267.0
+offset_bottom = 30.0
+size_flags_vertical = 0
+
+[node name="base_damage" type="Control" parent="background/base_damage_container" unique_id=1577166536]
+custom_minimum_size = Vector2(120, 50)
+layout_direction = 2
+anchors_preset = 0
+offset_left = 346.0
+offset_top = -8.0
+offset_right = 466.0
+offset_bottom = 42.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+script = ExtResource("3_15oxs")
+
+[node name="buy_button" type="TextureRect" parent="background/base_damage_container/base_damage" unique_id=1920034627]
+custom_minimum_size = Vector2(120, 30)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_3by1d")
+expand_mode = 1
+flip_v = true
+
+[node name="buy_text" type="Label" parent="background/base_damage_container/base_damage" unique_id=336493882]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -15.0
+offset_right = 50.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Comprar"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="bd_label2" type="Label" parent="background/base_damage_container" unique_id=264867663]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 30.0
+offset_right = 57.0
+offset_bottom = 60.0
+size_flags_vertical = 0
+text = "Custo:"
+
+[node name="cost" type="Label" parent="background/base_damage_container" unique_id=1972479001]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+offset_left = 64.0
+offset_top = 30.0
+offset_right = 114.0
+offset_bottom = 60.0
+size_flags_vertical = 0
+
+[node name="drift_traction_container" type="Control" parent="background" unique_id=863849186]
+anchors_preset = 0
+offset_left = 65.0
+offset_top = 298.5
+offset_right = 643.0
+offset_bottom = 298.5
+
+[node name="dt_label1" type="Label" parent="background/drift_traction_container" unique_id=820732721]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 0
+offset_left = 8.0
+offset_right = 236.0
+offset_bottom = 30.0
+size_flags_vertical = 0
+text = "Aumentar a tração de drift em "
+
+[node name="step_val" type="Label" parent="background/drift_traction_container" unique_id=2074946717]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+offset_left = 248.0
+offset_right = 298.0
+offset_bottom = 30.0
+size_flags_vertical = 0
+
+[node name="drift_traction" type="Control" parent="background/drift_traction_container" unique_id=261905959]
+custom_minimum_size = Vector2(120, 50)
+layout_direction = 2
+anchors_preset = 0
+offset_left = 345.0
+offset_top = -8.0
+offset_right = 465.0
+offset_bottom = 42.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+script = ExtResource("3_15oxs")
+
+[node name="buy_button" type="TextureRect" parent="background/drift_traction_container/drift_traction" unique_id=995026031]
+custom_minimum_size = Vector2(120, 30)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_3by1d")
+expand_mode = 1
+flip_v = true
+
+[node name="buy_text" type="Label" parent="background/drift_traction_container/drift_traction" unique_id=1234685400]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -15.0
+offset_right = 50.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Comprar"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="dt_label2" type="Label" parent="background/drift_traction_container" unique_id=89260493]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 30.0
+offset_right = 57.0
+offset_bottom = 60.0
+size_flags_vertical = 0
+text = "Custo:"
+
+[node name="cost" type="Label" parent="background/drift_traction_container" unique_id=386207092]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 1
+offset_left = 64.0
+offset_top = 30.0
+offset_right = 114.0
+offset_bottom = 60.0
+size_flags_vertical = 0
+
+[connection signal="gui_input" from="background/max_health_container/max_health" to="background/max_health_container/max_health" method="_on_gui_input"]
+[connection signal="gui_input" from="background/engine_power_container/engine_power" to="background/engine_power_container/engine_power" method="_on_gui_input"]
+[connection signal="gui_input" from="background/base_damage_container/base_damage" to="background/base_damage_container/base_damage" method="_on_gui_input"]
+[connection signal="gui_input" from="background/drift_traction_container/drift_traction" to="background/drift_traction_container/drift_traction" method="_on_gui_input"]

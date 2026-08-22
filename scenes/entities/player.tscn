@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://b5cbtb7hix63h" path="res://assets/sprites/entities/player_000.png" id="2_42nxq"]
 [ext_resource type="PackedScene" uid="uid://bajs8h6lhtgv5" path="res://scenes/ui/inventario.tscn" id="3_1ie0h"]
 [ext_resource type="Script" uid="uid://b8s0fexespo8o" path="res://scripts/ui/ui_canvas.gd" id="3_42nxq"]
+[ext_resource type="PackedScene" uid="uid://c23ixdpvvncv7" path="res://scenes/ui/upgrade_shop.tscn" id="5_5u6hq"]
+[ext_resource type="Script" uid="uid://coj27neg8etam" path="res://scripts/ui/notification.gd" id="6_d4qa6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dqkch"]
 radius = 25.019993
@@ -71,11 +73,30 @@ shape = SubResource("CircleShape2D_qhqgy")
 
 [node name="inventoryData" type="Node" parent="." unique_id=1189242973]
 
-[node name="inventoryHUD" type="CanvasLayer" parent="." unique_id=737088758 groups=["inventCanvas"]]
+[node name="PlayerCanvas" type="CanvasLayer" parent="." unique_id=737088758 groups=["PlayerCanvas"]]
 script = ExtResource("3_42nxq")
 
-[node name="inventory" parent="inventoryHUD" unique_id=1194000883 instance=ExtResource("3_1ie0h")]
+[node name="inventory" parent="PlayerCanvas" unique_id=1194000883 instance=ExtResource("3_1ie0h")]
 visible = false
+
+[node name="upgrade_shop" parent="PlayerCanvas" unique_id=1273479935 instance=ExtResource("5_5u6hq")]
+visible = false
+
+[node name="notification" type="Label" parent="PlayerCanvas" unique_id=69037831]
+visible = false
+z_index = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_d4qa6")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1437981006]
 texture_filter = 1

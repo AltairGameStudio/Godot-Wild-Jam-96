@@ -130,7 +130,7 @@ func _on_mouse_entered() -> void:
 		4: lvl*10,
 		5: lvl/5.0,
 		6: lvl/10.0,
-		7: lvl*20
+		7: lvl*50
 	}
 	$description.text = "Item: %s\nLevel: %d\n%s" % [item[it], lvl, item_description[it] % buff[it]]
 	$description.visible = true

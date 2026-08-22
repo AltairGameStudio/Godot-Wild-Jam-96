@@ -1,4 +1,3 @@
-class_name trash
 extends CanvasLayer
 
 func _ready() -> void:
@@ -6,6 +5,8 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
+		if $upgrade_shop.visible:
+			$upgrade_shop.visible = false
 		$inventory.visible = not $inventory.visible
 		if $inventory/store.visible:
 			$inventory/store.visible = false

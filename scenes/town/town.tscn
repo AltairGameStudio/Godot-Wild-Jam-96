@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://bj6t5gaehditt" path="res://assets/sprites/tree.png" id="8_xbtnt"]
 [ext_resource type="Texture2D" uid="uid://dss0rse2oqcay" path="res://assets/sprites/bush_2.png" id="9_3sg37"]
 [ext_resource type="Script" uid="uid://cj6manv3gm1uh" path="res://scripts/entities/store_npc.gd" id="16_my0xt"]
+[ext_resource type="Script" uid="uid://6uguhq1ckj7q" path="res://scripts/entities/upgrade_npc.gd" id="17_fwvjp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fwvjp"]
 resource_name = "tiles"
@@ -10062,6 +10063,11 @@ accent_color = Color(0.39215687, 0.58431375, 0.19215687, 1)
 [node name="ArmorStore" parent="NPCs" unique_id=416472880 instance=ExtResource("1_e21v4")]
 position = Vector2(867, 531)
 script = ExtResource("16_my0xt")
+
+[node name="UpgradeStore" parent="NPCs" unique_id=1299559040 instance=ExtResource("1_e21v4")]
+position = Vector2(1546, 578.99994)
+rotation = 1.5707964
+script = ExtResource("17_fwvjp")
 
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1143949303]
 position = Vector2(559, 135)

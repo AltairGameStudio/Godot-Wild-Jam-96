@@ -62,66 +62,82 @@ script = ExtResource("2_okgyk")
 [node name="gold" type="Label" parent="info" unique_id=884197101]
 layout_mode = 1
 offset_left = 50.0
-offset_top = 56.5
+offset_top = 50.0
 offset_right = 135.0
-offset_bottom = 79.5
+offset_bottom = 73.0
 text = "Qtd. ouro:"
 
 [node name="max_life" type="Label" parent="info" unique_id=1318083703]
 layout_mode = 1
 offset_left = 50.0
-offset_top = 91.5
+offset_top = 84.0
 offset_right = 135.0
-offset_bottom = 114.5
+offset_bottom = 107.0
 text = "Vida máx. :"
 
 [node name="act_life" type="Label" parent="info" unique_id=1418539347]
 layout_mode = 1
 offset_left = 50.0
-offset_top = 131.5
+offset_top = 116.5
 offset_right = 141.0
-offset_bottom = 154.5
+offset_bottom = 139.5
 text = "Vida atual : "
 
 [node name="attack" type="Label" parent="info" unique_id=1171320578]
 layout_mode = 1
 offset_left = 50.0
-offset_top = 172.5
+offset_top = 181.0
 offset_right = 145.0
-offset_bottom = 195.5
+offset_bottom = 204.0
 text = "Dano base : "
 
 [node name="defense" type="Label" parent="info" unique_id=520014219]
 layout_mode = 1
 offset_left = 50.0
-offset_top = 213.5
+offset_top = 147.5
 offset_right = 145.0
-offset_bottom = 236.5
+offset_bottom = 170.5
 text = "Defesa : "
 
 [node name="max_velocity" type="Label" parent="info" unique_id=1957310165]
 layout_mode = 1
 offset_left = 50.0
-offset_top = 254.5
+offset_top = 213.0
 offset_right = 214.0
-offset_bottom = 277.5
+offset_bottom = 236.0
 text = "Vel. máx. : "
 
 [node name="mult_velocity" type="Label" parent="info" unique_id=285274494]
 layout_mode = 1
 offset_left = 50.0
-offset_top = 297.5
+offset_top = 244.5
 offset_right = 225.0
-offset_bottom = 320.5
+offset_bottom = 267.5
 text = "Mult. de vel.: "
 
 [node name="steer_speed" type="Label" parent="info" unique_id=1209698360]
 layout_mode = 1
 offset_left = 50.0
-offset_top = 339.5
+offset_top = 278.0
 offset_right = 225.0
-offset_bottom = 362.5
+offset_bottom = 301.0
 text = "Vel. de manobra : "
+
+[node name="drift_traction" type="Label" parent="info" unique_id=290895366]
+layout_mode = 1
+offset_left = 50.0
+offset_top = 308.0
+offset_right = 225.0
+offset_bottom = 331.0
+text = "Tração de drift : "
+
+[node name="engine_power" type="Label" parent="info" unique_id=720726975]
+layout_mode = 1
+offset_left = 50.0
+offset_top = 340.0
+offset_right = 225.0
+offset_bottom = 363.0
+text = "Força do cavalo : "
 
 [node name="invent" type="TextureRect" parent="." unique_id=1998166446]
 layout_mode = 2
