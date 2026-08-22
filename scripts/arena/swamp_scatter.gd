@@ -15,9 +15,9 @@ extends Node2D
 @export_range(0.2, 2.0, 0.05) var outer_density_bias: float = 0.65 # < 1.0 empurra mais props para a borda externa
 
 @export_group("Quantidades Desejadas")
-@export var tree_count: int = 24
-@export var tree_down_count: int = 14
-@export var stump_count: int = 18
+@export var tree_count: int = 12
+@export var tree_down_count: int = 12
+@export var stump_count: int = 9
 @export var bush_count: int = 28
 @export var flower_count: int = 45
 
@@ -57,7 +57,7 @@ func _generate_swamp() -> void:
 	_spawn_prop_category(tex_stump, stump_count, "circle", 100.0, 20.0, Vector2(0, -5))
 	
 	# Arbustos: Obstáculo pequeno
-	_spawn_prop_category(tex_bush, bush_count, "circle", 100.0, 20.0, Vector2(0, -4))
+	_spawn_prop_category(tex_bush, bush_count, "none", 100.0, 20.0, Vector2(0, -4))
 	
 	# Flores: Sem colisão física (Clearance baixo apenas para não nascer dentro do mesmo ponto)
 	_spawn_prop_category(tex_flower, flower_count, "none", 22.0, 0.0, Vector2.ZERO)
@@ -116,6 +116,7 @@ func _instantiate_element(
 		spr.position = pos
 		# Origem na base do pé da flor
 		spr.offset = Vector2(0, -spr_h * 0.4)
+		spr.modulate.a = 0.5
 		add_child(spr)
 	else:
 		var body = StaticBody2D.new()

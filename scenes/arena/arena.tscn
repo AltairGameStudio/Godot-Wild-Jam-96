@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://d1bxenhu7ropx" path="res://assets/sprites/tilesets/swamp-tileset-frame0.png" id="4_xgbxb"]
 [ext_resource type="Texture2D" uid="uid://cwfmuvlk33ei6" path="res://assets/sprites/tilesets/grass-water-tileset-frame0.png" id="5_vmsrg"]
 [ext_resource type="PackedScene" uid="uid://7d5t1q2dmnct" path="res://scenes/entities/heavy_enemy.tscn" id="5_w4nra"]
-[ext_resource type="Script" path="res://scripts/ui/enemy_indicators.gd" id="6_jx0ua"]
+[ext_resource type="Script" uid="uid://chcdoqrsmlrq4" path="res://scripts/ui/enemy_indicators.gd" id="6_jx0ua"]
 [ext_resource type="Texture2D" uid="uid://c7xj42h2wd6jg" path="res://assets/sprites/tilesets/grass-walk-tileset-frame0.png" id="6_s83md"]
 [ext_resource type="PackedScene" uid="uid://cgjxoex1bxyv0" path="res://scenes/entities/shield_enemy.tscn" id="6_t3vx8"]
 [ext_resource type="Texture2D" uid="uid://by85axt801wa7" path="res://assets/sprites/tilesets/grasslol.png" id="7_fv88w"]
@@ -226,7 +226,11 @@ ring_layers = 15
 position = Vector2(881, 503)
 script = ExtResource("17_rhjlh")
 safe_zone_radius = 300.0
-flower_count = 60
+tree_count = 6
+tree_down_count = 6
+stump_count = 5
+bush_count = 14
+flower_count = 20
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=1737750689]
 energy = 0.75
