@@ -83,6 +83,9 @@ func play_town_theme() -> void:
 func play_arena_theme() -> void:
 	play_music(BGM_ARENA, 0.8)
 
+func play_boss_theme() -> void:
+	play_music(BGM_BOSS, 0.8)
+	
 # --- SISTEMA DE SFX COM RANDOMIZAÇÃO DE PITCH (ANTI-FADIGA AUDITIVA) ---
 
 func play_sfx(stream: AudioStream, base_volume_db: float = 0.0, pitch_range: float = 0.08) -> void:

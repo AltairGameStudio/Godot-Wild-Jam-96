@@ -48,7 +48,18 @@ const PHASE_TITLES = {
 }
 
 func _ready() -> void:
-	AudioManager.play_arena_theme()
+	var current_phase: int = 1
+	if "current_phase" in get_tree().current_scene:
+		current_phase = maxi(1, get_tree().current_scene.current_phase)
+	elif get_node_or_null("/root/GameManager"):
+		current_phase = get_node("/root/GameManager").current_phase
+
+	if current_phase >= 9:
+		AudioManager.play_boss_theme()
+	else:
+		AudioManager.play_arena_theme()
+
+	# 3. Inicialização dos Nós
 	player_ref = get_tree().get_first_node_in_group("player") as Node2D
 	start_phase()
 
