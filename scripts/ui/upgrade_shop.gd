@@ -42,9 +42,9 @@ func buy_upgrade(upgrade_name: String) -> void:
 	if ((upgrade_entry["base_cost"] * (upgrade_entry["cost_mult"] ** upgrade_entry["level"])) <= game.gold):
 		game.gold -= cost
 		apply_upgrade(upgrade_name, val_step)
-		$"../notification".activate_notification("Upgrade comprado!")
+		$"../notification".activate_notification("Upgrade bought")
 		game.upgrades[upgrade_name]["level"] += 1
 		game.upgrades[upgrade_name]["current_val"] += game.upgrades[upgrade_name]["val_step"]
 		update_upgrades()
 	else:
-		$"../notification".activate_notification("Sem dinheiro para isso.")
+		$"../notification".activate_notification("You don't have money for that")

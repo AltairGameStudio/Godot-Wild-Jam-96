@@ -23,6 +23,7 @@ var is_in_run: bool = false
 # Caminhos das Cenas
 const ARENA_SCENE_PATH = "res://scenes/arena/arena.tscn"
 const TOWN_SCENE_PATH = "res://scenes/town/town.tscn"
+var player_scene = preload("res://scenes/entities/player.tscn")
 
 var current_phase: int = 1
 
@@ -73,13 +74,20 @@ func end_run_success() -> void:
 
 # Retorno por morte (perde os itens da run atual)
 func end_run_failure() -> void:
-	print("Morreu")
+	await get_tree().create_timer(5).timeout
 	is_in_run = false
-	current_run_loot.clear()
+	current_run_loot.clear.call_deferred()
 	
 	# Reseta a fase ao morrer
 	current_phase = 1
-	get_tree().change_scene_to_file(TOWN_SCENE_PATH)
+	gold = 100
+	var new_player = player_scene.instantiate()
+	add_child(new_player)
+	upgrades["max_health"]["current_val"] = new_player.max_health
+	upgrades["engine_power"]["current_val"] = new_player.engine_power
+	upgrades["base_damage"]["current_val"] = new_player.base_damage
+	upgrades["drift_traction"]["current_val"] = new_player.drift_traction
+	change_world(TOWN_SCENE_PATH)
 
 func add_gold(amount: int) -> void:
 	gold += amount

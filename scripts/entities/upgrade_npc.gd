@@ -4,8 +4,8 @@ func _ready() -> void:
 	# Garante que o NPC esteja no grupo para o TownUI conectar
 	add_to_group("npcs")
 	npc_type = NPCType.SHOP
-	npc_name = "Treinador"
-	prompt_message = "[E] Melhorar atributos"
+	npc_name = "Trainer"
+	prompt_message = "[E] Improve attributes"
 	prompt_label.position += Vector2(40, 30)
 	prompt_label.set_rotation_degrees(-90)
 	visual.modulate = Color(0.8,0.8,0.6)

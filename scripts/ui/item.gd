@@ -32,10 +32,9 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
-func setup(id: int, pos: Vector2) -> void:
+func setup(id, pos: Vector2) -> void:
 	item_id = id
 	self.global_position = pos
-	@warning_ignore("integer_division")
 	$sprite.texture = load("res://assets/sprites/items/%s.png" % items[item_id/100])
 	scale = Vector2(0.75, 0.75)
 	

@@ -1,16 +1,16 @@
 extends TextureRect
 
 var labels = {
-	0 : "Qtd. ouro : ",
-	1 : "Vida máx. : ",
-	2 : "Vida atual : " ,
-	3 : "Dano : ",
-	4 : "Defesa : ",
-	5 : "Vel. máx. : ",
-	6 : "Mult. de vel. : ",
-	7 : "Vel. de manobra : ",
-	8 : "Tração de drift : ",
-	9 : "Força do cavalo : "
+	0 : "Total coins : ",
+	1 : "Max health : ",
+	2 : "Current health : " ,
+	3 : "Damage : ",
+	4 : "Defense : ",
+	5 : "Max speed : ",
+	6 : "Speed multiplier : ",
+	7 : "Steer speed : ",
+	8 : "Drift traction : ",
+	9 : "Horsepower : "
 }
 
 func update_labels(values) -> void:

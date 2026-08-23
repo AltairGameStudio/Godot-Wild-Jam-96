@@ -4,12 +4,12 @@ extends Node2D
 enum NPCType { DIALOGUE, SHOP, UPGRADE, QUEST, EXPEDITION_GATE }
 
 @export_group("Identidade")
-@export var npc_name: String = "Habitante"
+@export var npc_name: String = "Habitant"
 @export var npc_type: NPCType = NPCType.DIALOGUE
-@export var prompt_message: String = "[E] Falar"
+@export var prompt_message: String = "[E] Speak"
 
 @export_group("Conteúdo")
-@export_multiline var dialogue_pages: Array[String] = ["Olá, cavaleiro!"]
+@export_multiline var dialogue_pages: Array[String] = ["Hello, knight!"]
 @export var accent_color: Color = Color.CORNFLOWER_BLUE
 
 signal interacted(npc_data: NPC)
@@ -29,8 +29,7 @@ func _ready() -> void:
 
 	# Se for o portão de expedição, atualiza a mensagem com a fase atual
 	if npc_type == NPCType.EXPEDITION_GATE:
-		#prompt_message = "[E] Ir para a Arena (Fase %d)" % (GameManager.current_phase + 1)
-		prompt_message = "[E] Ir para a Arena (Fase %d)" % (get_tree().current_scene.current_phase + 1)
+		prompt_message = "[E] Go to the arena (Phase %d)" % (get_tree().current_scene.current_phase)
 
 	prompt_label.text = prompt_message
 	prompt_label.visible = false
@@ -45,8 +44,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		player_in_range = true
 		if npc_type == NPCType.EXPEDITION_GATE:
-			#prompt_label.text = "[E] Ir para a Arena (Fase %d)" % (GameManager.current_phase + 1)
-			prompt_label.text = "[Space] Go to arena (level %d)" % (get_tree().current_scene.current_phase)
+			prompt_label.text = "[E] Go to the arena (Phase %d)" % (get_tree().current_scene.current_phase)
 		prompt_label.visible = true
 
 func _on_body_exited(body: Node2D) -> void:

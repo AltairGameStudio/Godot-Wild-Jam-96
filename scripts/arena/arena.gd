@@ -69,7 +69,12 @@ func start_phase() -> void:
 func _process(delta: float) -> void:
 	if not is_round_active:
 		return
-
+	
+	# Verifica se o player morreu
+	if !player_ref:
+		_end_phase_by_death()
+		return
+	
 	# Atualiza a contagem regressiva
 	round_time_left -= delta
 	_update_timer_label()
@@ -173,6 +178,20 @@ func _end_phase_by_time() -> void:
 	# Chama a finalização da run com sucesso para voltar à cidade
 	if get_tree().current_scene.has_method("end_run_success"):
 		get_tree().current_scene.end_run_success()
+
+func _end_phase_by_death() -> void:
+	is_round_active = false
+	if timer_label:
+		timer_label.text = "00"
+	
+	_show_announcement("YOU DIED!", "Restarting on town...", 3.5, Color(0.3, 1.0, 0.4))
+
+	# Remove todos os inimigos vivos restantes na arena
+	get_tree().call_group("enemies", "queue_free")
+	
+	# Chama a finalização da run com sucesso para voltar à cidade
+	if get_tree().current_scene.has_method("end_run_failure"):
+		get_tree().current_scene.end_run_failure()
 
 # --- CONFIGURAÇÃO DE POOL POR FASE (OPCIONAL) ---
 func _setup_phase_pool(phase: int) -> void:

@@ -3,12 +3,11 @@
 importer="aseprite_wizard.plugin.static-texture"
 type="PortableCompressedTexture2D"
 uid="uid://ctcpexmfcur7i"
-path="res://.godot/imported/house_1.aseprite-41590712a84e5c0294ae6cb4f126dd13.res"
+valid=false
 
 [deps]
 
 source_file="res://assets/sprites/houses/house_1.aseprite"
-dest_files=["res://.godot/imported/house_1.aseprite-41590712a84e5c0294ae6cb4f126dd13.res"]
 
 [params]
 

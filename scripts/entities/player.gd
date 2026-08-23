@@ -95,13 +95,6 @@ func equipment_changed(item_id, item_equipped: bool):
 	
 	update_info()
 
-#var upgrades: Dictionary = {
-	#"max_health": {"level": 1, "base_cost": 50, "cost_mult": 1.5, "val_step": 20.0, "current_val": 100.0},
-	#"engine_power": {"level": 1, "base_cost": 75, "cost_mult": 1.6, "val_step": 150.0, "current_val": 1400.0},
-	#"base_damage": {"level": 1, "base_cost": 60, "cost_mult": 1.5, "val_step": 10.0, "current_val": 30.0},
-	#"drift_traction": {"level": 1, "base_cost": 100, "cost_mult": 1.8, "val_step": 0.03, "current_val": 0.85}
-#}
-
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if is_invulnerable:
 		return
@@ -244,22 +237,21 @@ func pickup_item(item: Area2D) -> void:
 	var item_id = item.item_id
 	if item_id/100 == 1:
 		get_tree().current_scene.add_gold(item_id%100)
-		$PlayerCanvas/notification.activate_notification("%d moedas coletadas" % (item_id%100))
+		$PlayerCanvas/notification.activate_notification("%d coins colecteds" % (item_id%100))
 		item.queue_free()
 		return
 	var canvas = get_tree().get_first_node_in_group("PlayerCanvas")
-	if canvas:
-		if canvas.add_item_inventory(item):
-			item.queue_free()
-	var items_available = {
-		2: "Lança",
-		3: "Armadura",
-		4: "Capa",
-		5: "Rédea",
-		6: "Ferradura",
-		7: "Sela"
-	}
-	$PlayerCanvas/notification.activate_notification("%s Lvl %d adicionado ao inventário" % [items_available[item_id/100], item_id%100])
+	if canvas and canvas.add_item_inventory(item):
+		item.queue_free()
+		var items_available = {
+			2: "Lance",
+			3: "Armor",
+			4: "Cape",
+			5: "Rein",
+			6: "Horseshoe",
+			7: "Saddle"
+		}
+		$PlayerCanvas/notification.activate_notification("%s Lvl %d added to the inventory" % [items_available[item_id/100], item_id%100])
 
 func apply_slow(factor: float = 0.5) -> void:
 	active_slow_sources += 1

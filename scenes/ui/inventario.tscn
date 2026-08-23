@@ -65,7 +65,7 @@ offset_left = 50.0
 offset_top = 50.0
 offset_right = 135.0
 offset_bottom = 73.0
-text = "Qtd. ouro:"
+text = "Coins : "
 
 [node name="max_life" type="Label" parent="info" unique_id=1318083703]
 layout_mode = 1
@@ -73,7 +73,7 @@ offset_left = 50.0
 offset_top = 84.0
 offset_right = 135.0
 offset_bottom = 107.0
-text = "Vida máx. :"
+text = "Max health : "
 
 [node name="act_life" type="Label" parent="info" unique_id=1418539347]
 layout_mode = 1
@@ -81,7 +81,7 @@ offset_left = 50.0
 offset_top = 116.5
 offset_right = 141.0
 offset_bottom = 139.5
-text = "Vida atual : "
+text = "Current health : "
 
 [node name="attack" type="Label" parent="info" unique_id=1171320578]
 layout_mode = 1
@@ -89,7 +89,7 @@ offset_left = 50.0
 offset_top = 181.0
 offset_right = 145.0
 offset_bottom = 204.0
-text = "Dano base : "
+text = "Damage : "
 
 [node name="defense" type="Label" parent="info" unique_id=520014219]
 layout_mode = 1
@@ -97,7 +97,7 @@ offset_left = 50.0
 offset_top = 147.5
 offset_right = 145.0
 offset_bottom = 170.5
-text = "Defesa : "
+text = "Defense : "
 
 [node name="max_velocity" type="Label" parent="info" unique_id=1957310165]
 layout_mode = 1
@@ -105,7 +105,7 @@ offset_left = 50.0
 offset_top = 213.0
 offset_right = 214.0
 offset_bottom = 236.0
-text = "Vel. máx. : "
+text = "Max speed : "
 
 [node name="mult_velocity" type="Label" parent="info" unique_id=285274494]
 layout_mode = 1
@@ -113,7 +113,7 @@ offset_left = 50.0
 offset_top = 244.5
 offset_right = 225.0
 offset_bottom = 267.5
-text = "Mult. de vel.: "
+text = "Speed multiplier : "
 
 [node name="steer_speed" type="Label" parent="info" unique_id=1209698360]
 layout_mode = 1
@@ -121,7 +121,7 @@ offset_left = 50.0
 offset_top = 278.0
 offset_right = 225.0
 offset_bottom = 301.0
-text = "Vel. de manobra : "
+text = "Steer speed : "
 
 [node name="drift_traction" type="Label" parent="info" unique_id=290895366]
 layout_mode = 1
@@ -129,7 +129,7 @@ offset_left = 50.0
 offset_top = 308.0
 offset_right = 225.0
 offset_bottom = 331.0
-text = "Tração de drift : "
+text = "Drift traction : "
 
 [node name="engine_power" type="Label" parent="info" unique_id=720726975]
 layout_mode = 1
@@ -137,7 +137,7 @@ offset_left = 50.0
 offset_top = 340.0
 offset_right = 225.0
 offset_bottom = 363.0
-text = "Força do cavalo : "
+text = "Horsepower : "
 
 [node name="invent" type="TextureRect" parent="." unique_id=1998166446]
 layout_mode = 2
@@ -642,7 +642,7 @@ offset_right = 28.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Vender"
+text = "Sell all"
 
 [node name="info_total" type="Label" parent="store" unique_id=973427389]
 layout_mode = 1
@@ -653,9 +653,9 @@ anchor_right = 0.14500001
 anchor_bottom = 0.532
 offset_left = 0.18999481
 offset_top = -0.07600403
-offset_right = 148.19
+offset_right = 98.189995
 offset_bottom = 22.923996
-text = "Valor em moedas : "
+text = "Total value : "
 
 [node name="total" type="Label" parent="store" unique_id=1601746321]
 layout_mode = 1
@@ -664,9 +664,9 @@ anchor_left = 0.40100002
 anchor_top = 0.532
 anchor_right = 0.40100002
 anchor_bottom = 0.532
-offset_left = 0.22198486
+offset_left = -49.778015
 offset_top = -0.07600403
-offset_right = 69.221985
+offset_right = 19.221985
 offset_bottom = 22.923996
 text = "0"
 
@@ -1008,8 +1008,8 @@ offset_left = -58.73401
 offset_top = -10.91803
 offset_right = 60.26599
 offset_bottom = 38.08197
-text = "Custo dos itens
-"
+text = "Items cost"
+horizontal_alignment = 1
 
 [connection signal="mouse_entered" from="equip/equipments/lance" to="equip/equipments/lance" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="equip/equipments/lance" to="equip/equipments/lance" method="_on_mouse_exited"]

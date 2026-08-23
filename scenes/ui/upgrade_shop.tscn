@@ -36,16 +36,16 @@ offset_bottom = 74.5
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 0
 offset_left = 8.0
-offset_right = 236.0
+offset_right = 192.0
 offset_bottom = 30.0
 size_flags_vertical = 0
-text = "Aumentar a vida máxima em "
+text = "Increase max health in"
 
 [node name="step_val" type="Label" parent="background/max_health_container" unique_id=863637361]
 custom_minimum_size = Vector2(50, 30)
 layout_mode = 1
-offset_left = 236.0
-offset_right = 286.0
+offset_left = 192.0
+offset_right = 242.0
 offset_bottom = 30.0
 size_flags_vertical = 0
 
@@ -93,7 +93,7 @@ offset_right = 50.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Comprar"
+text = "Buy"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -102,17 +102,17 @@ custom_minimum_size = Vector2(0, 30)
 layout_mode = 0
 offset_left = 8.0
 offset_top = 30.0
-offset_right = 57.0
+offset_right = 48.0
 offset_bottom = 60.0
 size_flags_vertical = 0
-text = "Custo:"
+text = "Cost:"
 
 [node name="cost" type="Label" parent="background/max_health_container" unique_id=283323339]
 custom_minimum_size = Vector2(50, 30)
 layout_mode = 1
-offset_left = 64.0
+offset_left = 48.0
 offset_top = 30.0
-offset_right = 114.0
+offset_right = 98.0
 offset_bottom = 60.0
 size_flags_vertical = 0
 
@@ -127,16 +127,16 @@ offset_bottom = 146.5
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 0
 offset_left = 8.0
-offset_right = 236.0
+offset_right = 194.0
 offset_bottom = 30.0
 size_flags_vertical = 0
-text = "Aumentar a força do cavalo em "
+text = "Increase horse power in"
 
 [node name="step_val" type="Label" parent="background/engine_power_container" unique_id=195699473]
 custom_minimum_size = Vector2(50, 30)
 layout_mode = 1
-offset_left = 257.0
-offset_right = 307.0
+offset_left = 201.0
+offset_right = 251.0
 offset_bottom = 30.0
 size_flags_vertical = 0
 
@@ -184,7 +184,7 @@ offset_right = 50.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Comprar"
+text = "Buy"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -193,17 +193,17 @@ custom_minimum_size = Vector2(0, 30)
 layout_mode = 0
 offset_left = 8.0
 offset_top = 30.0
-offset_right = 57.0
+offset_right = 49.0
 offset_bottom = 60.0
 size_flags_vertical = 0
-text = "Custo:"
+text = "Cost:"
 
 [node name="cost" type="Label" parent="background/engine_power_container" unique_id=1576092929]
 custom_minimum_size = Vector2(50, 30)
 layout_mode = 1
-offset_left = 64.0
+offset_left = 49.0
 offset_top = 30.0
-offset_right = 114.0
+offset_right = 99.0
 offset_bottom = 60.0
 size_flags_vertical = 0
 
@@ -218,16 +218,16 @@ offset_bottom = 226.5
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 0
 offset_left = 8.0
-offset_right = 236.0
+offset_right = 201.0
 offset_bottom = 30.0
 size_flags_vertical = 0
-text = "Aumentar o dano base em"
+text = "Increase base damage in"
 
 [node name="step_val" type="Label" parent="background/base_damage_container" unique_id=1388433109]
 custom_minimum_size = Vector2(50, 30)
 layout_mode = 1
-offset_left = 217.0
-offset_right = 267.0
+offset_left = 209.0
+offset_right = 259.0
 offset_bottom = 30.0
 size_flags_vertical = 0
 
@@ -275,7 +275,7 @@ offset_right = 50.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Comprar"
+text = "Buy"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -284,17 +284,17 @@ custom_minimum_size = Vector2(0, 30)
 layout_mode = 0
 offset_left = 8.0
 offset_top = 30.0
-offset_right = 57.0
+offset_right = 49.0
 offset_bottom = 60.0
 size_flags_vertical = 0
-text = "Custo:"
+text = "Cost:"
 
 [node name="cost" type="Label" parent="background/base_damage_container" unique_id=1972479001]
 custom_minimum_size = Vector2(50, 30)
 layout_mode = 1
-offset_left = 64.0
+offset_left = 49.0
 offset_top = 30.0
-offset_right = 114.0
+offset_right = 99.0
 offset_bottom = 60.0
 size_flags_vertical = 0
 
@@ -309,16 +309,16 @@ offset_bottom = 298.5
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 0
 offset_left = 8.0
-offset_right = 236.0
+offset_right = 200.0
 offset_bottom = 30.0
 size_flags_vertical = 0
-text = "Aumentar a tração de drift em "
+text = "Increase drift traction in"
 
 [node name="step_val" type="Label" parent="background/drift_traction_container" unique_id=2074946717]
 custom_minimum_size = Vector2(50, 30)
 layout_mode = 1
-offset_left = 248.0
-offset_right = 298.0
+offset_left = 200.0
+offset_right = 250.0
 offset_bottom = 30.0
 size_flags_vertical = 0
 
@@ -366,7 +366,7 @@ offset_right = 50.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Comprar"
+text = "Buy"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -375,17 +375,17 @@ custom_minimum_size = Vector2(0, 30)
 layout_mode = 0
 offset_left = 8.0
 offset_top = 30.0
-offset_right = 57.0
+offset_right = 48.0
 offset_bottom = 60.0
 size_flags_vertical = 0
-text = "Custo:"
+text = "Cost:"
 
 [node name="cost" type="Label" parent="background/drift_traction_container" unique_id=386207092]
 custom_minimum_size = Vector2(50, 30)
 layout_mode = 1
-offset_left = 64.0
+offset_left = 48.0
 offset_top = 30.0
-offset_right = 114.0
+offset_right = 98.0
 offset_bottom = 60.0
 size_flags_vertical = 0
 

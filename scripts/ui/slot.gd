@@ -4,22 +4,22 @@ extends Control
 var id = 0
 var description = null
 var item = {
-	1: "Moeda",
-	2: "Lança",
-	3: "Armadura",
-	4: "Capa",
-	5: "Rédea",
-	6: "Ferradura",
-	7: "Sela"
+	1: "Coin",
+	2: "Lance",
+	3: "Armor",
+	4: "Cape",
+	5: "Rein",
+	6: "Horseshoe",
+	7: "Saddle"
 }
 var item_description = {
 	1: "%d",
-	2: "Aumenta o dano em (%d).",
-	3: "Diminui em (%d) porcento o dano recebido.",
-	4: "Aumenta a vida máxima em (%d)",
-	5: "Aumenta a velocidade de condução (giro) em (%.1f).",
-	6: "Aumenta o multiplicador de velocidade em (%.1f).",
-	7: "Aumenta a velocidade máxima em (%d)."
+	2: "Increase the damage in (%d)",
+	3: "Decrease in (%d) percents the received damage",
+	4: "Increase max health in (%d)",
+	5: "Increases steer speed in (%.1f).",
+	6: "Increases the speed multiplier in (%.1f).",
+	7: "Increases the max speed in (%d)."
 }
 
 func _ready() -> void:
