@@ -81,10 +81,10 @@ func _handle_npc_interaction(npc: NPC) -> void:
 	match npc.npc_type:
 		NPC.NPCType.DIALOGUE, NPC.NPCType.QUEST:
 			_start_dialogue(npc.npc_name, npc.dialogue_pages)
-		NPC.NPCType.SHOP:
-			shop_window.visible = true
-		NPC.NPCType.UPGRADE:
-			upgrade_window.visible = true
+		#NPC.NPCType.SHOP:
+			#shop_window.visible = true
+		#NPC.NPCType.UPGRADE:
+			#upgrade_window.visible = true
 		NPC.NPCType.EXPEDITION_GATE:
 			current_tutorial_state = TutorialState.COMPLETED
 			objective_label.visible = false

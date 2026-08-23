@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://btow5yatkocyy"]
 
-[ext_resource type="Script" uid="uid://bjkbr5i81kla4" path="res://scripts/town.gd" id="1_3sg37"]
+[ext_resource type="Script" path="res://scripts/town.gd" id="1_3sg37"]
 [ext_resource type="Texture2D" uid="uid://cfjmtbs2yssrs" path="res://assets/sprites/houses/house_blacksmith-frame0.png" id="1_5vpkg"]
 [ext_resource type="Script" uid="uid://bfu2hcip83gi8" path="res://scripts/world/town_ui.gd" id="1_6g2qn"]
 [ext_resource type="PackedScene" uid="uid://bosxy7omdd3or" path="res://scenes/entities/npc.tscn" id="1_e21v4"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://dss0rse2oqcay" path="res://assets/sprites/bush_2.png" id="9_3sg37"]
 [ext_resource type="Script" uid="uid://cj6manv3gm1uh" path="res://scripts/entities/store_npc.gd" id="16_my0xt"]
 [ext_resource type="Script" uid="uid://6uguhq1ckj7q" path="res://scripts/entities/upgrade_npc.gd" id="17_fwvjp"]
+[ext_resource type="Script" uid="uid://btitssjowk2u0" path="res://scripts/entities/health_npc.gd" id="18_3sg37"]
 [ext_resource type="Script" uid="uid://chcdoqrsmlrq4" path="res://scripts/ui/enemy_indicators.gd" id="19_xbtnt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fwvjp"]
@@ -10071,6 +10072,11 @@ script = ExtResource("16_my0xt")
 position = Vector2(1546, 578.99994)
 rotation = 1.5707964
 script = ExtResource("17_fwvjp")
+
+[node name="LifeNPC" parent="NPCs" unique_id=1228802209 instance=ExtResource("1_e21v4")]
+position = Vector2(1165, 135)
+rotation = 3.1415927
+script = ExtResource("18_3sg37")
 
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1143949303]
 position = Vector2(559, 135)
