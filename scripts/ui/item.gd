@@ -40,5 +40,6 @@ func setup(id, pos: Vector2) -> void:
 	
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		AudioManager.play_sfx(AudioManager.SFX_COIN)
 		body.pickup_item(self)
 		queue_free.call_deferred()

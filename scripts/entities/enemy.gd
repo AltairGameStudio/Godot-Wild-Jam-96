@@ -130,8 +130,10 @@ func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.H
 	match hit_type:
 		HitReceiver.HitType.SHIELD:
 			# Se acertar o escudo, empurra menos
+			AudioManager.play_sfx(AudioManager.SFX_SHIELD)
 			velocity += direction * (impact_speed * 0.4 + 100.0)
 		HitReceiver.HitType.WEAKSPOT, HitReceiver.HitType.NORMAL:
+			AudioManager.play_sfx(AudioManager.SFX_HIT)
 			current_health = maxf(0.0, current_health - damage)
 			if health_bar:
 				health_bar.value = current_health
@@ -165,6 +167,7 @@ func create_item() -> void:
 func die() -> void:
 	# Se já morreu neste frame, não faz nada
 	if is_dead: return 
+	AudioManager.play_sfx(AudioManager.SFX_IMPACT)
 	call_deferred("create_item")
 	is_dead = true
 	enemy_died.emit()

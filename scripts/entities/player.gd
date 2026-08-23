@@ -120,7 +120,7 @@ func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, ignore_charge
 	current_health = maxf(0.0, current_health - (amount * (1 - defense/100)))
 	velocity += knockback
 	health_changed.emit(current_health, max_health+extra_health)
-	
+	AudioManager.play_sfx(AudioManager.SFX_HURT)
 	_trigger_invulnerability()
 	update_info()
 	if current_health <= 0.0:

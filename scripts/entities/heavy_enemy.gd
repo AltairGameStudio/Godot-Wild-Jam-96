@@ -98,6 +98,7 @@ func _update_healthbar_position() -> void:
 func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.HitType, impact_speed: float = 0.0) -> void:
 	# Vetor frontal do inimigo
 	var enemy_forward = Vector2.DOWN.rotated(rotation)
+	AudioManager.play_sfx(AudioManager.SFX_HIT)
 	
 	# Verifica se o ataque veio por trás
 	var is_backstab = direction.dot(enemy_forward) > backstab_angle_threshold

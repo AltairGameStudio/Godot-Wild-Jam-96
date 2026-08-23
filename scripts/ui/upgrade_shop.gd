@@ -41,6 +41,7 @@ func buy_upgrade(upgrade_name: String) -> void:
 	var val_step = upgrade_entry["val_step"]
 	if ((upgrade_entry["base_cost"] * (upgrade_entry["cost_mult"] ** upgrade_entry["level"])) <= game.gold):
 		game.gold -= cost
+		AudioManager.play_sfx(AudioManager.SFX_BUY)
 		apply_upgrade(upgrade_name, val_step)
 		$"../notification".activate_notification("Upgrade bought")
 		game.upgrades[upgrade_name]["level"] += 1
