@@ -121,6 +121,7 @@ func _check_dodge_trigger() -> void:
 
 func _trigger_dodge(dir_from_player: Vector2) -> void:
 	is_dodging = true
+	AudioManager.play_sfx(AudioManager.SFX_DODGE)
 	dodge_timer = dodge_duration
 	dodge_cooldown = dodge_cooldown_time
 	
@@ -240,6 +241,7 @@ func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.H
 		HitReceiver.HitType.SHIELD:
 			velocity += direction * (impact_speed * 0.4 + 100.0)
 		HitReceiver.HitType.WEAKSPOT, HitReceiver.HitType.NORMAL:
+			AudioManager.play_sfx(AudioManager.SFX_HIT)
 			current_health = maxf(0.0, current_health - damage)
 			if health_bar:
 				health_bar.value = current_health

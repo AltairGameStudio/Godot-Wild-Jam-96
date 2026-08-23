@@ -14,6 +14,8 @@ const SFX_BUY = preload("res://assets/audio/sfx/buy.mp3")
 const SFX_IMPACT = preload("res://assets/audio/sfx/impact.mp3")
 const SFX_HIT = preload("res://assets/audio/sfx/hit.mp3")
 const SFX_SHOOT = preload("res://assets/audio/sfx/shoot.mp3")
+const SFX_HEAL = preload("res://assets/audio/sfx/heal.mp3")
+const SFX_DODGE = preload("res://assets/audio/sfx/dodge.mp3")
 
 # Dois players para crossfade transparente
 var bgm_player_a: AudioStreamPlayer

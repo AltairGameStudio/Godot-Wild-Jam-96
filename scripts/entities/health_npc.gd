@@ -42,7 +42,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if player_in_range:
 		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"):
 			if (player_ref.current_health < player_ref.max_health + player_ref.extra_health):
-				player_ref.current_health += life_to_heal
+				player_ref.current_health += life_to_heal * 2
 				get_tree().current_scene.gold -= cost
 				player_ref.update_info()
 				_on_body_entered(player_ref)
