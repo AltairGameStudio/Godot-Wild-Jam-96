@@ -41,3 +41,9 @@ func _unhandled_input(event: InputEvent) -> void:
 					player.velocity = Vector2.ZERO
 					interacted.emit(self)
 					get_viewport().set_input_as_handled()
+				# Se estiver aberta fecha e libera o player
+				elif upgrade_node.visible:
+					upgrade_node.visible = false
+					player.can_move = true
+					interacted.emit(self)
+					get_viewport().set_input_as_handled()

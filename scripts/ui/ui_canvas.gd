@@ -10,6 +10,8 @@ func _process(_delta: float) -> void:
 	
 	# Tecla E para abrir/fechar inventário normal
 	if Input.is_action_just_pressed("toggle_inventory"):
+		if $upgrade_shop.visible:
+			$upgrade_shop.visible = false
 		var is_open = $inventory.visible
 		if not is_open:
 			$inventory.visible = true

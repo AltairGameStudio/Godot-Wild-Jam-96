@@ -42,3 +42,10 @@ func _unhandled_input(event: InputEvent) -> void:
 					player.velocity = Vector2.ZERO
 					interacted.emit(self)
 					get_viewport().set_input_as_handled()
+				else:
+					inv_node.visible = false
+					store_node.visible = false
+					player.can_move = true
+					interacted.emit(self)
+					get_viewport().set_input_as_handled()
+					
