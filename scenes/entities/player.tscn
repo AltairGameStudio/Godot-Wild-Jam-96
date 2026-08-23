@@ -83,20 +83,20 @@ visible = false
 [node name="upgrade_shop" parent="PlayerCanvas" unique_id=1273479935 instance=ExtResource("5_5u6hq")]
 visible = false
 
-[node name="notification" type="Label" parent="PlayerCanvas" unique_id=69037831]
-visible = false
+[node name="notification" type="VBoxContainer" parent="PlayerCanvas" unique_id=720672709]
 z_index = 2
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -90.0
+offset_top = -114.0
+offset_right = -50.0
+offset_bottom = -80.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
 script = ExtResource("6_d4qa6")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1437981006]

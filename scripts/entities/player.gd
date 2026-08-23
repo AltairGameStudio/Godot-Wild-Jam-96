@@ -243,7 +243,7 @@ func pickup_item(item: Area2D) -> void:
 	var item_id = item.item_id
 	if item_id/100 == 1:
 		get_tree().current_scene.add_gold(item_id%100)
-		$PlayerCanvas/notification.activate_notification("%d coins colecteds" % (item_id%100))
+		$PlayerCanvas/notification.activate_notification("Collected %d coins" % (item_id%100))
 		item.queue_free()
 		return
 	var canvas = get_tree().get_first_node_in_group("PlayerCanvas")
