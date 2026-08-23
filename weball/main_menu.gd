@@ -116,7 +116,8 @@ You entered the cursed marsh for a quick ride. The locals are aggressive, the mu
 • [color=#70c1b3][W / UP][/color] Accelerate steed
 • [color=#70c1b3][S / DOWN][/color] Brake & Reverse
 • [color=#70c1b3][A / D][/color] Steer / Drift around obstacles
-• [color=#70c1b3][E / SPACE][/color] Talk to Townfolk & Buy Upgrades
+• [color=#70c1b3][SPACE][/color] Talk to Townfolk & Buy Upgrades
+• [color=#70c1b3][E][/color] Open inventory
 
 [color=#e76f51][b]COMBAT TIP:[/b][/color]
 Your lance deals damage [b]proportional to your velocity[/b]. Ram enemies at maximum speed to break their lines!
@@ -196,7 +197,7 @@ Your lance deals damage [b]proportional to your velocity[/b]. Ram enemies at max
 
 func _create_base_modal(title_text: String) -> Panel:
 	var panel = Panel.new()
-	panel.custom_minimum_size = Vector2(560, 420)
+	panel.custom_minimum_size = Vector2(560, 450)
 	panel.anchor_left = 0.5
 	panel.anchor_top = 0.5
 	panel.anchor_right = 0.5
