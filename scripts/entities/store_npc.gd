@@ -25,13 +25,20 @@ func _on_body_exited(body: Node2D) -> void:
 	if body is Player:
 		player_in_range = false
 		prompt_label.visible = false
-
+		
 func _unhandled_input(event: InputEvent) -> void:
-	# Aceita tanto a ação customizada 'interact' quanto 'ui_accept' ou a tecla E diretamente
 	if player_in_range:
 		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"):
 			var player = get_tree().get_first_node_in_group("player")
-			var is_open = player.get_node("PlayerCanvas/inventory/store").visible
-			player.get_node("PlayerCanvas/inventory").visible = !is_open
-			player.get_node("PlayerCanvas/inventory/store").visible = !is_open
-			interacted.emit(self)
+			if is_instance_valid(player):
+				var inv_node = player.get_node("PlayerCanvas/inventory")
+				var store_node = player.get_node("PlayerCanvas/inventory/store")
+				
+				# Se o inventário/loja não estiver aberto, abre a loja
+				if not (inv_node.visible and store_node.visible):
+					inv_node.visible = true
+					store_node.visible = true
+					player.can_move = false
+					player.velocity = Vector2.ZERO
+					interacted.emit(self)
+					get_viewport().set_input_as_handled()
