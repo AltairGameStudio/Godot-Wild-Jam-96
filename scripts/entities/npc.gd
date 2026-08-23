@@ -44,7 +44,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		player_in_range = true
 		if npc_type == NPCType.EXPEDITION_GATE:
-			prompt_label.text = "[Space] Go to the arena (Phase %d)" % (get_tree().current_scene.current_phase)
+			prompt_label.text = "[Space] Go to the arena (level %d)" % (get_tree().current_scene.current_phase)
 		prompt_label.visible = true
 
 func _on_body_exited(body: Node2D) -> void:

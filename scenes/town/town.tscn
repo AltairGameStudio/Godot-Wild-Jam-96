@@ -10116,6 +10116,7 @@ offset_right = 913.0
 offset_bottom = 531.0
 
 [node name="ObjectiveLabel" type="Label" parent="TownHUD/UI" unique_id=1375494433]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -10131,28 +10132,6 @@ theme_override_font_sizes/font_size = 32
 text = "Go to the Arena Guardian to start an expedition."
 horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="TownHUD/UI" unique_id=810978094]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -155.0
-offset_top = 100.0
-offset_right = 155.0
-offset_bottom = 385.0
-grow_horizontal = 2
-size_flags_horizontal = 4
-theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 32
-text = "[W] Accelerate
-[A, S] Rotate
-[E] Open inventory
-[Space] Interact
-
-Press Space to close"
-horizontal_alignment = 1
-
 [node name="TargetIndicator" type="Control" parent="TownHUD/UI" unique_id=276088697]
 anchors_preset = 0
 offset_right = 40.0
@@ -10160,6 +10139,48 @@ offset_bottom = 40.0
 script = ExtResource("19_xbtnt")
 indicator_color = Color(1, 1, 0, 1)
 target_group = ""
+
+[node name="ControlsBackground" type="ColorRect" parent="TownHUD/UI" unique_id=1124790511]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7019608)
+
+[node name="Label" type="Label" parent="TownHUD/UI/ControlsBackground" unique_id=810978094]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -142.5
+offset_right = 155.0
+offset_bottom = 142.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 32
+text = "=== HOW TO PLAY ===
+
+    CONTROLS:
+    [W] Accelerate / Move forward
+    [A / D] Steer / Rotate
+    [E] Open / Close Inventory
+    [Space] Interact
+
+    COMBAT MECHANICS:
+    Build up speed to lower and charge your lance!
+    The faster you strike enemies, the more damage you deal.
+    Charge at top speed for maximum impact!
+
+    [ Press SPACE to continue ]"
+horizontal_alignment = 1
 
 [node name="Limits" type="StaticBody2D" parent="." unique_id=1527474310]
 position = Vector2(124, 257)

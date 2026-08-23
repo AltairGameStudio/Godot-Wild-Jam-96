@@ -43,6 +43,8 @@ var heading_angle: float = 0.0
 var speed_multiplier: float = 1.0
 var active_slow_sources: int = 0
 
+var can_move: bool = true
+
 func _ready() -> void:
 	add_to_group("player")
 	current_health = max_health + extra_health
@@ -147,6 +149,10 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _handle_movement(delta: float) -> void:
+	if not can_move:
+		velocity = Vector2.ZERO
+		return
+		
 	var turn_input = Input.get_axis("ui_left", "ui_right")
 	var throttle_input = Input.get_axis("ui_down", "ui_up")
 	

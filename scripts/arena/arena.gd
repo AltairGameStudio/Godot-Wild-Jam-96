@@ -1,7 +1,7 @@
 extends Node2D
 
 @export_group("Configurações da Rodada")
-@export var round_duration: float = 60.0           # Duração total da rodada em segundos
+@export var round_duration: float = 5.0           # Duração total da rodada em segundos
 @export var min_spawn_interval: float = 4.0        # Tempo mínimo entre spawns
 @export var max_spawn_interval: float = 5.0        # Tempo máximo entre spawns
 @export var min_distance_from_player: float = 380.0 # Distância mínima para não spawnar colado no player
@@ -59,7 +59,7 @@ func start_phase() -> void:
 	_setup_phase_pool(current_phase)
 	
 	var sub_title = PHASE_TITLES.get(current_phase, "Survive!")
-	_show_announcement("PHASE %d" % current_phase, sub_title, 2.5)
+	_show_announcement("LEVEL %d" % current_phase, sub_title, 2.5)
 
 	round_time_left = round_duration
 	next_spawn_timer = randf_range(min_spawn_interval, max_spawn_interval)

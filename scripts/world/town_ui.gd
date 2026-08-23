@@ -11,18 +11,18 @@ extends CanvasLayer
 var active_dialogue: Array[String] = []
 var dialogue_index: int = 0
 
-enum TutorialState { CONTROLS, GO_TO_NPC, COMPLETED }
-var current_tutorial_state: TutorialState = TutorialState.CONTROLS
+enum TutorialState { CONTROLS, GO_TO_NPC, VISIT_SHOPS, COMPLETED }
+var current_tutorial_state: TutorialState = TutorialState.COMPLETED
 
-@onready var controls_label: Label = $UI/Label
+var arena_npc: Node2D = null
+var shop_npcs: Array[Node2D] = []
+var player: Node2D = null
+
+@onready var controls_panel = $UI/ControlsBackground
 @onready var objective_label: Label = $UI/ObjectiveLabel
 @onready var target_indicator: Control = $UI/TargetIndicator
 
-var arena_npc: Node2D = null
-var player: Node2D = null
-
 func _ready() -> void:
-	# Esconde todas as janelas ao carregar a cidade
 	dialogue_box.visible = false
 	shop_window.visible = false
 	upgrade_window.visible = false
@@ -32,19 +32,52 @@ func _ready() -> void:
 	for npc in npcs:
 		if npc is NPC:
 			npc.interacted.connect(_handle_npc_interaction)
-			
-	# Localizar o NPC da arena e o Player
-	for npc in get_tree().get_nodes_in_group("npcs"):
-		if npc is NPC and npc.npc_type == NPC.NPCType.EXPEDITION_GATE:
-			arena_npc = npc
-			break
+			if npc.npc_type == NPC.NPCType.EXPEDITION_GATE:
+				arena_npc = npc
+			elif npc.npc_type == NPC.NPCType.SHOP or npc.npc_type == NPC.NPCType.UPGRADE:
+				shop_npcs.append(npc)
 			
 	player = get_tree().get_first_node_in_group("player")
 
-	# Iniciar tutorial
-	_start_tutorial_controls()
+	# Busca a fase atual no nó principal do jogo
+	var phase = 1
+	var game_node = get_tree().root.get_node_or_null("Game")
+	if not game_node:
+		# Tenta pegar subindo na hierarquia (TownHUD -> Town -> World -> Game)
+		game_node = get_node_or_null("/root/Game")
+	
+	if game_node and "current_phase" in game_node:
+		phase = game_node.current_phase
+	elif get_tree().current_scene and "current_phase" in get_tree().current_scene:
+		phase = get_tree().current_scene.current_phase
+
+	print(">>> [TownUI] Iniciando Cidade na Fase: ", phase)
+
+	if phase == 1:
+		_start_tutorial_controls()
+	elif phase == 2:
+		controls_panel.visible = false
+		_start_tutorial_visit_shops()
+	else:
+		current_tutorial_state = TutorialState.COMPLETED
+		controls_panel.visible = false
+		objective_label.visible = false
+		target_indicator.visible = false
 
 func _handle_npc_interaction(npc: NPC) -> void:
+	# Se interagiu com um NPC que tinha exclamação, remove daquele NPC
+	if npc.has_quest:
+		npc.has_quest = false
+		target_indicator.custom_targets.erase(npc)
+		
+		# Se visitou todas as lojas, pode esconder o objetivo ou pedir para voltar para a arena
+		if current_tutorial_state == TutorialState.VISIT_SHOPS:
+			if target_indicator.custom_targets.is_empty():
+				objective_label.text = "Ready? Go back to the Arena Guardian!"
+				if is_instance_valid(arena_npc):
+					target_indicator.custom_targets = [arena_npc]
+					arena_npc.has_quest = true
+
 	match npc.npc_type:
 		NPC.NPCType.DIALOGUE, NPC.NPCType.QUEST:
 			_start_dialogue(npc.npc_name, npc.dialogue_pages)
@@ -82,17 +115,39 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _start_tutorial_controls() -> void:
 	current_tutorial_state = TutorialState.CONTROLS
-	controls_label.visible = true
+	controls_panel.visible = true
 	objective_label.visible = false
+	if is_instance_valid(player):
+		player.can_move = false
 
 func _start_tutorial_go_to_npc() -> void:
 	current_tutorial_state = TutorialState.GO_TO_NPC
-	controls_label.visible = false
+	controls_panel.visible = false
 	objective_label.visible = true
 	objective_label.text = "Go to the Arena Guardian to start an expedition."
+	
+	if is_instance_valid(player):
+		player.can_move = true
 	
 	# Passa o NPC da arena como alvo da seta:
 	if is_instance_valid(arena_npc):
 		target_indicator.custom_targets = [arena_npc]
 		target_indicator.visible = true
 		arena_npc.has_quest = true
+
+func _start_tutorial_visit_shops() -> void:
+	current_tutorial_state = TutorialState.VISIT_SHOPS
+	controls_panel.visible = false # <--- Garante que os controles estão fechados
+	if is_instance_valid(player):
+		player.can_move = true     # <--- Garante que o jogador pode andar
+	objective_label.visible = true
+	objective_label.text = "Visit the shops to upgrade your gear!"
+	
+	# Ativa a exclamação em todas as lojas
+	for shop in shop_npcs:
+		if is_instance_valid(shop):
+			shop.has_quest = true
+			
+	# Passa todos os NPCs das lojas para o indicador de setas
+	target_indicator.custom_targets = shop_npcs.duplicate()
+	target_indicator.visible = true
