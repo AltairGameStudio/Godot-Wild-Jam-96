@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="WGJ#96"
-run/main_scene="uid://bs4rjnmx5salv"
+run/main_scene="res://weball/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+AudioManager="*uid://2mrsoaq4o31v"
 
 [display]
 

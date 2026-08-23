@@ -48,6 +48,7 @@ const PHASE_TITLES = {
 }
 
 func _ready() -> void:
+	AudioManager.play_arena_theme()
 	player_ref = get_tree().get_first_node_in_group("player") as Node2D
 	start_phase()
 
