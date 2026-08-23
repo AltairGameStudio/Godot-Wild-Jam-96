@@ -29,7 +29,24 @@ position = Vector2(60, 0)
 shape = SubResource("CircleShape2D_n61dp")
 
 [node name="PromptLabel" type="Label" parent="." unique_id=378238653]
-offset_left = -19.0
-offset_top = 33.0
-offset_right = 21.0
-offset_bottom = 56.0
+offset_left = -175.0
+offset_top = 38.0
+offset_right = 176.0
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+
+[node name="ExclamationMarker" type="Label" parent="." unique_id=104962063]
+visible = false
+offset_left = -20.0
+offset_top = -97.0
+offset_right = 20.0
+offset_bottom = -52.0
+theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 48
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1

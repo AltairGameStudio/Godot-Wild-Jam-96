@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://dss0rse2oqcay" path="res://assets/sprites/bush_2.png" id="9_3sg37"]
 [ext_resource type="Script" uid="uid://cj6manv3gm1uh" path="res://scripts/entities/store_npc.gd" id="16_my0xt"]
 [ext_resource type="Script" uid="uid://6uguhq1ckj7q" path="res://scripts/entities/upgrade_npc.gd" id="17_fwvjp"]
+[ext_resource type="Script" uid="uid://chcdoqrsmlrq4" path="res://scripts/ui/enemy_indicators.gd" id="19_xbtnt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fwvjp"]
 resource_name = "tiles"
@@ -10073,7 +10074,6 @@ script = ExtResource("17_fwvjp")
 position = Vector2(559, 135)
 
 [node name="TownHUD" type="CanvasLayer" parent="." unique_id=616025795]
-visible = false
 script = ExtResource("1_6g2qn")
 
 [node name="UI" type="Control" parent="TownHUD" unique_id=918530139]
@@ -10114,6 +10114,52 @@ offset_left = 433.0
 offset_top = 17.0
 offset_right = 913.0
 offset_bottom = 531.0
+
+[node name="ObjectiveLabel" type="Label" parent="TownHUD/UI" unique_id=1375494433]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -374.5
+offset_top = 200.0
+offset_right = 374.5
+offset_bottom = 245.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 32
+text = "Go to the Arena Guardian to start an expedition."
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="TownHUD/UI" unique_id=810978094]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -155.0
+offset_top = 100.0
+offset_right = 155.0
+offset_bottom = 385.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 32
+text = "[W] Accelerate
+[A, S] Rotate
+[E] Open inventory
+[Space] Interact
+
+Press Space to close"
+horizontal_alignment = 1
+
+[node name="TargetIndicator" type="Control" parent="TownHUD/UI" unique_id=276088697]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("19_xbtnt")
+indicator_color = Color(1, 1, 0, 1)
+target_group = ""
 
 [node name="Limits" type="StaticBody2D" parent="." unique_id=1527474310]
 position = Vector2(124, 257)

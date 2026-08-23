@@ -11,6 +11,16 @@ extends CanvasLayer
 var active_dialogue: Array[String] = []
 var dialogue_index: int = 0
 
+enum TutorialState { CONTROLS, GO_TO_NPC, COMPLETED }
+var current_tutorial_state: TutorialState = TutorialState.CONTROLS
+
+@onready var controls_label: Label = $UI/Label
+@onready var objective_label: Label = $UI/ObjectiveLabel
+@onready var target_indicator: Control = $UI/TargetIndicator
+
+var arena_npc: Node2D = null
+var player: Node2D = null
+
 func _ready() -> void:
 	# Esconde todas as janelas ao carregar a cidade
 	dialogue_box.visible = false
@@ -22,6 +32,17 @@ func _ready() -> void:
 	for npc in npcs:
 		if npc is NPC:
 			npc.interacted.connect(_handle_npc_interaction)
+			
+	# Localizar o NPC da arena e o Player
+	for npc in get_tree().get_nodes_in_group("npcs"):
+		if npc is NPC and npc.npc_type == NPC.NPCType.EXPEDITION_GATE:
+			arena_npc = npc
+			break
+			
+	player = get_tree().get_first_node_in_group("player")
+
+	# Iniciar tutorial
+	_start_tutorial_controls()
 
 func _handle_npc_interaction(npc: NPC) -> void:
 	match npc.npc_type:
@@ -32,7 +53,12 @@ func _handle_npc_interaction(npc: NPC) -> void:
 		NPC.NPCType.UPGRADE:
 			upgrade_window.visible = true
 		NPC.NPCType.EXPEDITION_GATE:
-			#GameManager.start_run()
+			current_tutorial_state = TutorialState.COMPLETED
+			objective_label.visible = false
+			target_indicator.custom_targets.clear()
+			target_indicator.visible = false
+			if is_instance_valid(arena_npc):
+				arena_npc.has_quest = false
 			get_tree().current_scene.start_run()
 
 func _start_dialogue(speaker: String, text_pages: Array[String]) -> void:
@@ -49,8 +75,24 @@ func _show_current_page() -> void:
 		dialogue_box.visible = false
 
 func _unhandled_input(event: InputEvent) -> void:
-	# Avança o diálogo ao pressionar confirmar
-	if dialogue_box.visible and event.is_action_pressed("ui_accept"):
-		dialogue_index += 1
-		_show_current_page()
+	if current_tutorial_state == TutorialState.CONTROLS and event.is_action_pressed("ui_accept"):
+		_start_tutorial_go_to_npc()
 		get_viewport().set_input_as_handled()
+		return
+
+func _start_tutorial_controls() -> void:
+	current_tutorial_state = TutorialState.CONTROLS
+	controls_label.visible = true
+	objective_label.visible = false
+
+func _start_tutorial_go_to_npc() -> void:
+	current_tutorial_state = TutorialState.GO_TO_NPC
+	controls_label.visible = false
+	objective_label.visible = true
+	objective_label.text = "Go to the Arena Guardian to start an expedition."
+	
+	# Passa o NPC da arena como alvo da seta:
+	if is_instance_valid(arena_npc):
+		target_indicator.custom_targets = [arena_npc]
+		target_indicator.visible = true
+		arena_npc.has_quest = true

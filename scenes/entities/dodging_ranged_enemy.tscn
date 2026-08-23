@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://vo75vtnxe4sn"]
 
-[ext_resource type="Script" path="res://scripts/entities/dodging_ranged_enemy.gd" id="1_qcu1j"]
+[ext_resource type="Script" uid="uid://dakupwiuh8r2n" path="res://scripts/entities/dodging_ranged_enemy.gd" id="1_qcu1j"]
 [ext_resource type="PackedScene" uid="uid://bcpxwt5ovyq1c" path="res://scenes/entities/enemy_bullet.tscn" id="2_eakh8"]
 [ext_resource type="Texture2D" uid="uid://bye0cvh0k0uma" path="res://icon.svg" id="3_cdp7v"]
 [ext_resource type="Texture2D" uid="uid://bdupvy4gdj4fp" path="res://assets/sprites/entities/enemy_jumpy_000.png" id="3_eakh8"]

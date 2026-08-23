@@ -4,7 +4,7 @@ func _ready() -> void:
 	pass
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("toggle_inventory"):
 		if $upgrade_shop.visible:
 			$upgrade_shop.visible = false
 		$inventory.visible = not $inventory.visible

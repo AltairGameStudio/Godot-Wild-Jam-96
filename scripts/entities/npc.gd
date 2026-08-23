@@ -20,6 +20,9 @@ signal interacted(npc_data: NPC)
 
 var player_in_range: bool = false
 
+@onready var quest_marker: Label = $ExclamationMarker
+var has_quest: bool = false
+
 func _ready() -> void:
 	# Garante que o NPC esteja no grupo para o TownUI conectar
 	add_to_group("npcs")
@@ -43,7 +46,7 @@ func _on_body_entered(body: Node2D) -> void:
 		player_in_range = true
 		if npc_type == NPCType.EXPEDITION_GATE:
 			#prompt_label.text = "[E] Ir para a Arena (Fase %d)" % (GameManager.current_phase + 1)
-			prompt_label.text = "[E] Ir para a Arena (Fase %d)" % (get_tree().current_scene.current_phase + 1)
+			prompt_label.text = "[Space] Go to arena (level %d)" % (get_tree().current_scene.current_phase)
 		prompt_label.visible = true
 
 func _on_body_exited(body: Node2D) -> void:
@@ -59,3 +62,21 @@ func _unhandled_input(event: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 				
 			interacted.emit(self)
+
+func _process(_delta: float) -> void:
+	if not has_quest or not is_instance_valid(quest_marker):
+		if is_instance_valid(quest_marker):
+			quest_marker.visible = false
+		return
+
+	# Verifica se a posição do NPC está dentro da tela visível
+	var viewport_rect: Rect2 = get_viewport_rect()
+	var screen_pos: Vector2 = get_global_transform_with_canvas().origin
+	var is_on_screen: bool = viewport_rect.has_point(screen_pos)
+
+	# Só mostra a exclamação se o NPC estiver DENTRO da tela
+	quest_marker.visible = is_on_screen
+
+	# Efeito visual suave (bobbing/flutuando para cima e para baixo):
+	if is_on_screen:
+		quest_marker.position.y = -45.0 + sin(Time.get_ticks_msec() * 0.005) * 4.0
