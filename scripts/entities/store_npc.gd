@@ -5,7 +5,7 @@ func _ready() -> void:
 	add_to_group("npcs")
 	npc_type = NPCType.SHOP
 	npc_name = "Seller"
-	prompt_message = "[E] Open the store"
+	prompt_message = "[Space] Open the store"
 
 	prompt_label.text = prompt_message
 	prompt_label.visible = false

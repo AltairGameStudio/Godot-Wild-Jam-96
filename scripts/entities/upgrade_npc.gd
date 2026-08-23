@@ -5,8 +5,8 @@ func _ready() -> void:
 	add_to_group("npcs")
 	npc_type = NPCType.SHOP
 	npc_name = "Trainer"
-	prompt_message = "[E] Improve attributes"
-	prompt_label.position += Vector2(40, 30)
+	prompt_message = "[Space] Improve attributes"
+	prompt_label.position += Vector2(180, 130)
 	prompt_label.set_rotation_degrees(-90)
 	visual.modulate = Color(0.8,0.8,0.6)
 	prompt_label.text = prompt_message
