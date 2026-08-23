@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://by85axt801wa7" path="res://assets/sprites/tilesets/grasslol.png" id="7_fv88w"]
 [ext_resource type="PackedScene" uid="uid://vo75vtnxe4sn" path="res://scenes/entities/dodging_ranged_enemy.tscn" id="11_xgbxb"]
 [ext_resource type="Texture2D" uid="uid://wdhhrc0n8620" path="res://assets/sprites/tilesheet_complete.png" id="13_tp84n"]
+[ext_resource type="Texture2D" uid="uid://c0obk15o8xyu3" path="res://assets/sprites/blood_red_bar.png" id="15_8kk48"]
 [ext_resource type="Script" uid="uid://cw6ef5j7sruiu" path="res://scripts/arena/forest_ring.gd" id="15_t3vx8"]
 [ext_resource type="Texture2D" uid="uid://b4ad7s0y55y8d" path="res://assets/sprites/tree_2.png" id="16_rhjlh"]
 [ext_resource type="Script" uid="uid://bibnrli0s70wu" path="res://scripts/arena/swamp_scatter.gd" id="17_rhjlh"]
@@ -1171,11 +1172,10 @@ sources/5 = SubResource("TileSetAtlasSource_gy0qm")
 pattern_0 = SubResource("TileMapPattern_w4nra")
 pattern_1 = SubResource("TileMapPattern_t3vx8")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ft05"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8kk48"]
 bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ag8t"]
-bg_color = Color(1, 0.34122363, 0.29450622, 1)
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
 
 [node name="Arena" type="Node2D" unique_id=49824254]
 z_as_relative = false
@@ -1201,16 +1201,6 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="PlayerHealthBar" type="ProgressBar" parent="CanvasLayer/UI" unique_id=1306571241]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 5.0
-offset_right = 170.0
-offset_bottom = 28.0
-theme_override_styles/background = SubResource("StyleBoxFlat_7ft05")
-theme_override_styles/fill = SubResource("StyleBoxFlat_4ag8t")
-show_percentage = false
-
 [node name="RoundTimerLabel" type="Label" parent="CanvasLayer/UI" unique_id=952804464]
 layout_mode = 1
 anchors_preset = 5
@@ -1224,6 +1214,27 @@ grow_horizontal = 2
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 32
 text = "60s"
+
+[node name="HealthBarContainer" type="Control" parent="CanvasLayer/UI" unique_id=1010999941]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthSprite" type="TextureRect" parent="CanvasLayer/UI/HealthBarContainer" unique_id=646439688]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 21.0
+offset_right = 324.0
+offset_bottom = 61.0
+texture = ExtResource("15_8kk48")
+
+[node name="DamageMask" type="Panel" parent="CanvasLayer/UI/HealthBarContainer" unique_id=180482751]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 29.0
+offset_right = 316.0
+offset_bottom = 53.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8kk48")
 
 [node name="EnemyIndicators" type="Control" parent="CanvasLayer" unique_id=234991851]
 layout_mode = 3

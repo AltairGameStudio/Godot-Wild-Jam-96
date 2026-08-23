@@ -36,6 +36,7 @@ engine_power = 150.0
 max_speed = 300.0
 min_charge_speed = 200.0
 base_damage = 30.0
+damage_velocity_scale = 0.1
 bounce_ratio = 0.3
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1024225290]
