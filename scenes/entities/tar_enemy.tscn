@@ -21,6 +21,7 @@ bg_color = Color(0.6012307, 0, 0.12017762, 1)
 radius = 38.209946
 
 [node name="TarEnemy" type="CharacterBody2D" unique_id=1922258064]
+scale = Vector2(1.993415, 1.9999998)
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_dyacx")
@@ -55,6 +56,7 @@ offset_bottom = -30.0
 theme_override_styles/background = SubResource("StyleBoxFlat_8vmmm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_vnfh1")
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="SeparationArea" type="Area2D" parent="." unique_id=1334543851]
 collision_layer = 128

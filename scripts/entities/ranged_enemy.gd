@@ -143,7 +143,8 @@ func _on_shoot_timer_timeout() -> void:
 func shoot() -> void:
 	if bullet_scene == null or not is_instance_valid(player_ref):
 		return
-		
+	
+	AudioManager.play_sfx(AudioManager.SFX_SHOOT)
 	var bullet = bullet_scene.instantiate() as Area2D
 	
 	# Calcula a direção em linha reta para o player
@@ -191,6 +192,7 @@ func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.H
 		HitReceiver.HitType.SHIELD:
 			velocity += direction * (impact_speed * 0.4 + 100.0)
 		HitReceiver.HitType.WEAKSPOT, HitReceiver.HitType.NORMAL:
+			AudioManager.play_sfx(AudioManager.SFX_HIT)
 			current_health = maxf(0.0, current_health - damage)
 			if health_bar:
 				health_bar.value = current_health

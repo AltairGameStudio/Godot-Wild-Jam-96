@@ -29,6 +29,7 @@ bg_color = Color(0.6012307, 0, 0.12017762, 1)
 radius = 42.047592
 
 [node name="RangedEnemy" type="CharacterBody2D" unique_id=302185580]
+scale = Vector2(2.0000005, 1.9999998)
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_puwww")
@@ -101,6 +102,7 @@ offset_bottom = -23.0
 theme_override_styles/background = SubResource("StyleBoxFlat_md0e3")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4ra3w")
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="ShootTimer" type="Timer" parent="." unique_id=345535461]
 wait_time = 1.5

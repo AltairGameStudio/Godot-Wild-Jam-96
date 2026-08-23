@@ -24,6 +24,7 @@ radius = 48.010414
 radius = 33.0
 
 [node name="HeavyEnemy" type="CharacterBody2D" unique_id=302185580]
+scale = Vector2(1.9999986, 2.0000005)
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_l2kg0")
@@ -56,6 +57,7 @@ offset_bottom = -36.0
 theme_override_styles/background = SubResource("StyleBoxFlat_md0e3")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4ra3w")
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="SeparationArea" type="Area2D" parent="." unique_id=22887674]
 collision_layer = 128

@@ -147,6 +147,7 @@ func _update_healthbar_position() -> void:
 
 func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.HitType, impact_speed: float = 0.0) -> void:
 	current_health = maxf(0.0, current_health - damage)
+	AudioManager.play_sfx(AudioManager.SFX_HIT)
 	if health_bar:
 		health_bar.value = current_health
 	

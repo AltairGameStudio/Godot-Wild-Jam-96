@@ -5,6 +5,7 @@ extends Control
 func clear_store() -> void:
 	var total = 0
 	for child_slot in sale_zone.get_children():
+		AudioManager.play_sfx(AudioManager.SFX_BUY)
 		total += child_slot.slot_value
 		child_slot.set_empty_slot()
 	get_tree().current_scene.add_gold(total)

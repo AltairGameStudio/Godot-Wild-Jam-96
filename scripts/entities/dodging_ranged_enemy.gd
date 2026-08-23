@@ -205,7 +205,8 @@ func _on_shoot_timer_timeout() -> void:
 func shoot() -> void:
 	if bullet_scene == null or not is_instance_valid(player_ref):
 		return
-		
+	
+	AudioManager.play_sfx(AudioManager.SFX_SHOOT)
 	var bullet = bullet_scene.instantiate() as Area2D
 	var base_dir = (player_ref.global_position - shoot_point.global_position).normalized()
 	
