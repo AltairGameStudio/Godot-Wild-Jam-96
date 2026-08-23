@@ -72,9 +72,12 @@ func _process(_delta: float) -> void:
 	var screen_pos: Vector2 = get_global_transform_with_canvas().origin
 	var is_on_screen: bool = viewport_rect.has_point(screen_pos)
 
-	# Só mostra a exclamação se o NPC estiver DENTRO da tela
 	quest_marker.visible = is_on_screen
 
-	# Efeito visual suave (bobbing/flutuando para cima e para baixo):
 	if is_on_screen:
-		quest_marker.position.y = -45.0 + sin(Time.get_ticks_msec() * 0.005) * 4.0
+		# 1. Anula a rotação herdada do NPC para ficar sempre em pé
+		quest_marker.rotation = -global_rotation
+			
+		# 2. Posiciona ela no topo do NPC com animação
+		var bobbing = sin(Time.get_ticks_msec() * 0.005) * 4.0
+		quest_marker.global_position = global_position + Vector2(-quest_marker.size.x / 2.0, -60.0 + bobbing)
