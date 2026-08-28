@@ -2,6 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 signal health_changed(current: float, max_h: float)
+signal power_charge_changed(current_load: float, on_load: bool)
 
 @export_group("Vida")
 @export var max_health: float = 100.0
@@ -13,6 +14,9 @@ var current_health: float
 @export var steer_speed: float = 2.0
 @export var forward_friction: float = 0.98
 @export var drift_traction: float = 0.85
+
+@export var power_charge_load: float = 0.0
+@export var on_power_charge: bool = false
 
 @export_group("Combate")
 @export var min_charge_speed: float = 100.0
@@ -45,6 +49,10 @@ var active_slow_sources: int = 0
 
 var can_move: bool = true
 
+# Efeito visual de velocidade
+var ghost_intervals: float = 0.3
+var last_ghost : float = 0.0
+
 func _ready() -> void:
 	add_to_group("player")
 	current_health = max_health + extra_health
@@ -57,6 +65,15 @@ func _ready() -> void:
 		hurtbox_area.area_entered.connect(_on_hurtbox_area_entered)
 	update_info()
 
+func create_ghost() -> void:
+	var ghost = Sprite2D.new()
+	ghost.texture = $Sprite2D.texture
+	get_tree().current_scene.add_child(ghost)
+	var tween = create_tween()
+	tween.tween_property(ghost, "self_modulate:a", 0.0, 0.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.finished.connect(ghost.queue_free)
+	ghost.global_transform = $Sprite2D.global_transform
+
 func update_info() -> void:
 	$PlayerCanvas/inventory/info.update_labels(
 		[max_health + extra_health,
@@ -68,16 +85,25 @@ func update_info() -> void:
 		 steer_speed + extra_steer_speed,
 		 drift_traction,
 		 engine_power])
+	$PlayerCanvas/equipment/coin/quantity.text = "%d" % get_tree().current_scene.gold
 
 func equipment_changed(item_id, item_equipped: bool):
 	var lvl : float = item_id%100
 	var controler = -1
+	var mod_color = Color(1,1,1,0.5)
+	var equip_txt = ""
 	if item_equipped: 
 		controler = 1
+		mod_color = Color(1,1,1,1)
+		equip_txt = "Lvl %d" % lvl
 	if (item_id/100) == 2:
 		extra_damage += controler * lvl*2
+		$PlayerCanvas/equipment/lance.modulate = mod_color
+		$PlayerCanvas/equipment/lance/lvl.text = equip_txt
 	elif (item_id/100) == 3:
 		defense += controler * lvl*3
+		$PlayerCanvas/equipment/armor.modulate = mod_color
+		$PlayerCanvas/equipment/armor/lvl.text = equip_txt
 	elif (item_id/100) == 4:
 		if item_equipped and (current_health == max_health + extra_health):
 			current_health = max_health + lvl*10
@@ -88,12 +114,20 @@ func equipment_changed(item_id, item_equipped: bool):
 				var percent = current_health/max_health+extra_health
 				current_health = max_health*percent
 		extra_health += controler * lvl*10
+		$PlayerCanvas/equipment/cape.modulate = mod_color
+		$PlayerCanvas/equipment/cape/lvl.text = equip_txt
 	elif (item_id/100) == 5:
 		extra_steer_speed += controler * lvl/5.0
+		$PlayerCanvas/equipment/rein.modulate = mod_color
+		$PlayerCanvas/equipment/rein/lvl.text = equip_txt
 	elif (item_id/100) == 6:
 		extra_speed_multiplier += controler * lvl/10.0
+		$PlayerCanvas/equipment/horseshoe.modulate = mod_color
+		$PlayerCanvas/equipment/horseshoe/lvl.text = equip_txt
 	elif (item_id/100) == 7:
 		extra_speed += controler * lvl*50
+		$PlayerCanvas/equipment/saddle.modulate = mod_color
+		$PlayerCanvas/equipment/saddle/lvl.text = equip_txt
 	
 	update_info()
 
@@ -139,20 +173,26 @@ func _trigger_invulnerability() -> void:
 	_check_overlapping_hitboxes()
 
 func _physics_process(delta: float) -> void:
+	if Input.is_key_pressed(KEY_SHIFT):
+		if not on_power_charge and power_charge_load >= 1:
+			on_power_charge = true
+			power_charge_changed.emit(power_charge_load, power_charge_changed)
 	_handle_movement(delta)
 	var is_charging = lance_area.monitoring
 	_update_lance_state()
 	if !is_charging and lance_area.monitoring:
-		lance_area.modulate = Color(1,0,0,1)
+		var tween = create_tween()
+		tween.tween_property(lance_area, "modulate", Color(1,0,0,0.6), 0.2)
 	elif is_charging and !lance_area.monitoring:
-		lance_area.modulate = Color(1,1,1,1)
+		var tween = create_tween()
+		tween.tween_property(lance_area, "modulate", Color(1,1,1,1), 0.2)
 	move_and_slide()
 
 func _handle_movement(delta: float) -> void:
 	if not can_move:
 		velocity = Vector2.ZERO
 		return
-		
+	
 	var turn_input = Input.get_axis("ui_left", "ui_right")
 	var throttle_input = Input.get_axis("ui_down", "ui_up")
 	
@@ -182,6 +222,21 @@ func _handle_movement(delta: float) -> void:
 	 # Limita à velocidade máxima com lentidão
 	if velocity.length() > effective_max_speed:
 		velocity = velocity.normalized() * effective_max_speed
+	
+	if get_tree().current_scene.is_in_run:
+		if ((velocity.length() >= effective_max_speed * 0.95) and not on_power_charge):
+			power_charge_load = min(power_charge_load + delta/2, 1)
+			power_charge_changed.emit(power_charge_load, on_power_charge)
+		elif on_power_charge:
+			if last_ghost >= ghost_intervals:
+				create_ghost()
+				last_ghost = 0
+			else:
+				last_ghost += delta
+			power_charge_load = max(power_charge_load - delta/2, 0)
+			power_charge_changed.emit(power_charge_load, on_power_charge)
+			if power_charge_load <= 0:
+				on_power_charge = false
 
 func _update_lance_state() -> void:
 	if not lance_area:
@@ -189,7 +244,6 @@ func _update_lance_state() -> void:
 		
 	var is_charging = velocity.length() >= min_charge_speed
 	lance_area.monitoring = is_charging
-	
 	
 	# Garante impacto mesmo se já estiver colidindo ao atingir a velocidade
 	if is_charging:
@@ -217,8 +271,9 @@ func _on_lance_hit(area: Area2D) -> void:
 	var _hit_data = receiver.process_hit(raw_damage + extra_damage, velocity.normalized(), current_speed)
 	
 	# Empurra o jogador na direção oposta ao golpe
-	var bounce_dir = -forward_vec
-	velocity = bounce_dir * (current_speed * bounce_ratio)
+	if not on_power_charge:
+		var bounce_dir = -forward_vec
+		velocity = bounce_dir * (current_speed * bounce_ratio)
 
 func _on_hurtbox_entered(area: Area2D) -> void:
 	if is_invulnerable:

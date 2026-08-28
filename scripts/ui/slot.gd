@@ -132,7 +132,7 @@ func _on_mouse_entered() -> void:
 		6: lvl/10.0,
 		7: lvl*50
 	}
-	$description.text = "Item: %s\nLevel: %d\n%s" % [item[it], lvl, item_description[it] % buff[it]]
+	$description/label.text = "Item: %s\nLevel: %d\n%s" % [item[it], lvl, item_description[it] % buff[it]]
 	$description.visible = true
 
 func _on_mouse_exited() -> void:

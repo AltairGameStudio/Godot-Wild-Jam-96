@@ -4,6 +4,7 @@ func _ready() -> void:
 	$inventory.visible = false
 	$inventory/store.visible = false
 	$upgrade_shop.visible = false
+	$equipment.visible = false
 
 func _process(_delta: float) -> void:
 	var player = get_tree().get_first_node_in_group("player")
@@ -15,7 +16,7 @@ func _process(_delta: float) -> void:
 		var is_open = $inventory.visible
 		if not is_open:
 			$inventory.visible = true
-			if is_instance_valid(player):
+			if is_instance_valid(player) and get_tree().current_scene.is_in_run:
 				player.can_move = false
 				player.velocity = Vector2.ZERO
 		else:

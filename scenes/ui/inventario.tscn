@@ -38,6 +38,18 @@
 [ext_resource type="Texture2D" uid="uid://rbjxqp4g7pjs" path="res://assets/sprites/items/horseshoe.png" id="32_77d6k"]
 [ext_resource type="Texture2D" uid="uid://cme17ohbaulgi" path="res://assets/sprites/items/saddle.png" id="33_7jf4j"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x1rtc"]
+bg_color = Color(0.012617188, 0.012617188, 0.012617188, 0.6745098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.026433926, 0.026433926, 0.026433926, 0.8352941)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [node name="inventory" type="GridContainer" unique_id=1194000883]
 anchors_preset = 8
 anchor_left = 0.5
@@ -336,12 +348,17 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
 
-[node name="description" type="Label" parent="equip/equipments/lance" unique_id=532948664]
+[node name="description" type="PanelContainer" parent="equip/equipments/lance" unique_id=2142423247]
 visible = false
 z_index = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="equip/equipments/lance/description" unique_id=43318593]
+z_index = 1
+layout_mode = 2
 
 [node name="rein" type="Control" parent="equip/equipments" unique_id=1217355771]
 custom_minimum_size = Vector2(60, 60)
@@ -372,12 +389,17 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
 
-[node name="description" type="Label" parent="equip/equipments/rein" unique_id=1581566273]
+[node name="description" type="PanelContainer" parent="equip/equipments/rein" unique_id=1781975971]
 visible = false
 z_index = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="equip/equipments/rein/description" unique_id=1658697589]
+z_index = 1
+layout_mode = 2
 
 [node name="armor" type="Control" parent="equip/equipments" unique_id=2132605866]
 custom_minimum_size = Vector2(60, 60)
@@ -408,12 +430,17 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
 
-[node name="description" type="Label" parent="equip/equipments/armor" unique_id=1618731903]
+[node name="description" type="PanelContainer" parent="equip/equipments/armor" unique_id=1253913027]
 visible = false
 z_index = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="equip/equipments/armor/description" unique_id=915979666]
+z_index = 1
+layout_mode = 2
 
 [node name="horseshoe" type="Control" parent="equip/equipments" unique_id=1838463288]
 custom_minimum_size = Vector2(60, 60)
@@ -444,12 +471,17 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
 
-[node name="description" type="Label" parent="equip/equipments/horseshoe" unique_id=508511999]
+[node name="description" type="PanelContainer" parent="equip/equipments/horseshoe" unique_id=1305023980]
 visible = false
 z_index = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="equip/equipments/horseshoe/description" unique_id=1527661419]
+z_index = 1
+layout_mode = 2
 
 [node name="cape" type="Control" parent="equip/equipments" unique_id=1152287377]
 custom_minimum_size = Vector2(60, 60)
@@ -480,12 +512,17 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
 
-[node name="description" type="Label" parent="equip/equipments/cape" unique_id=1270994468]
+[node name="description" type="PanelContainer" parent="equip/equipments/cape" unique_id=249342223]
 visible = false
 z_index = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="equip/equipments/cape/description" unique_id=1418150652]
+z_index = 1
+layout_mode = 2
 
 [node name="saddle" type="Control" parent="equip/equipments" unique_id=1326128113]
 custom_minimum_size = Vector2(60, 60)
@@ -516,12 +553,17 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
 
-[node name="description" type="Label" parent="equip/equipments/saddle" unique_id=1904572884]
+[node name="description" type="PanelContainer" parent="equip/equipments/saddle" unique_id=426643638]
 visible = false
 z_index = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="equip/equipments/saddle/description" unique_id=1009982997]
+z_index = 1
+layout_mode = 2
 
 [node name="dummy_slot" type="Control" parent="." unique_id=1231830665]
 layout_mode = 2
@@ -607,14 +649,16 @@ script = ExtResource("23_e33ju")
 
 [node name="sell_button" type="Control" parent="store" unique_id=1420586304 groups=["sell_store"]]
 layout_mode = 1
-anchor_left = 0.75000006
-anchor_top = 0.574
-anchor_right = 0.75000006
-anchor_bottom = 0.574
-offset_left = -55.50003
-offset_top = -16.582
-offset_right = 55.49997
-offset_bottom = 16.418
+anchor_left = 0.767
+anchor_top = 0.55300003
+anchor_right = 0.767
+anchor_bottom = 0.55300003
+offset_left = -55.32602
+offset_top = -16.32901
+offset_right = 55.67398
+offset_bottom = 16.67099
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("23_8lyor")
 
 [node name="sprite" type="TextureRect" parent="store/sell_button" unique_id=84475609]
@@ -622,8 +666,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 2.0
-offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("24_e33ju")
@@ -693,20 +735,34 @@ layout_mode = 2
 script = ExtResource("23_bci2j")
 
 [node name="sprite" type="TextureRect" parent="store/buy_zone/minus" unique_id=1017252129]
-layout_mode = 0
-offset_top = 13.75
-offset_right = 29.0
-offset_bottom = 42.75
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.5
+offset_top = -14.5
+offset_right = 14.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("24_3chmt")
 expand_mode = 2
 
-[node name="description" type="Label" parent="store/buy_zone/minus" unique_id=1752422703]
+[node name="description" type="PanelContainer" parent="store/buy_zone/minus" unique_id=838013042]
 visible = false
 z_index = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Diminuir level dos itens"
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="store/buy_zone/minus/description" unique_id=593105862]
+z_index = 1
+layout_mode = 2
+text = "Decrease items level"
+horizontal_alignment = 1
 
 [node name="2" type="Control" parent="store/buy_zone" unique_id=1790994582 groups=["buy_store"]]
 custom_minimum_size = Vector2(60, 60)
@@ -737,12 +793,6 @@ grow_vertical = 2
 texture = ExtResource("28_x1rtc")
 expand_mode = 2
 
-[node name="description" type="Label" parent="store/buy_zone/2" unique_id=1440887525]
-z_index = 1
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="cost" type="Label" parent="store/buy_zone/2" unique_id=946892078]
 layout_mode = 1
 anchors_preset = -1
@@ -755,6 +805,18 @@ offset_top = -11.520004
 offset_right = 20.5
 offset_bottom = 11.479996
 horizontal_alignment = 1
+
+[node name="description" type="PanelContainer" parent="store/buy_zone/2" unique_id=1047863209]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="store/buy_zone/2/description" unique_id=767364569]
+z_index = 1
+layout_mode = 2
 
 [node name="3" type="Control" parent="store/buy_zone" unique_id=724298611 groups=["buy_store"]]
 custom_minimum_size = Vector2(60, 60)
@@ -781,12 +843,6 @@ grow_vertical = 2
 texture = ExtResource("29_x35ds")
 expand_mode = 2
 
-[node name="description" type="Label" parent="store/buy_zone/3" unique_id=1486709335]
-z_index = 1
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="cost" type="Label" parent="store/buy_zone/3" unique_id=1143894291]
 layout_mode = 1
 anchors_preset = -1
@@ -799,6 +855,18 @@ offset_top = -11.520004
 offset_right = 20.5
 offset_bottom = 11.479996
 horizontal_alignment = 1
+
+[node name="description" type="PanelContainer" parent="store/buy_zone/3" unique_id=331308112]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="store/buy_zone/3/description" unique_id=1165235230]
+z_index = 1
+layout_mode = 2
 
 [node name="4" type="Control" parent="store/buy_zone" unique_id=196595956 groups=["buy_store"]]
 custom_minimum_size = Vector2(60, 60)
@@ -825,12 +893,6 @@ grow_vertical = 2
 texture = ExtResource("30_wxh2m")
 expand_mode = 2
 
-[node name="description" type="Label" parent="store/buy_zone/4" unique_id=959318691]
-z_index = 1
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="cost" type="Label" parent="store/buy_zone/4" unique_id=1297481491]
 layout_mode = 1
 anchors_preset = -1
@@ -843,6 +905,18 @@ offset_top = -11.520004
 offset_right = 20.5
 offset_bottom = 11.479996
 horizontal_alignment = 1
+
+[node name="description" type="PanelContainer" parent="store/buy_zone/4" unique_id=53751826]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="store/buy_zone/4/description" unique_id=158377898]
+z_index = 1
+layout_mode = 2
 
 [node name="5" type="Control" parent="store/buy_zone" unique_id=275552447 groups=["buy_store"]]
 custom_minimum_size = Vector2(60, 60)
@@ -869,12 +943,6 @@ grow_vertical = 2
 texture = ExtResource("31_cbn55")
 expand_mode = 2
 
-[node name="description" type="Label" parent="store/buy_zone/5" unique_id=695240790]
-z_index = 1
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="cost" type="Label" parent="store/buy_zone/5" unique_id=1234068894]
 layout_mode = 1
 anchors_preset = -1
@@ -887,6 +955,18 @@ offset_top = -11.520004
 offset_right = 20.5
 offset_bottom = 11.479996
 horizontal_alignment = 1
+
+[node name="description" type="PanelContainer" parent="store/buy_zone/5" unique_id=1307290938]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="store/buy_zone/5/description" unique_id=1537062042]
+z_index = 1
+layout_mode = 2
 
 [node name="6" type="Control" parent="store/buy_zone" unique_id=1226536007 groups=["buy_store"]]
 custom_minimum_size = Vector2(60, 60)
@@ -913,12 +993,6 @@ grow_vertical = 2
 texture = ExtResource("32_77d6k")
 expand_mode = 2
 
-[node name="description" type="Label" parent="store/buy_zone/6" unique_id=1396584945]
-z_index = 1
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="cost" type="Label" parent="store/buy_zone/6" unique_id=1328478076]
 layout_mode = 1
 anchors_preset = -1
@@ -931,6 +1005,18 @@ offset_top = -11.520004
 offset_right = 20.5
 offset_bottom = 11.479996
 horizontal_alignment = 1
+
+[node name="description" type="PanelContainer" parent="store/buy_zone/6" unique_id=2009850668]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="store/buy_zone/6/description" unique_id=259829119]
+z_index = 1
+layout_mode = 2
 
 [node name="7" type="Control" parent="store/buy_zone" unique_id=1872163292 groups=["buy_store"]]
 custom_minimum_size = Vector2(60, 60)
@@ -957,12 +1043,6 @@ grow_vertical = 2
 texture = ExtResource("33_7jf4j")
 expand_mode = 2
 
-[node name="description" type="Label" parent="store/buy_zone/7" unique_id=27347316]
-z_index = 1
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="cost" type="Label" parent="store/buy_zone/7" unique_id=435899492]
 layout_mode = 1
 anchors_preset = -1
@@ -976,26 +1056,52 @@ offset_right = 20.5
 offset_bottom = 11.479996
 horizontal_alignment = 1
 
+[node name="description" type="PanelContainer" parent="store/buy_zone/7" unique_id=546897091]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="store/buy_zone/7/description" unique_id=872459157]
+z_index = 1
+layout_mode = 2
+
 [node name="plus" type="Control" parent="store/buy_zone" unique_id=1693455922]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 script = ExtResource("25_xw6bx")
 
 [node name="sprite" type="TextureRect" parent="store/buy_zone/plus" unique_id=1971353742]
-layout_mode = 0
-offset_top = 14.0
-offset_right = 29.75
-offset_bottom = 43.75
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.875
+offset_top = -14.875
+offset_right = 14.875
+offset_bottom = 14.875
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("26_f63ls")
 expand_mode = 2
 
-[node name="description" type="Label" parent="store/buy_zone/plus" unique_id=1020233928]
+[node name="description" type="PanelContainer" parent="store/buy_zone/plus" unique_id=69847868]
 visible = false
 z_index = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Subir level dos itens"
+offset_right = 169.5
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1rtc")
+
+[node name="label" type="Label" parent="store/buy_zone/plus/description" unique_id=1020233928]
+z_index = 1
+layout_mode = 2
+text = "Increase items level"
+horizontal_alignment = 1
 
 [node name="cost_label" type="Label" parent="store" unique_id=1791917015]
 layout_mode = 1

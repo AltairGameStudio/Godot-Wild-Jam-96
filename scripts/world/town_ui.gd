@@ -109,6 +109,7 @@ func _show_current_page() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if current_tutorial_state == TutorialState.CONTROLS and event.is_action_pressed("ui_accept"):
+		get_tree().get_first_node_in_group("player").get_node("PlayerCanvas/equipment").visible = true
 		_start_tutorial_go_to_npc()
 		get_viewport().set_input_as_handled()
 		return

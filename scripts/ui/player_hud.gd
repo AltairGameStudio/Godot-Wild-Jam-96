@@ -4,6 +4,8 @@ extends CanvasLayer
 
 var mask_start_x: float = 0.0
 var max_mask_width: float = 0.0
+var charge_mask_start_x: float = 0.0
+var charge_max_mask_width: float = 0.0
 
 func _ready() -> void:
 	# Guarda a posição X inicial (ex: 32.0) e a largura total (ex: 284.0)
@@ -14,6 +16,7 @@ func _ready() -> void:
 	if player:
 		_on_player_health_changed(player.current_health, player.max_health + player.extra_health)
 		player.health_changed.connect(_on_player_health_changed)
+		player.power_charge_changed.connect(_on_power_charge_changed)
 
 func _on_player_health_changed(current: float, max_h: float) -> void:
 	var health_percent: float = clampf(current / maxf(1.0, max_h), 0.0, 1.0)
@@ -25,3 +28,10 @@ func _on_player_health_changed(current: float, max_h: float) -> void:
 	# Ajusta o tamanho e posiciona colado na extremidade direita da barra
 	damage_mask.size.x = current_mask_width
 	damage_mask.position.x = mask_start_x + (max_mask_width - current_mask_width)
+
+func _on_power_charge_changed(current_load, on_power_charge) -> void:
+	if current_load >= 1:
+		$UI/ChargeContainer/Label.visible = !on_power_charge
+		$UI/ChargeContainer/light.visible = !on_power_charge
+	else:
+		$UI/ChargeContainer/LanceSprite.modulate = Color(1,1,1,0.5 + current_load/2)
