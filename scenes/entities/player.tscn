@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://bekms35j6usg0" path="res://assets/sprites/items/rein.png" id="12_1yk18"]
 [ext_resource type="Texture2D" uid="uid://rbjxqp4g7pjs" path="res://assets/sprites/items/horseshoe.png" id="13_b4o2o"]
 [ext_resource type="Texture2D" uid="uid://cme17ohbaulgi" path="res://assets/sprites/items/saddle.png" id="14_yr3on"]
+[ext_resource type="Script" uid="uid://6jr8e2psttx5" path="res://scripts/ui/player_hud.gd" id="15_spk56"]
+[ext_resource type="Texture2D" uid="uid://c0obk15o8xyu3" path="res://assets/sprites/blood_red_bar.png" id="16_1yk18"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dqkch"]
 radius = 25.019993
@@ -22,6 +24,11 @@ radius = 25.019993
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qhqgy"]
 radius = 28.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b4o2o"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
 
 [sub_resource type="Gradient" id="Gradient_42nxq"]
 interpolation_mode = 2
@@ -357,6 +364,29 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HealthBarContainer" type="Control" parent="PlayerCanvas" unique_id=902970055]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("15_spk56")
+
+[node name="HealthSprite" type="TextureRect" parent="PlayerCanvas/HealthBarContainer" unique_id=2101347910]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 21.0
+offset_right = 324.0
+offset_bottom = 61.0
+texture = ExtResource("16_1yk18")
+
+[node name="DamageMask" type="Panel" parent="PlayerCanvas/HealthBarContainer" unique_id=1815392444]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 29.0
+offset_right = 316.0
+offset_bottom = 53.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_b4o2o")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1437981006]
 texture_filter = 1
