@@ -182,7 +182,7 @@ func _end_phase_by_time() -> void:
 	if timer_label:
 		timer_label.text = "00"
 		
-	_show_announcement("TIME'S UP!", "Travelling to the town...", 3.5, Color(0.3, 1.0, 0.4))
+	_show_announcement("TIME'S UP!", "Travelling to the town...", 3.5, Color("f2d9a6ff"))
 
 	# Remove todos os inimigos vivos restantes na arena
 	get_tree().call_group("enemies", "queue_free")
@@ -236,7 +236,7 @@ func _setup_phase_pool(phase: int) -> void:
 			enemy_scenes = [SCENE_SWORD, SCENE_RANGED, SCENE_SHIELD, SCENE_TAR, SCENE_HEAVY, SCENE_DODGING]
 			enemy_weights = [5.0, 10.0, 15.0, 20.0, 25.0, 25.0]
 
-func _show_announcement(title: String, subtitle: String, duration: float = 3.0, title_color: Color = Color(1.0, 0.85, 0.2)) -> void:
+func _show_announcement(title: String, subtitle: String, duration: float = 3.0, title_color: Color = Color("f2d9a6ff")) -> void:
 	if not announcement_container or not title_label or not subtitle_label:
 		return
 
