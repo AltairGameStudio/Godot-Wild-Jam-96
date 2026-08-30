@@ -9,8 +9,11 @@ extends Container
 @onready var drift_traction = $background/drift_traction_container
 var upgrade_names = ["max_health", "engine_power", "base_damage", "drift_traction"]
 
+const TEX_CLOSE = preload("res://assets/sprites/start_main_menu/close.png")
+
 func _ready() -> void:
 	update_upgrades()
+	_setup_close_button()
 
 func update_upgrades() -> void:
 	$background/max_health_container/step_val.text = str(game.upgrades["max_health"]["val_step"])
@@ -49,3 +52,34 @@ func buy_upgrade(upgrade_name: String) -> void:
 		update_upgrades()
 	else:
 		$"../notification".activate_notification("You don't have money for that")
+
+func _setup_close_button() -> void:
+	var close_btn = TextureButton.new()
+	close_btn.texture_normal = TEX_CLOSE
+	
+	# === AJUSTE DE TAMANHO ===
+	var button_size = Vector2(48, 48) # Altere aqui o tamanho (Largura, Altura)
+	close_btn.ignore_texture_size = true
+	close_btn.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+	close_btn.custom_minimum_size = button_size
+	
+	# === AJUSTE DE POSIÇÃO ===
+	var margin_right = -50.0 # Mais alto = mais para a esquerda
+	var margin_top = 15.0   # Mais alto = mais para baixo
+	
+	close_btn.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	close_btn.offset_left = - (margin_right + button_size.x)
+	close_btn.offset_right = - margin_right
+	close_btn.offset_top = margin_top
+	close_btn.offset_bottom = margin_top + button_size.y
+	
+	close_btn.pressed.connect(func():
+		var canvas = get_parent()
+		if canvas.has_method("close_all_menus"):
+			canvas.close_all_menus()
+		else:
+			visible = false
+			if is_instance_valid(player):
+				player.can_move = true
+	)
+	$background.add_child(close_btn)
