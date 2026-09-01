@@ -5,7 +5,7 @@ signal gold_changed(new_amount: int)
 signal upgrade_purchased(upgrade_id: String, new_level: int)
 
 # Economia e Meta-Progressão (Persistente)
-var gold: int = 100 # Ouro inicial para testes
+var gold: int = 0 # Ouro inicial para testes
 
 # Níveis e valores dos upgrades permanentes
 var upgrades: Dictionary = {

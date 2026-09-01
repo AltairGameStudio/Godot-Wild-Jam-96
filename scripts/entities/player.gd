@@ -159,6 +159,12 @@ func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, ignore_charge
 	update_info()
 	if current_health <= 0.0:
 		die()
+		
+func heal(amount: float) -> void:
+	var total_max = max_health + extra_health
+	current_health = minf(total_max, current_health + amount)
+	health_changed.emit(current_health, total_max)
+	update_info()
 
 func _trigger_invulnerability() -> void:
 	is_invulnerable = true

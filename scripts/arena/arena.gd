@@ -7,8 +7,8 @@ extends Node2D
 @export var min_distance_from_player: float = 380.0 # Distância mínima para não spawnar colado no player
 
 @export_group("Limites da Arena para Spawn")
-@export var arena_min_bounds: Vector2 = Vector2(-600, -300)
-@export var arena_max_bounds: Vector2 = Vector2(2300, 1350)
+@export var arena_center: Vector2 = Vector2(895, 511)
+@export var arena_spawn_radius: float = 1250.0
 
 @export_group("Pool de Inimigos Padrão")
 @export var enemy_scenes: Array[PackedScene] = []
@@ -48,6 +48,10 @@ const PHASE_TITLES = {
 }
 
 func _ready() -> void:
+	if has_node("ForestRing"):
+		arena_center = $ForestRing.global_position
+		arena_spawn_radius = $ForestRing.radius - 200.0
+	
 	var current_phase: int = 1
 	if "current_phase" in get_tree().current_scene:
 		current_phase = maxi(1, get_tree().current_scene.current_phase)
@@ -156,14 +160,13 @@ func _get_safe_spawn_position() -> Vector2:
 		player_ref = get_tree().get_first_node_in_group("player") as Node2D
 
 	var attempts = 0
-	var final_pos = Vector2.ZERO
+	var final_pos = arena_center
 
-	# Tenta até 12 vezes sortear um ponto afastado do jogador
-	while attempts < 12:
-		final_pos = Vector2(
-			randf_range(arena_min_bounds.x, arena_max_bounds.x),
-			randf_range(arena_min_bounds.y, arena_max_bounds.y)
-		)
+	# Tenta até 15 vezes sortear um ponto dentro do círculo seguro e afastado do jogador
+	while attempts < 15:
+		var angle = randf() * TAU
+		var dist = sqrt(randf()) * arena_spawn_radius
+		final_pos = arena_center + Vector2(cos(angle), sin(angle)) * dist
 		
 		if not is_instance_valid(player_ref):
 			return final_pos
