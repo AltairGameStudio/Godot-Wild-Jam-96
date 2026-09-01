@@ -14,6 +14,10 @@ signal enemy_died
 @export var wobble_frequency: float = 3.0    # Velocidade da oscilação
 @export var wobble_amplitude: float = 0.5    # Intensidade do desvio lateral (0.0 a 1.0)
 
+@export_group("Drops de Recompensa")
+@export var min_gold_drop: int = 1   # Quantidade mínima de ouro
+@export var max_gold_drop: int = 4  # Quantidade máxima de ouro
+
 @export var separation_strength: float = 60.0 # Força com que os inimigos se repelem
 @onready var separation_area: Area2D = $SeparationArea
 
@@ -150,9 +154,9 @@ func _on_hit_received(damage: float, direction: Vector2, hit_type: HitReceiver.H
 				die()
 
 func create_item() -> void:
-	var coin_lvl = randi_range(1,10)
+	var coin_amount = randi_range(min_gold_drop, max_gold_drop)
 	var coin_drop = drop.instantiate()
-	coin_drop.setup(100 + coin_lvl, self.global_position)
+	coin_drop.setup(100 + coin_amount, self.global_position)
 	get_tree().current_scene.get_node("World/Arena").add_child(coin_drop)
 	
 	for idx in range(items_can_drop.size()):

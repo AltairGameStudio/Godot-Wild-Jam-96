@@ -36,6 +36,10 @@ signal enemy_died
 @export var strafe_speed_ratio: float = 0.8
 @export var separation_strength: float = 60.0
 
+@export_group("Drops de Recompensa")
+@export var min_gold_drop: int = 21
+@export var max_gold_drop: int = 24
+
 @onready var separation_area: Area2D = $SeparationArea
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var shoot_point: Marker2D = $ShootPoint
@@ -224,6 +228,11 @@ func _update_healthbar_position() -> void:
 		health_bar.global_position = global_position + Vector2(-health_bar.size.x / 2.0, -30.0)
 
 func create_item() -> void:
+	var coin_amount = randi_range(min_gold_drop, max_gold_drop)
+	var coin_drop = drop.instantiate()
+	coin_drop.setup(100 + coin_amount, self.global_position)
+	get_tree().current_scene.get_node("World/Arena").add_child(coin_drop)
+	
 	for i in range(1, 6):
 		var new_drop = drop.instantiate()
 		new_drop.setup(i * 100, self.global_position)

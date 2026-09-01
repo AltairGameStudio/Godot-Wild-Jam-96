@@ -20,6 +20,10 @@ signal enemy_died
 @export var retreat_distance: float = 170.0 # Se o player chegar mais perto que isso, ele recua
 @export var strafe_speed_ratio: float = 0.75 # Velocidade enquanto circula
 
+@export_group("Drops de Recompensa")
+@export var min_gold_drop: int = 5
+@export var max_gold_drop: int = 8
+
 @export var separation_strength: float = 60.0 # Força com que os inimigos se repelem
 @onready var separation_area: Area2D = $SeparationArea
 
@@ -165,9 +169,9 @@ func _update_healthbar_position() -> void:
 		health_bar.global_position = global_position + Vector2(-health_bar.size.x / 2.0, -30.0)
 
 func create_item() -> void:
-	var coin_lvl = randi_range(1,10)
+	var coin_amount = randi_range(min_gold_drop, max_gold_drop)
 	var coin_drop = drop.instantiate()
-	coin_drop.setup(100 + coin_lvl, self.global_position)
+	coin_drop.setup(100 + coin_amount, self.global_position)
 	get_tree().current_scene.get_node("World/Arena").add_child(coin_drop)
 	
 	for idx in range(items_can_drop.size()):
