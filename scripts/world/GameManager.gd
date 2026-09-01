@@ -9,7 +9,7 @@ var gold: int = 0 # Ouro inicial para testes
 
 # Níveis e valores dos upgrades permanentes
 var upgrades: Dictionary = {
-	"max_health": {"level": 1, "base_cost": 50, "cost_mult": 1.5, "val_step": 20.0, "current_val": 100.0},
+	"charge_time": {"level": 1, "base_cost": 50, "cost_mult": 1.5, "val_step": -0.5, "current_val": 8.0},
 	"engine_power": {"level": 1, "base_cost": 75, "cost_mult": 1.6, "val_step": 150.0, "current_val": 1400.0},
 	"base_damage": {"level": 1, "base_cost": 60, "cost_mult": 1.5, "val_step": 10.0, "current_val": 30.0},
 	"drift_traction": {"level": 1, "base_cost": 100, "cost_mult": 1.8, "val_step": 0.03, "current_val": 0.85}
@@ -80,10 +80,10 @@ func end_run_failure() -> void:
 	
 	# Reseta a fase ao morrer
 	current_phase = 1
-	gold = 100
+	gold = 0
 	var new_player = player_scene.instantiate()
 	add_child(new_player)
-	upgrades["max_health"]["current_val"] = new_player.max_health
+	upgrades["charge_time"]["current_val"] = new_player.charge_time_to_fill
 	upgrades["engine_power"]["current_val"] = new_player.engine_power
 	upgrades["base_damage"]["current_val"] = new_player.base_damage
 	upgrades["drift_traction"]["current_val"] = new_player.drift_traction

@@ -22,6 +22,7 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		player_ref = body
+		player_in_range = true
 		if body.current_health == (body.max_health + body.extra_health):
 			prompt_label.text = "Your life is full"
 		elif get_tree().current_scene.gold == 0:
@@ -31,7 +32,6 @@ func _on_body_entered(body: Node2D) -> void:
 			var life_missing = (body.max_health + body.extra_health) - body.current_health
 			life_to_heal = min(min(total_gold/coin_per_health, life_missing), 10)
 			cost = ceil(life_to_heal*coin_per_health)
-			player_in_range = true
 			prompt_label.text = prompt_message % [cost, life_to_heal]
 		prompt_label.visible = true
 
@@ -47,4 +47,4 @@ func _unhandled_input(event: InputEvent) -> void:
 				player_ref.heal(life_to_heal)
 				get_tree().current_scene.gold -= cost
 				_on_body_entered(player_ref)
-				interacted.emit(self)
+			interacted.emit(self)

@@ -3,11 +3,11 @@ extends Container
 @onready var game = get_tree().current_scene
 @onready var player = get_tree().current_scene.get_node("Player")
 
-@onready var max_health = $background/max_health_container
+@onready var charge_time = $background/charge_time_container
 @onready var engine_power = $background/engine_power_container
 @onready var base_damage = $background/base_damage_container
 @onready var drift_traction = $background/drift_traction_container
-var upgrade_names = ["max_health", "engine_power", "base_damage", "drift_traction"]
+var upgrade_names = ["charge_time", "engine_power", "base_damage", "drift_traction"]
 
 const TEX_CLOSE = preload("res://assets/sprites/start_main_menu/close.png")
 
@@ -16,8 +16,8 @@ func _ready() -> void:
 	_setup_close_button()
 
 func update_upgrades() -> void:
-	$background/max_health_container/step_val.text = str(game.upgrades["max_health"]["val_step"])
-	$background/max_health_container/cost.text = str(game.upgrades["max_health"]["base_cost"] * (game.upgrades["max_health"]["cost_mult"]**game.upgrades["max_health"]["level"]))
+	$background/charge_time_container/step_val.text = str(abs(game.upgrades["charge_time"]["val_step"])) + "s"
+	$background/charge_time_container/cost.text = str(int(game.upgrades["charge_time"]["base_cost"] * (game.upgrades["charge_time"]["cost_mult"]**game.upgrades["charge_time"]["level"])))
 	$background/engine_power_container/step_val.text = str(game.upgrades["engine_power"]["val_step"])
 	$background/engine_power_container/cost.text = str(game.upgrades["engine_power"]["base_cost"] * (game.upgrades["engine_power"]["cost_mult"]**game.upgrades["engine_power"]["level"]))
 	$background/base_damage_container/step_val.text = str(game.upgrades["base_damage"]["val_step"])
@@ -27,9 +27,8 @@ func update_upgrades() -> void:
 
 func apply_upgrade(upgrade_name: String, val_step: int) -> void:
 	match upgrade_name:
-		"max_health":
-			player.max_health += val_step
-			player.current_health += val_step
+		"charge_time":
+			player.charge_time_to_fill = maxf(0.5, player.charge_time_to_fill + val_step)
 		"engine_power":
 			player.engine_power += val_step
 		"base_damage":

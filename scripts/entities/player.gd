@@ -235,7 +235,7 @@ func _handle_movement(delta: float) -> void:
 	if get_tree().current_scene.is_in_run:
 		if ((velocity.length() >= effective_max_speed * 0.95) and not on_power_charge):
 			# Enche proporcionalmente ao tempo definido em charge_time_to_fill
-			var fill_rate = delta / maxf(0.01, charge_time_to_fill)
+			var fill_rate = delta / maxf(0.5, charge_time_to_fill) # Evita divisão por zero ou tempo negativo
 			power_charge_load = min(power_charge_load + fill_rate, 1.0)
 			power_charge_changed.emit(power_charge_load, on_power_charge)
 
