@@ -34,6 +34,11 @@ var player_ref: Node2D = null
 @onready var title_label: Label = get_node_or_null("CanvasLayer/AnnouncementContainer/TitleLabel")
 @onready var subtitle_label: Label = get_node_or_null("CanvasLayer/AnnouncementContainer/SubtitleLabel")
 
+@onready var charge_container: Control = get_node_or_null("CanvasLayer/UI/ChargeContainer")
+@onready var charge_light: Node2D = get_node_or_null("CanvasLayer/UI/ChargeContainer/light")
+@onready var charge_lance_progress: TextureProgressBar = get_node_or_null("CanvasLayer/UI/ChargeContainer/LanceProgress")
+@onready var charge_label: Label = get_node_or_null("CanvasLayer/UI/ChargeContainer/Label")
+
 # Nomes temáticos para cada uma das 9 fases
 const PHASE_TITLES = {
 	1: "The Awakening of the Spear",
@@ -65,6 +70,12 @@ func _ready() -> void:
 
 	# 3. Inicialização dos Nós
 	player_ref = get_tree().get_first_node_in_group("player") as Node2D
+	
+	# Conecta o sinal de carga do Player
+	if player_ref and player_ref.has_signal("power_charge_changed"):
+		if not player_ref.power_charge_changed.is_connected(_on_power_charge_changed):
+			player_ref.power_charge_changed.connect(_on_power_charge_changed)
+	
 	start_phase()
 
 func start_phase() -> void:
@@ -263,3 +274,17 @@ EASE_OUT)
 
 	# Fade-out suave
 	tween.tween_property(announcement_container, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+
+func _on_power_charge_changed(current_load: float, is_on_dash: bool) -> void:
+	var is_fully_charged = current_load >= 1.0
+	var is_ready_to_use = is_fully_charged and not is_on_dash
+	
+	if charge_light:
+		charge_light.visible = is_ready_to_use
+	
+	if charge_label:
+		charge_label.visible = is_ready_to_use
+		
+	# Preenche a barra da esquerda para a direita de 0.0 a 1.0
+	if charge_lance_progress:
+		charge_lance_progress.value = current_load

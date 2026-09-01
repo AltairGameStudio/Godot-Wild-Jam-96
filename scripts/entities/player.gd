@@ -15,9 +15,6 @@ var current_health: float
 @export var forward_friction: float = 0.98
 @export var drift_traction: float = 0.85
 
-@export var power_charge_load: float = 0.0
-@export var on_power_charge: bool = false
-
 @export_group("Combate")
 @export var min_charge_speed: float = 100.0
 #@export var base_damage: float = 10.0
@@ -36,6 +33,12 @@ var is_invulnerable: bool = false
 @export var extra_speed = 0
 @export var extra_steer_speed = 0
 @export var extra_speed_multiplier = 0
+
+@export_group("Habilidade Dash / Carga")
+@export var charge_time_to_fill: float = 3.0   # Tempo em segundos para encher a barra de 0% a 100%
+@export var dash_duration: float = 1.5         # Tempo em segundos que o Dash dura até a barra esvaziar
+@export var power_charge_load: float = 0.0
+@export var on_power_charge: bool = false
 
 @onready var lance_pivot: Node2D = $LancePivot
 @onready var lance_area: Area2D = $LancePivot/LanceArea
@@ -231,17 +234,24 @@ func _handle_movement(delta: float) -> void:
 	
 	if get_tree().current_scene.is_in_run:
 		if ((velocity.length() >= effective_max_speed * 0.95) and not on_power_charge):
-			power_charge_load = min(power_charge_load + delta/2, 1)
+			# Enche proporcionalmente ao tempo definido em charge_time_to_fill
+			var fill_rate = delta / maxf(0.01, charge_time_to_fill)
+			power_charge_load = min(power_charge_load + fill_rate, 1.0)
 			power_charge_changed.emit(power_charge_load, on_power_charge)
+
 		elif on_power_charge:
 			if last_ghost >= ghost_intervals:
 				create_ghost()
-				last_ghost = 0
+				last_ghost = 0.0
 			else:
 				last_ghost += delta
-			power_charge_load = max(power_charge_load - delta/2, 0)
+
+			# Esvazia proporcionalmente ao tempo definido em dash_duration
+			var drain_rate = delta / maxf(0.01, dash_duration)
+			power_charge_load = max(power_charge_load - drain_rate, 0.0)
 			power_charge_changed.emit(power_charge_load, on_power_charge)
-			if power_charge_load <= 0:
+			
+			if power_charge_load <= 0.0:
 				on_power_charge = false
 
 func _update_lance_state() -> void:

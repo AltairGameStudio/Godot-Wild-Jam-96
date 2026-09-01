@@ -53,6 +53,8 @@ min_charge_speed = 200.0
 base_damage = 30.0
 damage_velocity_scale = 0.1
 bounce_ratio = 0.3
+charge_time_to_fill = 8.0
+dash_duration = 2.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1024225290]
 rotation = 1.5707964

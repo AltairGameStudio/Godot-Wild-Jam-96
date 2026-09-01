@@ -1241,12 +1241,20 @@ scale = Vector2(-4.3265266, 1.0440663)
 energy = 2.05
 texture = SubResource("GradientTexture2D_fir7s")
 
-[node name="LanceSprite" type="TextureRect" parent="CanvasLayer/UI/ChargeContainer" unique_id=171921341]
+[node name="LanceProgress" type="TextureProgressBar" parent="CanvasLayer/UI/ChargeContainer" unique_id=363941286]
 modulate = Color(1, 1, 1, 0.5019608)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("16_wqbss")
+offset_left = 283.0
+offset_top = 39.99995
+offset_right = 562.0
+offset_bottom = 79.999954
+rotation = 3.1415927
+max_value = 1.0
+step = 0.01
+fill_mode = 1
+texture_under = ExtResource("16_wqbss")
+texture_progress = ExtResource("16_wqbss")
+tint_under = Color(1, 1, 1, 0.3019608)
 
 [node name="Label" type="Label" parent="CanvasLayer/UI/ChargeContainer" unique_id=1878212710]
 visible = false
