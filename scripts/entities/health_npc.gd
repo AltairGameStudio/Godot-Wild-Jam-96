@@ -1,6 +1,6 @@
 extends NPC
 
-const HEAL_AMOUNT: float = 10.0
+const HEAL_AMOUNT: float = 20.0
 const HEAL_COST: int = 5
 
 var player_ref: Player = null

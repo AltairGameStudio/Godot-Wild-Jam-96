@@ -50,9 +50,8 @@ script = ExtResource("1_g2els")
 engine_power = 150.0
 max_speed = 300.0
 min_charge_speed = 200.0
-base_damage = 30.0
 damage_velocity_scale = 0.1
-bounce_ratio = 0.3
+bounce_force = 90.0
 charge_time_to_fill = 8.0
 dash_duration = 2.0
 

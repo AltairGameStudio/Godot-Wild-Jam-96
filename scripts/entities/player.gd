@@ -18,9 +18,9 @@ var current_health: float
 @export_group("Combate")
 @export var min_charge_speed: float = 100.0
 #@export var base_damage: float = 10.0
-@export var base_damage: float = 1000.0
+@export var base_damage: float = 30.0
 @export var damage_velocity_scale: float = 0.01
-@export var bounce_ratio: float = 0.35
+@export var bounce_force: float = 120.0  # Força fixa do recuo para trás
 
 @export_group("Defesa e Invulnerabilidade")
 @export var invulnerability_duration: float = 0.6
@@ -39,6 +39,7 @@ var is_invulnerable: bool = false
 @export var dash_duration: float = 1.5         # Tempo em segundos que o Dash dura até a barra esvaziar
 @export var power_charge_load: float = 0.0
 @export var on_power_charge: bool = false
+@export var min_dash_charge_speed: float = 285.0
 
 @onready var lance_pivot: Node2D = $LancePivot
 @onready var lance_area: Area2D = $LancePivot/LanceArea
@@ -108,15 +109,16 @@ func equipment_changed(item_id, item_equipped: bool):
 		$PlayerCanvas/equipment/armor.modulate = mod_color
 		$PlayerCanvas/equipment/armor/lvl.text = equip_txt
 	elif (item_id/100) == 4:
-		if item_equipped and (current_health == max_health + extra_health):
-			current_health = max_health + lvl*10
-		elif not item_equipped:
-			if (current_health == max_health + extra_health):
-				current_health = max_health
-			elif (current_health != max_health + extra_health) and current_health >= max_health:
-				var percent = current_health/max_health+extra_health
-				current_health = max_health*percent
-		extra_health += controler * lvl*10
+		var health_bonus = lvl * 10.0
+		if item_equipped:
+			# Ao equipar: aumenta a vida extra e soma a mesma quantidade na vida atual
+			extra_health += health_bonus
+			current_health += health_bonus
+		else:
+			# Ao desequipar: remove a vida extra e reduz a vida atual (garantindo que não passe do novo máximo)
+			extra_health -= health_bonus
+			current_health = minf(current_health, max_health + extra_health)
+			
 		$PlayerCanvas/equipment/cape.modulate = mod_color
 		$PlayerCanvas/equipment/cape/lvl.text = equip_txt
 	elif (item_id/100) == 5:
@@ -132,6 +134,9 @@ func equipment_changed(item_id, item_equipped: bool):
 		$PlayerCanvas/equipment/saddle.modulate = mod_color
 		$PlayerCanvas/equipment/saddle/lvl.text = equip_txt
 	
+	# Notifica a barra de vida do HUD para redesenhar com a nova vida máxima e atual
+	health_changed.emit(current_health, max_health + extra_health)
+	
 	update_info()
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
@@ -144,7 +149,8 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		take_damage(payload["damage"], payload["knockback"])
 
 func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, ignore_charge: bool = false) -> void:
-	if is_invulnerable:
+	# Invulnerável se estiver piscando ou em pleno Dash
+	if is_invulnerable or on_power_charge:
 		return
 		
 	# Se estiver em investida rápida frontal, a lança anula o dano de frente
@@ -183,9 +189,12 @@ func _trigger_invulnerability() -> void:
 
 func _physics_process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_SHIFT):
-		if not on_power_charge and power_charge_load >= 1:
+		if not on_power_charge and power_charge_load >= 1.0:
 			on_power_charge = true
-			power_charge_changed.emit(power_charge_load, power_charge_changed)
+			var forward_vec = Vector2.UP.rotated(heading_angle)
+			# Impulso instantâneo para frente
+			velocity = forward_vec * ((max_speed + extra_speed) * 1.8)
+			power_charge_changed.emit(power_charge_load, on_power_charge)
 	_handle_movement(delta)
 	var is_charging = lance_area.monitoring
 	_update_lance_state()
@@ -211,9 +220,12 @@ func _handle_movement(delta: float) -> void:
 	var forward_vec = Vector2.UP.rotated(heading_angle)
 	var right_vec = Vector2.RIGHT.rotated(heading_angle)
 	
+	# Multiplicador de velocidade aumentado durante o Dash (ex: 1.8x)
+	var dash_mult = 1.8 if on_power_charge else 1.0
+	
 	# Aplica o multiplicador de velocidade atual
-	var effective_power = engine_power * (speed_multiplier + extra_speed_multiplier)
-	var effective_max_speed = (max_speed + extra_speed) * (speed_multiplier + extra_speed_multiplier)
+	var effective_power = engine_power * (speed_multiplier + extra_speed_multiplier) * dash_mult
+	var effective_max_speed = (max_speed + extra_speed) * (speed_multiplier + extra_speed_multiplier) * dash_mult
 	
 	if throttle_input > 0.0:
 		velocity += forward_vec * engine_power * throttle_input * delta
@@ -233,7 +245,7 @@ func _handle_movement(delta: float) -> void:
 		velocity = velocity.normalized() * effective_max_speed
 	
 	if get_tree().current_scene.is_in_run:
-		if ((velocity.length() >= effective_max_speed * 0.95) and not on_power_charge):
+		if ((velocity.length() >= min_dash_charge_speed) and not on_power_charge):
 			# Enche proporcionalmente ao tempo definido em charge_time_to_fill
 			var fill_rate = delta / maxf(0.5, charge_time_to_fill) # Evita divisão por zero ou tempo negativo
 			power_charge_load = min(power_charge_load + fill_rate, 1.0)
@@ -286,10 +298,10 @@ func _on_lance_hit(area: Area2D) -> void:
 	# Enviamos o dano, a direção e a velocidade atual do impacto
 	var _hit_data = receiver.process_hit(raw_damage + extra_damage, velocity.normalized(), current_speed)
 	
-	# Empurra o jogador na direção oposta ao golpe
+	# Empurra o jogador na direção oposta ao golpe com força fixa
 	if not on_power_charge:
 		var bounce_dir = -forward_vec
-		velocity = bounce_dir * (current_speed * bounce_ratio)
+		velocity = bounce_dir * bounce_force
 
 func _on_hurtbox_entered(area: Area2D) -> void:
 	if is_invulnerable:
