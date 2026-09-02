@@ -30,6 +30,8 @@ bg_color = Color(0, 0, 0, 1)
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spk56"]
+
 [sub_resource type="Gradient" id="Gradient_42nxq"]
 interpolation_mode = 2
 offsets = PackedFloat32Array(0, 0.89849627)
@@ -131,6 +133,7 @@ script = ExtResource("3_42nxq")
 visible = false
 
 [node name="upgrade_shop" parent="PlayerCanvas" unique_id=1273479935 instance=ExtResource("5_5u6hq")]
+visible = false
 
 [node name="notification" type="VBoxContainer" parent="PlayerCanvas" unique_id=720672709]
 z_index = 2
@@ -388,6 +391,17 @@ offset_top = 29.0
 offset_right = 316.0
 offset_bottom = 53.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_b4o2o")
+
+[node name="HealMask" type="Panel" parent="PlayerCanvas/HealthBarContainer" unique_id=1040018102]
+modulate = Color(17.413149, 0, 0, 1)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 32.0
+offset_top = 30.0
+offset_right = 72.0
+offset_bottom = 70.0
+scale = Vector2(0.9620969, 0.5725455)
+theme_override_styles/panel = SubResource("StyleBoxFlat_spk56")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1437981006]
 texture_filter = 1

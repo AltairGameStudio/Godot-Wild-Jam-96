@@ -32,6 +32,9 @@ func _update_heal_prompt() -> void:
 		prompt_label.text = "Come back when you have %d gold!" % HEAL_COST
 	else:
 		prompt_label.text = prompt_message
+	var health_bar = player_ref.get_node("PlayerCanvas/HealthBarContainer")
+	health_bar.show_heal_mask(player_ref.current_health, player_ref.max_health + player_ref.extra_health, HEAL_AMOUNT)
+	
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
@@ -44,6 +47,7 @@ func _on_body_exited(body: Node2D) -> void:
 	if body is Player:
 		player_in_range = false
 		prompt_label.visible = false
+		player_ref.get_node("PlayerCanvas/HealthBarContainer").hide_heal_mask()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if player_in_range and is_instance_valid(player_ref):
