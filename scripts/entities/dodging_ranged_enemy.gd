@@ -39,6 +39,8 @@ signal enemy_died
 @export_group("Drops de Recompensa")
 @export var min_gold_drop: int = 21
 @export var max_gold_drop: int = 24
+var items_can_drop = [5, 7]        # Tipos de itens que esse arqueiro pode dropar (ex: Rédea e Sela)
+var chances_of_drop = [0.25, 0.15] # 25% de chance para o primeiro, 15% para o segundo
 
 @onready var separation_area: Area2D = $SeparationArea
 @onready var health_bar: ProgressBar = $HealthBar
@@ -233,10 +235,15 @@ func create_item() -> void:
 	coin_drop.setup(100 + coin_amount, self.global_position)
 	get_tree().current_scene.get_node("World/Arena").add_child(coin_drop)
 	
-	for i in range(1, 6):
-		var new_drop = drop.instantiate()
-		new_drop.setup(i * 100, self.global_position)
-		get_tree().current_scene.add_child(new_drop)
+	# Drop de Equipamento com chance e nível aleatório
+	for idx in range(items_can_drop.size()):
+		if randf() <= chances_of_drop[idx]:
+			var idx_drop = drop.instantiate()
+			var idx_lvl = randi_range(1, 5) # Nível aleatório entre 1 e 5
+			var offset = Vector2(randi_range(-10, 10), randi_range(-10, 10))
+			idx_drop.setup(items_can_drop[idx] * 100 + idx_lvl, self.global_position + offset)
+			get_tree().current_scene.get_node("World/Arena").add_child(idx_drop)
+			return
 
 func die() -> void:
 	if is_dead: return 

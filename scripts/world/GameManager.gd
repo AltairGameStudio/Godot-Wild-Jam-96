@@ -10,7 +10,7 @@ var gold: int = 0 # Ouro inicial para testes
 # Níveis e valores dos upgrades permanentes
 var upgrades: Dictionary = {
 	"charge_time": {"level": 1, "base_cost": 50, "cost_mult": 1.5, "val_step": -0.5, "current_val": 8.0},
-	"engine_power": {"level": 1, "base_cost": 75, "cost_mult": 1.6, "val_step": 150.0, "current_val": 1400.0},
+	"engine_power": {"level": 1, "base_cost": 75, "cost_mult": 1.6, "val_step": 40.0, "current_val": 150.0},
 	"base_damage": {"level": 1, "base_cost": 60, "cost_mult": 1.5, "val_step": 10.0, "current_val": 30.0},
 	"drift_traction": {"level": 1, "base_cost": 100, "cost_mult": 1.8, "val_step": 0.03, "current_val": 0.85}
 }

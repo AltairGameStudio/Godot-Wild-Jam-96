@@ -57,6 +57,8 @@ var can_move: bool = true
 var ghost_intervals: float = 0.3
 var last_ghost : float = 0.0
 
+var current_dash_speed: float = 0.0
+
 func _ready() -> void:
 	add_to_group("player")
 	current_health = max_health + extra_health
@@ -192,9 +194,16 @@ func _physics_process(delta: float) -> void:
 		if not on_power_charge and power_charge_load >= 1.0:
 			on_power_charge = true
 			var forward_vec = Vector2.UP.rotated(heading_angle)
-			# Impulso instantâneo para frente
-			velocity = forward_vec * ((max_speed + extra_speed) * 1.8)
+			
+			# Calcula a velocidade fixa do dash baseada na velocidade atual multiplicada (ex: 1.7x)
+			var base_spd = maxf(velocity.length(), min_charge_speed)
+			current_dash_speed = base_spd * 1.7
+			
+			# Aplica o vetor de velocidade instantâneo
+			velocity = forward_vec * current_dash_speed
+			
 			power_charge_changed.emit(power_charge_load, on_power_charge)
+	
 	_handle_movement(delta)
 	var is_charging = lance_area.monitoring
 	_update_lance_state()
@@ -220,29 +229,29 @@ func _handle_movement(delta: float) -> void:
 	var forward_vec = Vector2.UP.rotated(heading_angle)
 	var right_vec = Vector2.RIGHT.rotated(heading_angle)
 	
-	# Multiplicador de velocidade aumentado durante o Dash (ex: 1.8x)
-	var dash_mult = 1.8 if on_power_charge else 1.0
-	
-	# Aplica o multiplicador de velocidade atual
-	var effective_power = engine_power * (speed_multiplier + extra_speed_multiplier) * dash_mult
-	var effective_max_speed = (max_speed + extra_speed) * (speed_multiplier + extra_speed_multiplier) * dash_mult
-	
-	if throttle_input > 0.0:
-		velocity += forward_vec * engine_power * throttle_input * delta
-	elif throttle_input < 0.0:
-		velocity += forward_vec * (engine_power * 0.4) * throttle_input * delta
-	
-	var forward_velocity = forward_vec * velocity.dot(forward_vec)
-	var lateral_velocity = right_vec * velocity.dot(right_vec)
-	
-	lateral_velocity *= pow(1.0 - drift_traction, delta)
-	forward_velocity *= pow(forward_friction, delta)
-	
-	velocity = forward_velocity + lateral_velocity
-	
-	 # Limita à velocidade máxima com lentidão
-	if velocity.length() > effective_max_speed:
-		velocity = velocity.normalized() * effective_max_speed
+	if on_power_charge:
+		# Durante o Dash: Mantém a velocidade fixa na direção que você estiver virando
+		velocity = forward_vec * current_dash_speed
+	else:
+		# Fora do Dash: Física normal de aceleração e atrito
+		var effective_power = engine_power * (speed_multiplier + extra_speed_multiplier)
+		var effective_max_speed = (max_speed + extra_speed) * (speed_multiplier + extra_speed_multiplier)
+		
+		if throttle_input > 0.0:
+			velocity += forward_vec * effective_power * throttle_input * delta
+		elif throttle_input < 0.0:
+			velocity += forward_vec * (effective_power * 0.4) * throttle_input * delta
+		
+		var forward_velocity = forward_vec * velocity.dot(forward_vec)
+		var lateral_velocity = right_vec * velocity.dot(right_vec)
+		
+		lateral_velocity *= pow(1.0 - drift_traction, delta)
+		forward_velocity *= pow(forward_friction, delta)
+		
+		velocity = forward_velocity + lateral_velocity
+		
+		if velocity.length() > effective_max_speed:
+			velocity = velocity.normalized() * effective_max_speed
 	
 	if get_tree().current_scene.is_in_run:
 		if ((velocity.length() >= min_dash_charge_speed) and not on_power_charge):
@@ -345,6 +354,10 @@ func pickup_item(item: Area2D) -> void:
 func apply_slow(factor: float = 0.5) -> void:
 	active_slow_sources += 1
 	speed_multiplier = factor
+	# Corta a velocidade atual imediatamente para o novo teto de lentidão
+	var effective_max_speed = (max_speed + extra_speed) * (speed_multiplier + extra_speed_multiplier)
+	if velocity.length() > effective_max_speed:
+		velocity = velocity.normalized() * effective_max_speed
 
 func remove_slow() -> void:
 	active_slow_sources = maxi(0, active_slow_sources - 1)
