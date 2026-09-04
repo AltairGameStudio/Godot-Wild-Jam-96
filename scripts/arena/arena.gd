@@ -1,7 +1,7 @@
 extends Node2D
 
 @export_group("Configurações da Rodada")
-@export var round_duration: float = 60.0           # Duração total da rodada em segundos
+@export var round_duration: float = 5.0           # Duração total da rodada em segundos
 @export var min_spawn_interval: float = 4.0        # Tempo mínimo entre spawns
 @export var max_spawn_interval: float = 5.0        # Tempo máximo entre spawns
 @export var min_distance_from_player: float = 380.0 # Distância mínima para não spawnar colado no player
@@ -56,6 +56,9 @@ const PHASE_TITLES = {
 	10: "The Final Reckoning"
 }
 
+var victory_panel: Panel = null
+var victory_overlay: ColorRect = null
+
 func _ready() -> void:
 	if has_node("ForestRing"):
 		arena_center = $ForestRing.global_position
@@ -80,6 +83,7 @@ func _ready() -> void:
 		if not player_ref.power_charge_changed.is_connected(_on_power_charge_changed):
 			player_ref.power_charge_changed.connect(_on_power_charge_changed)
 	
+	_create_victory_panel()
 	start_phase()
 
 func start_phase() -> void:
@@ -215,15 +219,26 @@ func _end_phase_by_time() -> void:
 	is_round_active = false
 	if timer_label:
 		timer_label.text = "00"
-		
-	_show_announcement("TIME'S UP!", "Travelling to the town...", 3.5, Color("f2d9a6ff"))
 
 	# Remove todos os inimigos vivos restantes na arena
 	get_tree().call_group("enemies", "queue_free")
 
-	# Chama a finalização da run com sucesso para voltar à cidade
-	if get_tree().current_scene.has_method("end_run_success"):
-		get_tree().current_scene.end_run_success()
+	var current_phase: int = 1
+	if "current_phase" in get_tree().current_scene:
+		current_phase = maxi(1, get_tree().current_scene.current_phase)
+	elif get_node_or_null("/root/GameManager"):
+		current_phase = get_node("/root/GameManager").current_phase
+
+	# Se completou a Fase 10, exibe o painel estilizado de vitória
+	if current_phase == 10 and is_instance_valid(victory_overlay):
+		victory_overlay.visible = true
+		# Toca a música da tela inicial com transição suave
+		if get_node_or_null("/root/AudioManager"):
+			AudioManager.play_menu_theme()
+	else:
+		_show_announcement("TIME'S UP!", "Travelling to the town...", 3.5, Color("f2d9a6ff"))
+		if get_tree().current_scene.has_method("end_run_success"):
+			get_tree().current_scene.end_run_success()
 
 func _end_phase_by_death() -> void:
 	is_round_active = false
@@ -311,3 +326,140 @@ func _on_power_charge_changed(current_load: float, is_on_dash: bool) -> void:
 	# Preenche a barra da esquerda para a direita de 0.0 a 1.0
 	if charge_lance_progress:
 		charge_lance_progress.value = current_load
+
+func _create_victory_panel() -> void:
+	var canvas_layer = get_node_or_null("CanvasLayer")
+	if not canvas_layer:
+		return
+
+	# 1. Overlay escuro de fundo (cobre a tela toda)
+	victory_overlay = ColorRect.new()
+	victory_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	victory_overlay.color = Color(0, 0, 0, 0.75)
+	victory_overlay.visible = false
+	canvas_layer.add_child(victory_overlay)
+
+	# 2. Painel central com a mesma paleta dos modais
+	victory_panel = Panel.new()
+	victory_panel.custom_minimum_size = Vector2(560, 300)
+	victory_panel.set_anchors_preset(Control.PRESET_CENTER)
+	victory_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	victory_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
+	
+	# Estilo: Fundo verde-escuro + Borda Dourada + Sombra
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.08, 0.12, 0.10, 0.95)       # Verde-escuro pântano
+	style.border_color = Color(0.83, 0.64, 0.45, 1.0)    # Dourado envelhecido
+	style.set_border_width_all(3)
+	style.set_corner_radius_all(8)
+	style.shadow_color = Color(0, 0, 0, 0.6)
+	style.shadow_size = 12
+	style.shadow_offset = Vector2(0, 6)
+	victory_panel.add_theme_stylebox_override("panel", style)
+	victory_overlay.add_child(victory_panel)
+
+	# 3. Faixa de Cabeçalho Dourada Translúcida
+	var header_bar = ColorRect.new()
+	header_bar.color = Color(0.83, 0.64, 0.45, 0.15)
+	header_bar.custom_minimum_size = Vector2(0, 42)
+	header_bar.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	header_bar.offset_bottom = 42.0
+	header_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	victory_panel.add_child(header_bar)
+
+	# 4. Título Principal
+	var title = Label.new()
+	title.text = "VICTORY ACHIEVED"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	title.offset_top = 8.0
+	title.offset_bottom = 36.0
+	title.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	title.modulate = Color(0.95, 0.85, 0.65) # Dourado claro
+	victory_panel.add_child(title)
+
+	# 5. Container de Conteúdo Interno
+	var content_box = VBoxContainer.new()
+	content_box.set_anchors_preset(Control.PRESET_FULL_RECT)
+	content_box.offset_top = 60.0
+	content_box.offset_bottom = -20.0
+	content_box.offset_left = 30.0
+	content_box.offset_right = -30.0
+	content_box.add_theme_constant_override("separation", 18)
+	victory_panel.add_child(content_box)
+
+	# Texto descritivo / mensagem
+	var msg_label = Label.new()
+	msg_label.text = "You conquered all 10 trials of the arena!\nWill you retire victorious or dare to push beyond in Endless Mode?"
+	msg_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	msg_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	msg_label.modulate = Color("f2d9a6ff")
+	content_box.add_child(msg_label)
+
+	# Espaçador flexível
+	var spacer = Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content_box.add_child(spacer)
+
+	# 6. Container de Botões
+	var btn_box = VBoxContainer.new()
+	btn_box.add_theme_constant_override("separation", 12)
+	content_box.add_child(btn_box)
+
+	# Botão 1: Endless Mode (Continuar)
+	var btn_endless = _create_styled_button("ENTER ENDLESS MODE (CONTINUE)")
+	btn_endless.pressed.connect(_on_endless_button_pressed)
+	btn_box.add_child(btn_endless)
+
+	# Botão 2: Main Menu (Resetar)
+	var btn_menu = _create_styled_button("MAIN MENU (RESET PROGRESS)")
+	btn_menu.pressed.connect(_on_menu_button_pressed)
+	btn_box.add_child(btn_menu)
+
+# Função auxiliar para padronizar os botões com o mesmo estilo do jogo
+func _create_styled_button(text: String) -> Button:
+	var btn = Button.new()
+	btn.text = text
+	btn.custom_minimum_size = Vector2(0, 42)
+	
+	# Estilo normal do botão
+	var btn_normal = StyleBoxFlat.new()
+	btn_normal.bg_color = Color(0.12, 0.18, 0.15, 0.9)
+	btn_normal.border_color = Color(0.83, 0.64, 0.45, 0.8)
+	btn_normal.set_border_width_all(2)
+	btn_normal.set_corner_radius_all(6)
+	
+	# Estilo ao passar o mouse (Hover)
+	var btn_hover = StyleBoxFlat.new()
+	btn_hover.bg_color = Color(0.20, 0.30, 0.25, 0.95)
+	btn_hover.border_color = Color(0.95, 0.85, 0.65, 1.0)
+	btn_hover.set_border_width_all(2)
+	btn_hover.set_corner_radius_all(6)
+	
+	# Estilo ao clicar (Pressed)
+	var btn_pressed = StyleBoxFlat.new()
+	btn_pressed.bg_color = Color(0.06, 0.10, 0.08, 0.95)
+	btn_pressed.border_color = Color(0.83, 0.64, 0.45, 1.0)
+	btn_pressed.set_border_width_all(2)
+	btn_pressed.set_corner_radius_all(6)
+
+	btn.add_theme_stylebox_override("normal", btn_normal)
+	btn.add_theme_stylebox_override("hover", btn_hover)
+	btn.add_theme_stylebox_override("pressed", btn_pressed)
+	btn.add_theme_color_override("font_color", Color("f2d9a6ff"))
+	btn.add_theme_color_override("font_hover_color", Color(1.0, 1.0, 1.0))
+	
+	return btn
+	
+func _on_endless_button_pressed() -> void:
+	if victory_overlay:
+		victory_overlay.visible = false
+	_show_announcement("ENDLESS MODE!", "Travelling to town...", 2.5, Color("f2d9a6ff"))
+	if get_tree().current_scene.has_method("end_run_success"):
+		get_tree().current_scene.end_run_success()
+
+func _on_menu_button_pressed() -> void:
+	if get_node_or_null("/root/GameManager"):
+		get_node("/root/GameManager").reset_game_to_menu()
+	else:
+		get_tree().change_scene_to_file("res://weball/main_menu.tscn")

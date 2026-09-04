@@ -116,3 +116,22 @@ func buy_upgrade(upgrade_id: String) -> bool:
 	
 	upgrade_purchased.emit(upgrade_id, data["level"])
 	return true
+
+func reset_game_to_menu() -> void:
+	is_in_run = false
+	current_run_loot.clear()
+	run_timer = 0.0
+	current_phase = 1
+	gold = 0
+	
+	upgrades = {
+		"charge_time": {"level": 1, "base_cost": 50, "cost_mult": 1.5, "val_step": -0.5, "current_val": 8.0},
+		"engine_power": {"level": 1, "base_cost": 75, "cost_mult": 1.6, "val_step": 40.0, "current_val": 150.0},
+		"base_damage": {"level": 1, "base_cost": 60, "cost_mult": 1.5, "val_step": 10.0, "current_val": 30.0},
+		"drift_traction": {"level": 1, "base_cost": 100, "cost_mult": 1.8, "val_step": 0.03, "current_val": 0.85}
+	}
+	
+	if get_node_or_null("/root/AudioManager"):
+		AudioManager.play_main_menu_theme()
+		
+	get_tree().change_scene_to_file("res://weball/main_menu.tscn")
