@@ -30,6 +30,9 @@ var next_spawn_timer: float = 0.0
 var is_round_active: bool = false
 var player_ref: Node2D = null
 
+var current_min_spawn: float = 4.0
+var current_max_spawn: float = 5.0
+
 @onready var announcement_container: VBoxContainer = get_node_or_null("CanvasLayer/AnnouncementContainer")
 @onready var title_label: Label = get_node_or_null("CanvasLayer/AnnouncementContainer/TitleLabel")
 @onready var subtitle_label: Label = get_node_or_null("CanvasLayer/AnnouncementContainer/SubtitleLabel")
@@ -41,15 +44,16 @@ var player_ref: Node2D = null
 
 # Nomes temáticos para cada uma das 9 fases
 const PHASE_TITLES = {
-	1: "The Awakening of the Spear",
-	2: "Rain of Arrows",
-	3: "Iron Wall",
-	4: "Sticky Ground",
-	5: "Armored Colossus",
-	6: "Dance of Shadows",
-	7: "Crossfire",
-	8: "Relentless Chaos",
-	9: "The Penultimate Confrontation"
+	1: "The Awakening",
+	2: "Scent of Gunpowder",
+	3: "Reinforced Front",
+	4: "Tainted Ground",
+	5: "Heavy Footsteps",
+	6: "Elusive Foes",
+	7: "Rising Tension",
+	8: "Relentless Pressure",
+	9: "The Penultimate Confrontation",
+	10: "The Final Reckoning"
 }
 
 func _ready() -> void:
@@ -89,7 +93,23 @@ func start_phase() -> void:
 	_show_announcement("LEVEL %d" % current_phase, sub_title, 2.5)
 
 	round_time_left = round_duration
-	next_spawn_timer = randf_range(min_spawn_interval, max_spawn_interval)
+	
+	# --- CONTROLE DE SPAWN: IGUAL ATÉ A FASE 10, DIMINUI NA 11 E ALÉM ---
+	if current_phase >= 11:
+		# Na fase 11 reduz ~15%. A cada fase além da 11, reduz mais 8% adicionais.
+		# Com um limite mínimo de 1.0s para não saturar a tela/FPS.
+		var endless_step = current_phase - 10 # Na fase 11 será 1, na fase 12 será 2, etc.
+		var reduction_factor = 0.15 + (endless_step - 1) * 0.08
+		var mult = maxf(0.25, 1.0 - reduction_factor)
+		
+		current_min_spawn = maxf(1.0, min_spawn_interval * mult)
+		current_max_spawn = maxf(1.4, max_spawn_interval * mult)
+	else:
+		# Fases 1 a 10 mantêm os tempos 100% originais
+		current_min_spawn = min_spawn_interval
+		current_max_spawn = max_spawn_interval
+
+	next_spawn_timer = randf_range(current_min_spawn, current_max_spawn)
 	is_round_active = true
 	_update_timer_label()
 
@@ -115,7 +135,7 @@ func _process(delta: float) -> void:
 	next_spawn_timer -= delta
 	if next_spawn_timer <= 0.0:
 		_spawn_random_enemy()
-		next_spawn_timer = randf_range(min_spawn_interval, max_spawn_interval)
+		next_spawn_timer = randf_range(current_min_spawn, current_max_spawn)
 
 func _update_timer_label() -> void:
 	if timer_label:
@@ -246,9 +266,12 @@ func _setup_phase_pool(phase: int) -> void:
 		8:
 			enemy_scenes = [SCENE_SWORD, SCENE_RANGED, SCENE_SHIELD, SCENE_TAR, SCENE_HEAVY, SCENE_DODGING]
 			enemy_weights = [10.0, 10.0, 15.0, 20.0, 20.0, 25.0]
-		_: # Fase 9 em diante
+		9:
 			enemy_scenes = [SCENE_SWORD, SCENE_RANGED, SCENE_SHIELD, SCENE_TAR, SCENE_HEAVY, SCENE_DODGING]
-			enemy_weights = [5.0, 10.0, 15.0, 20.0, 25.0, 25.0]
+			enemy_weights = [10.0, 10.0, 15.0, 20.0, 20.0, 25.0]
+		_: # Fase 10 em diante (Modo Infinito / Dificuldade Máxima)
+			enemy_scenes = [SCENE_SWORD, SCENE_RANGED, SCENE_SHIELD, SCENE_TAR, SCENE_HEAVY, SCENE_DODGING]
+			enemy_weights = [5.0, 5.0, 15.0, 25.0, 25.0, 25.0]
 
 func _show_announcement(title: String, subtitle: String, duration: float = 3.0, title_color: Color = Color("f2d9a6ff")) -> void:
 	if not announcement_container or not title_label or not subtitle_label:
