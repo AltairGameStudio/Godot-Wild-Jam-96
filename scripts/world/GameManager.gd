@@ -30,6 +30,13 @@ var current_phase: int = 1
 var current_scene: Node
 
 func _ready() -> void:
+	# Instancia o Menu de Pause global
+	var pause_script = load("res://scripts/ui/pause_menu.gd")
+	if pause_script:
+		var pause_instance = CanvasLayer.new()
+		pause_instance.set_script(pause_script)
+		add_child(pause_instance)
+		
 	change_world(TOWN_SCENE_PATH)
 	
 func _process(delta: float) -> void:
