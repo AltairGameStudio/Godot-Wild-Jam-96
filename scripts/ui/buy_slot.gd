@@ -3,19 +3,12 @@ class_name buy_slot
 
 var item_cost = 0
 var item_lvl = 1
-var item_value = {
-	2: 5,
-	3: 8,
-	4: 3,
-	5: 6,
-	6: 4,
-	7: 10
-}
 var item_type = 0
 
 func _ready() -> void:
 	item_type = int(name)
 	item_cost = item_value[item_type]
+	slot_value = int(item_cost*2.0/3.0)
 	id = 100*item_type+item_lvl
 	$cost.text = str(item_cost)
 
@@ -48,6 +41,7 @@ func on_lvl_up() -> void:
 	item_lvl += 1
 	id += 1
 	item_cost += item_value[item_type]
+	slot_value = int(item_cost*2.0/3.0)
 	$cost.text = str(item_cost)
 
 func on_lvl_down() -> void:
@@ -56,4 +50,5 @@ func on_lvl_down() -> void:
 	item_lvl -= 1
 	id -= 1
 	item_cost -= item_value[item_type]
+	slot_value = int(item_cost*2.0/3.0)
 	$cost.text = str(item_cost)

@@ -21,6 +21,15 @@ var item_description = {
 	6: "Increases the speed multiplier in (%.1f).",
 	7: "Increases the max speed in (%d)."
 }
+var item_value = {
+	2: 5,
+	3: 8,
+	4: 3,
+	5: 6,
+	6: 4,
+	7: 10
+}
+var slot_value = 0
 
 func _ready() -> void:
 	pass
@@ -28,7 +37,8 @@ func _ready() -> void:
 func set_empty_slot() -> void:
 	$sprite.texture = null
 	$amount.text = ""
-	self.id = 0
+	id = 0
+	slot_value = 0
 
 func _process(_delta: float) -> void:
 	if $description.visible:
@@ -75,7 +85,7 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if data.id == 0:
 		return
-	if data == self: 
+	if data == self:
 		$sprite.visible = true
 		if !(self is equipment):
 			$amount.visible = true
@@ -87,6 +97,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 			id = data.id
 		else:
 			$amount.text = str(int($amount.text) + 1)
+		slot_value = int(((id%100 * item_value[id/100]) * 2.0/3.0) * int($amount.text))
 		data.set_empty_slot()
 		get_tree().call_group("player", "update_info")
 	elif data is equipment and self.id == 0:
@@ -95,6 +106,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		$sprite.texture = data.equip_sprite
 		id = data.id
 		data.set_empty_slot()
+		slot_value = int(((id%100 * item_value[id/100]) * 2.0/3.0))
 	elif self.id == data.id: # Se o id for o mesmo soma as quantidades
 		var quantity = int($amount.text)
 		if data is equipment:
@@ -103,21 +115,24 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		else:
 			quantity += int(data.get_node("amount").text)
 		$amount.text = str(quantity)
+		slot_value = int(((id%100 * item_value[id/100]) * 2.0/3.0) * quantity)
 		data.set_empty_slot()
 	else: # Se o sprite for diferente troca os dados de lugar
 		if data is sell_slot:
-			#data.item_removed_from_store.emit(data.id, int(data.get_node("amount").text))
 			data.item_removed_from_store()
-			#data.new_item_on_store.emit(id, int($amount.text))
 		var sprite = data.get_node("sprite").texture
 		var text = data.get_node("amount").text
 		var n_id = data.id
+		var n_val = data.slot_value
 		data.get_node("sprite").texture = $sprite.texture
 		data.get_node("amount").text = $amount.text
 		data.id = id
+		data.slot_value = slot_value
 		$sprite.texture = sprite
 		$amount.text = text
 		id = n_id
+		slot_value = n_val
+
 
 func _on_mouse_entered() -> void:
 	if id == 0 or get_viewport().gui_is_dragging(): return
@@ -132,7 +147,7 @@ func _on_mouse_entered() -> void:
 		6: lvl/10.0,
 		7: lvl*50
 	}
-	$description/label.text = "Item: %s\nLevel: %d\n%s" % [item[it], lvl, item_description[it] % buff[it]]
+	$description/label.text = "Item: %s\nLevel: %d\n%s\nSell value: %d" % [item[it], lvl, item_description[it] % buff[it], slot_value]
 	$description.visible = true
 
 func _on_mouse_exited() -> void:

@@ -62,6 +62,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		data.get_node("sprite").visible = true
 		data.get_node("amount").visible = true
 	get_tree().call_group("player", "equipment_changed", self.id, true)
+	slot_value = data.slot_value
 
 func return_to_inventory(new_item_id) -> bool:
 	var empty = null

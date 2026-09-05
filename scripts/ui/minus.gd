@@ -2,6 +2,7 @@ extends Control
 
 var click_delay = 0.3
 var last_click = 0
+@onready var level_label = $"../../level"
 
 func _process(delta: float) -> void:
 	if last_click > 0:
@@ -13,6 +14,7 @@ func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and last_click <= 0:
 		last_click = click_delay
 		get_tree().call_group("buy_store", "on_lvl_down")
+		level_label.text = str(max(1,int(level_label.text) - 1))
 		var tween = create_tween().set_parallel(false)
 		tween.tween_property(self, "scale", Vector2(0.9, 0.9), 0.05).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.05).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
